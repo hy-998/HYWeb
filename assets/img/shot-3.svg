@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Consolas, monospace">
+  <rect width="800" height="500" fill="#18181b"/>
+  <!-- 终端窗口 -->
+  <rect x="40" y="40" width="720" height="420" rx="12" fill="#09090b" stroke="#3f3f46"/>
+  <rect x="40" y="40" width="720" height="36" rx="12" fill="#27272a"/>
+  <circle cx="66" cy="58" r="6" fill="#ef4444"/><circle cx="86" cy="58" r="6" fill="#eab308"/><circle cx="106" cy="58" r="6" fill="#22c55e"/>
+  <text x="80" y="120" fill="#22c55e" font-size="15">$ agent-browser open index.html</text>
+  <text x="80" y="155" fill="#a1a1aa" font-size="15">✓ 技术速记 | 弘1</text>
+  <text x="80" y="195" fill="#22c55e" font-size="15">$ agent-browser eval "location.href"</text>
+  <text x="80" y="230" fill="#f87171" font-size="15">"about:blank"          ← 又是空白页？</text>
+  <text x="80" y="270" fill="#22c55e" font-size="15">$ agent-browser tab list</text>
+  <text x="80" y="305" fill="#fbbf24" font-size="15">! 会话中途重启，eval 漂移到空标签页</text>
+  <text x="80" y="345" fill="#22c55e" font-size="15">$ agent-browser close --all &amp;&amp; retest --single-chain</text>
+  <text x="80" y="380" fill="#a1a1aa" font-size="15">✓ 全链路通过（页面从来没坏过）</text>
+  <text x="80" y="430" fill="#52525b" font-size="14"># lesson: 先怀疑仪器，再怀疑世界</text>
+</svg>

@@ -1,0 +1,356 @@
+/* ============================================================
+   开篇打字机效果 · 中文版
+   字体：零加载系统楷体栈（KaiTi / STKaiti / 苹方楷），无任何 webfont；
+   按钮 Enter 等西文字符同样走该栈的楷体字形
+   ============================================================ */
+
+:root {
+  font-size: 100%;
+  --container-padding: 5vw;
+  --font-mono: "Kaiti SC", STKaiti, KaiTi;
+  --font-sans: "Kaiti SC", STKaiti, KaiTi;
+}
+
+/* Tailwind preflight 相关（原站依赖它，缺了会差 5px 基线余量） */
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  color-scheme: light;
+  --white: 255, 255, 255;
+  --light-grey: 217, 217, 214;
+  --grey: 178, 180, 178;
+  --charcoal: 38, 38, 38;
+  --black: 0, 0, 0;
+  --error: 232, 26, 26;
+}
+
+/* 暗色令牌：取自原站 html.dark（--white/--black 互换，--charcoal 转浅灰） */
+html.dark {
+  color-scheme: dark;
+  --white: 0, 0, 0;
+  --light-grey: 38, 38, 38;
+  --grey: 178, 180, 178;
+  --charcoal: 217, 217, 214;
+  --black: 255, 255, 255;
+  --error: 232, 26, 26;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* preflight: 让 Logo(inline-block svg) 按 middle 对齐 */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* 隐藏滚动条（与博客一致）：保证 100vw 与布局宽相等，对齐才准 */
+html { scrollbar-width: none; }
+body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
+
+body {
+  background-color: rgba(var(--white));
+  color: rgba(var(--charcoal));
+  /* 中文栈：系统楷体 → 雅黑兜底 */
+  font-family: var(--font-sans), "Microsoft YaHei", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(var(--charcoal));
+  color: rgba(var(--white));
+}
+::-moz-selection {
+  background-color: rgba(var(--charcoal));
+  color: rgba(var(--white));
+}
+
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+
+/* .container —— 对齐博客主界面正文列：
+   max-width 断点与博客 .container 一致（640/768/1024/1200）；
+   水平内边距 1.5rem 与博客 .shorts-wrap（container+px-6 合并后的实际值）一致，
+   使打字机文字与博客 h1 左缘对齐（实测 h1X = 容器左缘 + 24px） */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  max-width: none;
+}
+@media (min-width: 640px) { .container { max-width: 640px; } }
+@media (min-width: 768px) { .container { max-width: 768px; } }
+@media (min-width: 1024px) { .container { max-width: 1024px; } }
+@media (min-width: 1200px) { .container { max-width: 1200px; } }
+
+/* .py-container-padding */
+.py-container-padding {
+  padding-top: var(--container-padding);
+  padding-bottom: var(--container-padding);
+}
+
+/* Logo：文字字标 "Welcome."
+   宽度沿用原 SVG 的 max(180px, 11vw)，字号按宽度反推使单词恰好占满 */
+.logo {
+  display: inline-block;
+  margin-bottom: 2.5rem; /* mb-40 = 40px */
+  width: max(180px, 11vw);
+  color: rgba(var(--charcoal));
+  font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-size: calc(max(180px, 11vw) / 4.6);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* .font-mono —— 中文版后与正文同为楷体，保留类名以兼容 HTML */
+.font-mono {
+  font-family: var(--font-mono), "Microsoft YaHei", serif;
+}
+
+/* .text-body-30 —— 中文字距归零（西文的 -0.04em 不适用），行高放宽到 1.6 */
+.text-body-30 {
+  font-size: max(18px, 1.25vw);
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* .text-body-20 */
+.text-body-20 {
+  font-size: max(16px, 1vw);
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* .pb-120 / md:pb-40 */
+.pb-120 {
+  padding-bottom: 7.5rem; /* 120px */
+}
+
+.main-content strong {
+  font-weight: 700;
+}
+
+/* 打字机容器（React <Typewriter> 组件渲染的 div） */
+.Typewriter {
+  display: block;
+}
+
+/* 站点自定义光标：0.75rem 的实心色块 */
+.Typewriter__cursor {
+  display: inline-block;
+  height: 1em;
+  width: 0.75rem;
+  background-color: currentColor;
+  text-indent: -9999px;
+  vertical-align: sub;
+}
+
+.Typewriter__wrapper br {
+  display: block;
+}
+
+/* ============ 右上角主题切换 ============ */
+/* 与博客 .theme-toggle 同规格（外壳 1.5rem / 图标 1rem / 日月互换）。
+   水平位置按博客主页实测值对齐：主页的切换按钮是 .quick-actions 组的第一个，
+   它后面还跟着若干按钮，所以并不贴正文列右缘。三档断点下后续按钮不同，
+   相对视口右缘的偏移分别为 96.7 / 148.7 / 100.7px（详见下方 640、768 媒体查询）。 */
+
+.theme-toggle {
+  position: fixed;
+  /* 与左上角字标垂直居中对齐：字标高 = max(180px,11vw)/4.6（line-height:1），
+     按钮高 1.5rem，故 top = 容器上内边距 + 字标高/2 - 按钮高/2 */
+  top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);
+  right: 96.7px;
+  z-index: 5;
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(var(--charcoal));
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0, 0, 0.2, 1) 0.5s, color 0.15s;
+}
+.theme-toggle.is-visible {
+  opacity: 1;
+}
+.theme-toggle:hover {
+  color: rgba(var(--grey));
+}
+.icon-slot {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+}
+.icon-slot svg {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  inset: 0;
+}
+/* 暗色显示太阳（点击切亮）、亮色显示月亮 —— 与博客 next-themes 行为一致 */
+html.dark .icon-moon {
+  display: none;
+}
+html:not(.dark) .icon-sun {
+  display: none;
+}
+
+/* ============ 底部 Enter 按钮 ============ */
+.cta-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.7s;
+  transition-delay: 0.5s;
+}
+.cta-wrap.is-visible {
+  opacity: 1;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: rgba(var(--black));
+  color: rgba(var(--white));
+  text-decoration: none;
+  width: 100%;
+  text-transform: uppercase;
+  transition: color 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.btn:hover {
+  color: rgba(var(--black));
+}
+.btn > span,
+.btn > svg {
+  position: relative;
+}
+
+/* 悬停时三段灰块依次滑入 */
+.btn__fill {
+  position: absolute;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+}
+.btn__fill > span {
+  width: 100%;
+  height: 100%;
+  transform-origin: top right;
+  transform: translateX(-100%) scale(1.1);
+  background-color: rgba(var(--grey));
+  transition-property: transform;
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.btn:hover .btn__fill > span {
+  transform: translateX(0) scale(1.1);
+}
+.btn__fill > span:nth-child(1) {
+  transition-delay: 0s;
+}
+.btn__fill > span:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.btn__fill > span:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.btn__icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  color: currentColor;
+  border-style: solid;
+  border-width: 1px;
+  transition: color 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* 640–767：主页 actions 组里 RSS(20) 与移动端菜单(40) 同时可见，
+   切换按钮被推得更靠左，故偏移从 80.7 增至 132.7（容器右内边距仍为 1rem） */
+@media (min-width: 640px) {
+  .theme-toggle {
+    right: calc(max((100vw - 640px) / 2, 0px) + 148.7px);
+  }
+}
+@media (min-width: 768px) {
+  .pb-120 {
+    padding-bottom: 2.5rem; /* md:pb-40 */
+  }
+  .cta-wrap {
+    bottom: var(--container-padding);
+    /* 左缘对齐博客正文列：居中容器(按断点) + 1.5rem 内边距 */
+    left: calc(max((100vw - 768px) / 2, 0px) + 1.5rem);
+    width: auto;
+  }
+  .btn {
+    width: auto;
+  }
+  .theme-toggle {
+    right: calc(max((100vw - 768px) / 2, 0px) + 100.7px);
+  }
+}
+@media (min-width: 1024px) {
+  .cta-wrap { left: calc(max((100vw - 1024px) / 2, 0px) + 1.5rem); }
+  .theme-toggle { right: calc(max((100vw - 1024px) / 2, 0px) + 100.7px); }
+}
+@media (min-width: 1200px) {
+  .cta-wrap { left: calc(max((100vw - 1200px) / 2, 0px) + 1.5rem); }
+  .theme-toggle { right: calc(max((100vw - 1200px) / 2, 0px) + 100.7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn__icon,
+  .btn__fill > span {
+    transition: none;
+  }
+}

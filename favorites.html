@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>收藏推荐 | 弘1</title>
+<meta name="description" content="精选的设计、开发与灵感资源收藏，按分类筛选，点击卡片直达原站。" />
+<link rel="icon" href="assets/img/avatar.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/css/clone.css?v=8" />
+<script>
+(function () {
+  try {
+    var theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="header-row">
+      <!-- 左侧：头像 + 站名 -->
+      <a class="brand" href="#" aria-label="弘1">
+        <span class="brand-avatar"><img src="assets/img/avatar.svg" alt="弘1" width="44" height="44" /></span>
+        <span class="brand-name">弘1</span>
+      </a>
+
+      <!-- 右侧：导航 + 操作区 -->
+      <div class="header-actions">
+        <nav class="main-nav">
+          <a href="index.html">首页</a>
+          <a href="projects.html">项目</a>
+          <a href="favorites.html" class="active">收藏推荐</a>
+        </nav>
+
+        <div class="quick-actions">
+          <!-- 主题切换（JS 接管） -->
+          <button class="theme-toggle" aria-label="切换主题">
+            <span class="icon-slot">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </span>
+          </button>
+
+          <!-- RSS -->
+          <button class="rss-btn" title="RSS Feed" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          </button>
+
+          <!-- 请我喝咖啡 -->
+          <a class="coffee" href="#" title="请我喝咖啡 ☕">
+            <span class="coffee-inner">
+              <span class="coffee-emoji">☕</span>
+              <span class="coffee-glow"></span>
+              <span class="coffee-heart">❤️</span>
+            </span>
+          </a>
+
+          <!-- 移动端菜单按钮 -->
+          <button class="mobile-menu-btn" type="button" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1">
+  <div class="container shorts-wrap">
+    <div class="page-head">
+      <h1>收藏推荐</h1>
+      <p>精选的设计、开发与灵感资源收藏，按分类筛选，点击卡片直达原站。</p>
+    </div>
+
+    <div class="filter-bar" role="tablist">
+      <button class="filter-tag active" data-group="all">全部 <span class="cnt">(21)</span></button>
+      <button class="filter-tag" data-group="recommend">🔥 推荐 <span class="cnt">(21)</span></button>
+      <button class="filter-tag" data-group="template">模板 <span class="cnt">(3)</span></button>
+      <button class="filter-tag" data-group="article">文章 <span class="cnt">(11)</span></button>
+      <button class="filter-tag" data-group="project">项目 <span class="cnt">(3)</span></button>
+      <button class="filter-tag" data-group="web">网页 <span class="cnt">(8)</span></button>
+      <button class="filter-tag" data-group="tools">Tools <span class="cnt">(5)</span></button>
+      <button class="filter-tag" data-group="gsap">GSAP <span class="cnt">(1)</span></button>
+    </div>
+
+    <div class="fav-grid">
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/vibe-coding-guide-ricoscreenshot" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-vibe-coding-guide-ricoscreenshot.jpg" alt="零基础 Vibe Coding 实战教程：用一个真实项目讲清楚完整工作流" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(065)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 零基础 Vibe Coding 实战教程：用一个真实项目讲清楚完整工作流</h2>
+          <p>以 RicoScreenshot 为案例：读懂项目 → 视觉规范 → 功能规划 → 开发 → 交互走查 → 上线</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/design-md-editor" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-design-md-editor.jpg" alt="开源 RICOUI DESIGN：用一份 DESIGN.md 统一设计规范和代码" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(063)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 开源 RICOUI DESIGN：用一份 DESIGN.md 统一设计规范和代码</h2>
+          <p>RICOUI DESIGN，一个围绕 DESIGN.md 的开源设计系统工作台</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/brands-design-md" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-brands-design-md.jpg" alt="开源我收录的 68 个知名品牌规范设计文档" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(061)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 开源我收录的 68 个知名品牌规范设计文档</h2>
+          <p>brands-design-md，把品牌视觉拆成预览和 DESIGN.md 的开源设计参考库</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/designer-vibe-coding-guide-git-github-ugit/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-git-github-ugit.jpg" alt="Vibe Coding 零基础指南：版本管理 Git、GitHub 与 UGit" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(060)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> Vibe Coding 零基础指南：版本管理 Git、GitHub 与 UGit</h2>
+          <p>Git、GitHub Desktop、UGit 与 AI 版本管理</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/vibe-coding-guide-2" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-vibe-coding-guide-2-1.jpg" alt="写给设计师的 Vibe Coding 零基础指南（二）" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(055)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 写给设计师的 Vibe Coding 零基础指南（二）</h2>
+          <p>技术栈、PRD、实操</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/vibe-coding-for-designers-1-basics-frameworks-tools" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-vibe-coding-guide-1.jpg" alt="写给设计师的 Vibe Coding 零基础指南（一）" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(054)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 写给设计师的 Vibe Coding 零基础指南（一）</h2>
+          <p>开发指南 - 基础、框架、工具</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/how-to-design-a-personal-website-a-complete-step-by-step-guide" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-rico2025-guide.jpg" alt="个人网站设计全流程指南（设计篇）" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(047)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 个人网站设计全流程指南（设计篇）</h2>
+          <p>如何设计个人网站？看看这份全流程指南，附开源模板</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="project,web,recommend" href="https://www.ricoui.com/detail/ricoui-portfolio/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-portfolio2025.jpg" alt="Ricoui Portfolio" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">项目</span><span class="fav-num">(046)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> Ricoui Portfolio</h2>
+          <p>Open Source Portfolio Template</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/what-is-dreamcore-aesthetics" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-dreamcore.jpg" alt="什么是梦核美学?" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(043)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 什么是梦核美学?</h2>
+          <p>What Is Dreamcore Aesthetics?</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend" href="https://og.ricoui.com/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-ricoog.jpg" alt="Rico OG 灵感库" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(042)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> Rico OG 灵感库</h2>
+          <p>Rico OG Inspiration Library</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/the-aesthetics-of-time-dislocation-retro-futurism/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-retrofuturism.jpg" alt="时间错位的美学：复古未来主义" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(039)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 时间错位的美学：复古未来主义</h2>
+          <p>The Aesthetics of Time Dislocation Retro-Futurism</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/design-style-guide-retro-and-vintage/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-retro.jpg" alt="设计风格指南：复古主义" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(037)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 设计风格指南：复古主义</h2>
+          <p>Retro Design Style Guide</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="tools,recommend" href="https://gradientshub.com/tools/text-gradient-generator/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/tools-css-text-generator.jpg" alt="CSS 文字渐变生成器" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">Tools</span><span class="fav-num">(036)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> CSS 文字渐变生成器</h2>
+          <p>CSS Text Generator</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="article,recommend" href="https://www.ricoui.com/blog/design-style-guide-neo-brutalism/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-neobrutalism.jpg" alt="设计风格指南：新粗野主义" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">文章</span><span class="fav-num">(035)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 设计风格指南：新粗野主义</h2>
+          <p>Neo-Brutalism</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="recommend,gsap,project,template" href="https://www.ricoui.com/detail/luonmodels/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-luonmodels.jpg" alt="LUONMODELS" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">GSAP</span><span class="fav-num">(033)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> LUONMODELS</h2>
+          <p>品牌官网模板 Astro.js</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend,tools" href="https://uiuxdeck.com/?ref=blog" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-uiuxdeck.jpg" alt="UIUX 设计工具&资源库" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(032)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> UIUX 设计工具&资源库</h2>
+          <p>分享我的设计收藏库</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend,tools" href="https://gradientshub.com/?ref=blog" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-gradientshub.jpg" alt="GradientsHub.com" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(031)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> GradientsHub.com</h2>
+          <p>高级渐变背景下载</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,tools,recommend" href="https://inspoweb.com/?ref=blog" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-inspoweb-3-2.jpg" alt="Website Inspiration " loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(030)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> Website Inspiration </h2>
+          <p>收集网站灵感和模板</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend,tools,template" href="https://github.com/ricocc/uiineed-todo-list?ref=blog" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-uiineed-todo.jpg" alt="开源-Uiineed Todo List" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(029)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 开源-Uiineed Todo List</h2>
+          <p>200+ Star 中英文双语，即开即用</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend,template,project" href="https://www.ricoui.com/detail/ricoblog2024/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/ricoblog2024.jpg" alt="Rico Blog 2024" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(028)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> Rico Blog 2024</h2>
+          <p>设计博客开源</p>
+        </div>
+      </a>
+      <a class="fav-card" data-groups="web,recommend" href="https://www.ricocc.com/" target="_blank" rel="noopener noreferrer">
+        <div class="fav-cover"><img src="assets/cover/cover-ricocc.jpg" alt="设计师的个人网站" loading="lazy" /></div>
+        <div class="fav-body">
+          <div class="fav-meta"><span class="fav-type">网页</span><span class="fav-num">(020)</span></div>
+          <h2><span class="fav-rec">🔥 推荐</span> 设计师的个人网站</h2>
+          <p>3D, Gsap, Portfolio</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="fav-empty" id="favEmpty">该分类下暂无收藏内容。</div>
+  </div>
+</main>
+
+<script src="assets/js/clone.js?v=8"></script>
+</body>
+</html>

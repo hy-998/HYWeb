@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>欢迎 · 弘1的博客</title>
+    <meta
+      name="description"
+      content="在 AI 时代，信息的搬运与生产变得极其容易，但关键在于一个人需要关注什么？所以我制作了这个博客——个人履历、AI 使用经验、所做的项目，都放在这里。"
+    />
+    <link rel="stylesheet" href="assets/intro/style.css?v=8" />
+    <script>
+      /* 主题预加载：与博客各页一致，localStorage 存 'theme'，默认 dark。
+         需在样式生效前同步执行，避免暗色下闪白。 */
+      (function () {
+        var theme;
+        try {
+          theme = localStorage.getItem('theme') || 'dark';
+        } catch (e) {
+          theme = 'dark';
+        }
+        var cl = document.documentElement.classList;
+        cl.remove('light', 'dark');
+        cl.add(theme);
+        /* 移动端浏览器 UI 同步换色 */
+        var meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = theme === 'dark' ? '#000000' : '#ffffff';
+        document.head.appendChild(meta);
+      })();
+    </script>
+  </head>
+  <body class="h-full bg-white font-sans text-charcoal">
+    <button class="theme-toggle" type="button" aria-label="切换主题">
+      <span class="icon-slot">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </span>
+    </button>
+    <div class="flex flex-col">
+      <main class="container py-container-padding"><a class="logo" href="#" aria-label="Welcome">Welcome.</a><div class="pb-120 font-mono text-body-30 main-content"><div
+            id="typewriter"
+            aria-label="在 AI 时代，信息的搬运与生产变得极其容易，但关键在于一个人需要关注什么？所以我制作了这个博客——个人履历、AI 使用经验、所做的项目，都放在这里。"
+          ></div></div><div class="cta-wrap"><a class="btn font-mono text-body-20" href="index.html" id="enterBtn"><div class="btn__fill"><span></span><span></span><span></span></div><span>Enter</span><svg
+              class="btn__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-label="caret-right"
+            ><path d="M12 9H14V11H12V9Z" fill="currentColor" /><path d="M10 7H12V9H10V7Z" fill="currentColor" /><path d="M10 15H12V17H10V15Z" fill="currentColor" /><path d="M14 11H16V13H14V11Z" fill="currentColor" /><path d="M8 17H10V19H8V17Z" fill="currentColor" /><path d="M8 5H10V7H8V5Z" fill="currentColor" /><path d="M12 13H14V15H12V13Z" fill="currentColor" /></svg></a></div></main>
+    </div>
+
+    <script src="assets/intro/typewriter.js?v=8"></script>
+    <script src="assets/intro/intro.js?v=8"></script>
+  </body>
+</html>
