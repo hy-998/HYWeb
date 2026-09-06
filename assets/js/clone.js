@@ -188,3 +188,35 @@
     }
   }
 })();
+
+/* ---------- 9. 移动端菜单：汉堡按钮开合下拉导航 ---------- */
+(function () {
+  var btn = document.querySelector(".mobile-menu-btn");
+  var menu = document.querySelector(".mobile-menu");
+  if (!btn || !menu) return;
+
+  var setOpen = function (open) {
+    menu.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+
+  btn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains("open"));
+  });
+  /* 点外部关闭 */
+  document.addEventListener("click", function (e) {
+    if (menu.classList.contains("open") && !menu.contains(e.target) && e.target !== btn) setOpen(false);
+  });
+  /* Esc 关闭；点菜单里的链接后关闭 */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a")) setOpen(false);
+  });
+  /* 窗口拉宽到桌面档时收起 */
+  window.addEventListener("resize", function () {
+    if (window.innerWidth >= 768) setOpen(false);
+  });
+})();

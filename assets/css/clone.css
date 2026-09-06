@@ -264,6 +264,34 @@ html:not(.dark) .icon-sun { display: none; }
 @media (min-width: 768px) { .mobile-menu-btn { display: none; } }
 .mobile-menu-btn:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
 
+/* 移动端下拉菜单：默认隐藏，.open 展开（定位上下文是 sticky 的 .site-header） */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 1rem;
+  right: 1rem;
+  flex-direction: column;
+  padding: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background: hsl(var(--background));
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+  z-index: 60;
+}
+.mobile-menu.open { display: flex; }
+@media (min-width: 768px) { .mobile-menu { display: none !important; } }
+.mobile-menu a {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground) / 0.6);
+  transition: background-color 0.15s, color 0.15s;
+}
+.mobile-menu a:hover { background: hsl(var(--accent)); color: hsl(var(--foreground) / 0.8); }
+.mobile-menu a.active { color: hsl(var(--foreground)); }
+
 /* ---------- 5. 列表区 ---------- */
 /* 原站：container md:px-6 flex flex-col px-6 pb-24 pt-8 */
 .shorts-wrap {
