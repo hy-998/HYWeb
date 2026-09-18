@@ -223,7 +223,7 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 
 ## 8. 工程规范
 
-1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=8`）；
+1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=10`）；
    **任何 JS/CSS 改动必须同步 bump 所有页面的版本号**。
    覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）。
 2. **零依赖**：无 webfont、无 CDN、无框架运行时；新增能力优先用原生实现。
