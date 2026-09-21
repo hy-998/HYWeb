@@ -3,12 +3,40 @@
    2. 分页：点击切换 current 态（静态复刻，无真实翻页数据） */
 
 (function () {
-  /* 0. 首次访问：先播放打字机开篇（intro.html 进过一次后不再重定向；
-        点头像重播不受此标记影响） */
+  /* 0. 首次访问：先播放打字机开篇
+        - 只有确认 localStorage 可写时才启用该重定向。存储被浏览器禁用时
+          setItem 永远失败、标记永远写不上，若照旧放行会形成
+          intro.html ↔ index.html 死循环（用户永远进不了博客）
+        - 跳转附带 ?next=<当前页面>，ENTER 后回到用户原本要看的页面，
+          而不是一律丢回首页（外部深链接首访不再被吞）
+        - ?skipIntro=1 为逃生口：任何情况下都直接放行，不播欢迎页
+        - 点头像重播不受此标记影响（见第 5 节） */
+  var introTarget = (function () {
+    var file = location.pathname.split('/').pop(); /* 根路径 /HYWeb/ → '' */
+    if (!file || file === 'index.html') return '';
+    return file + location.search + location.hash;
+  })();
+
+  var storageWritable = (function () {
+    try {
+      var probe = '__introProbe__';
+      localStorage.setItem(probe, '1');
+      var ok = localStorage.getItem(probe) === '1';
+      localStorage.removeItem(probe);
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   var seen = null;
-  try { seen = localStorage.getItem('introPlayed'); } catch (e) {}
-  if (!seen && !/intro\.html$/.test(location.pathname)) {
-    location.href = 'intro.html';
+  if (storageWritable) {
+    try { seen = localStorage.getItem('introPlayed'); } catch (e) {}
+  }
+
+  var skipIntro = /[?&]skipIntro=1(?:&|$)/.test(location.search);
+  if (storageWritable && !seen && !skipIntro && !/intro\.html$/.test(location.pathname)) {
+    location.href = 'intro.html' + (introTarget ? '?next=' + encodeURIComponent(introTarget) : '');
     return;
   }
 

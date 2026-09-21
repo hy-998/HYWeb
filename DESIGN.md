@@ -208,7 +208,10 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 3. **目录自动生成**：提取 `.prose h2` → `.toc-list`；未读 = `--muted-foreground` + 0.55 透明度，已读/当前 = `--foreground`；点击平滑滚动，`h2 { scroll-margin-top: 5rem }`；滚到页底 = 全部已读；无 h2 则显示「无目录」。
 4. **上一篇/下一篇**：按首页列表顺序（最新在前）链接相邻文章；首/末篇渲染禁用态。
 5. **打字机**：匀速 60ms/字，不加末段变速、不加停顿（用户已两次纠正，此为定稿）。
-6. **首访开场**：无 `introPlayed` 标记访问任何正文页 → 自动跳 `intro.html`；ENTER/键盘 Enter 进入主页并写标记；点头像任何时候可重播。
+6. **首访开场**：仅当 `localStorage` **可写**且无 `introPlayed` 标记时，访问任何正文页自动跳 `intro.html`；
+   跳转附带 `?next=<原页面>`，ENTER/键盘 Enter 回到该页面（无 `next` 或校验失败则回主页）并写标记；
+   `?skipIntro=1` 为逃生口，任何情况直接放行；**存储被禁用时不放欢迎页**（标记写不上会形成
+   intro ↔ index 死循环，宁可不播开场也不能锁死用户）。`next` 只接受同目录单个 `.html`，防止开放重定向。点头像任何时候可重播。
 
 ---
 
@@ -223,7 +226,7 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 
 ## 8. 工程规范
 
-1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=11`）；
+1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=12`）；
    **任何 JS/CSS 改动必须同步 bump 所有页面的版本号**。
    覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）。
 2. **零依赖**：无 webfont、无 CDN、无框架运行时；新增能力优先用原生实现。

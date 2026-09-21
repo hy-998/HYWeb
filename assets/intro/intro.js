@@ -16,10 +16,35 @@ const scrollToBottom = () => {
   });
 };
 
-/* 进入博客主界面（记录"开篇已播过"，之后直接进主界面） */
+/* 校验 clone.js 传来的 ?next=：只接受本站同目录下的单个 .html 文件
+   （可带 query/hash）。拒绝协议、绝对路径、协议相对地址、反斜杠、
+   `..` 穿越与 intro.html 自身，避免被构造成开放重定向或自我循环。 */
+function safeNext(raw) {
+  if (!raw) return "";
+  const s = String(raw);
+  if (!/^[\w.-]+\.html(?:[?#]\S*)?$/i.test(s)) return "";
+  if (s.indexOf("..") !== -1) return "";
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|\\|\/)/i.test(s)) return "";
+  if (/^intro\.html(?:[?#]|$)/i.test(s)) return "";
+  return s;
+}
+
+function readNext() {
+  let raw = "";
+  try {
+    raw = new URLSearchParams(window.location.search).get("next") || "";
+  } catch (e) {
+    return "";
+  }
+  return safeNext(raw);
+}
+
+/* 进入博客主界面（记录"开篇已播过"，之后直接进主界面。
+   带 ?next= 时回到用户首访时想看的页面；无 next 或校验不通过则回主页。
+   存储被禁用时 setItem 会抛错，此处吞掉即可——标记写不上不应挡住进入） */
 function enterBlog() {
   try { localStorage.setItem("introPlayed", "1"); } catch (e) {}
-  window.location.href = "index.html";
+  window.location.href = readNext() || "index.html";
 }
 
 function runIntro() {
