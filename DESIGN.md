@@ -2,7 +2,7 @@
 
 > 本文件是博客的**硬性设计规范**与设计方向说明。所有页面改动必须遵守本文档；
 > 与本文档冲突的旧实现应视为待修复项。
-> 生效范围：`intro.html` / `index.html` / `post-*.html` / `projects.html` / `favorites.html`
+> 生效范围：`intro.html` / `index.html` / `post-*.html` / `projects.html` / `favorites.html` / `about.html`
 
 ---
 
@@ -81,7 +81,7 @@
 ### 3.2 页头（全站共用）
 
 - `h-14` sticky + 毛玻璃（`bg-background/60 + backdrop-blur`），底部 1px 边框。
-- 左：头像（44px 圆形，点击回开场页）+ 站名；右：三页签导航（首页/项目/收藏推荐）+ 主题切换/RSS/☕。
+- 左：头像（44px 圆形，点击回开场页）+ 站名；右：三页签导航（首页/项目/收藏推荐）+ 主题切换/☕。
 - 导航激活态 = `--foreground` 常色，非激活 = `--muted-foreground`。
 - 「关于」是第四枚页签，但**不写进任何页面的静态 HTML**：由 `clone.js` 第 10 节在解锁后注入
   桌面导航与移动菜单末尾（原因见 6.7）。静态导航永远只有三枚，改动后按 8.3 复测。
@@ -134,21 +134,21 @@
 
 | 断点 | 切换按钮之后的按钮 | 容器右内边距 | 距视口右缘 |
 |---|---|---|---|
-| `< 640` | 咖啡 24.7 + 移动端菜单 40（RSS 隐藏） | 1rem | **96.7px** |
-| `640–767` | RSS 20 + 咖啡 24.7 + 移动端菜单 40 | 1rem | **148.7px** |
-| `≥ 768` | RSS 20 + 咖啡 24.7（移动端菜单隐藏） | 1.5rem | **100.7px** |
+| `< 640` | 咖啡 24.7 + 移动端菜单 40 | 1rem | **96.7px** |
+| `640–767` | 咖啡 24.7 + 移动端菜单 40 | 1rem | **112.7px** |
+| `≥ 768` | 咖啡 24.7（移动端菜单隐藏） | 1.5rem | **64.7px** |
 
-> ⚠️ `640–767` 是「RSS 已出现、移动端菜单尚未隐藏」的重叠区，按钮被推得最靠左，也最容易漏。
+> ⚠️ `640–767` 是「桌面导航尚未出现、移动端菜单已经显示」的重叠区，按钮被推得最靠左，也最容易漏。
 > 写媒体查询时 **640 那条必须排在 768 之前**，否则会被反向覆盖。
 
-欢迎页没有那两个按钮，所以**必须把 `right` 逐档写死成上表的数值**，让两页按钮落在同一 x：
+欢迎页没有咖啡与移动端菜单，所以**必须把 `right` 逐档写死成上表的数值**，让两页按钮落在同一 x：
 
 ```css
 .theme-toggle { right: 96.7px; }                                            /* < 640 */
-@media (min-width: 640px)  { .theme-toggle { right: calc(max((100vw - 640px)  / 2, 0px) + 148.7px); } }
-@media (min-width: 768px)  { .theme-toggle { right: calc(max((100vw - 768px)  / 2, 0px) + 100.7px); } }
-@media (min-width: 1024px) { .theme-toggle { right: calc(max((100vw - 1024px) / 2, 0px) + 100.7px); } }
-@media (min-width: 1200px) { .theme-toggle { right: calc(max((100vw - 1200px) / 2, 0px) + 100.7px); } }
+@media (min-width: 640px)  { .theme-toggle { right: calc(max((100vw - 640px)  / 2, 0px) + 112.7px); } }
+@media (min-width: 768px)  { .theme-toggle { right: calc(max((100vw - 768px)  / 2, 0px) + 64.7px); } }
+@media (min-width: 1024px) { .theme-toggle { right: calc(max((100vw - 1024px) / 2, 0px) + 64.7px); } }
+@media (min-width: 1200px) { .theme-toggle { right: calc(max((100vw - 1200px) / 2, 0px) + 64.7px); } }
 ```
 
 **垂直位置**：正文页随 `h-14` 页头居中；欢迎页与左上角 "Welcome." 字标垂直居中——
@@ -157,8 +157,8 @@
 top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字标高÷2 − 按钮高÷2 */
 ```
 
-**实测基准（2026-09-06）**：15 档视口宽（320 / 375 / 480 / 600 / 639 / 640 / 700 / 767 / 768 / 900 / 1023 / 1024 / 1200 / 1440 / 1920）
-两页按钮 x 偏差 **0.0px**。任何改动后按 8.3 复测。
+**实测基准（2026-10-24，RSS 移除后）**：抽测 375 / 700 / 831 / 1440 四档，
+两页按钮 x 偏差 **≤0.03px**。任何改动后按 8.3 复测。
 
 ### 3.9 简历页（about.html）
 
@@ -266,7 +266,7 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 
 ## 8. 工程规范
 
-1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=17`）；
+1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=21`）；
    **任何 JS/CSS 改动必须同步 bump 所有页面的版本号**。
    覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）
    与 `assets/css/about.css`、`assets/js/{access,about}.js`。
