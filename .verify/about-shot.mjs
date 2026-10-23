@@ -429,6 +429,18 @@ async function main() {
   const pm = JSON.parse(await evalIn(`(() => {
     const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
     const d = (s) => { const e = g(s); return e ? e.display : 'missing'; };
+    /* 亮度 0~255，越小越黑；带 alpha 的先按白纸合成一遍 ——
+       rgba(9,9,11,.22) 直接取 rgb 会量成近黑，可纸上其实是一层浅灰。
+       屏幕上「次要文字」靠深色底 + 低不透明度分层级，白纸上同一套只会糊掉，
+       纸上到底有没有墨，只能这样量出来才知道 */
+    const lum = (sel, prop) => {
+      const e = g(sel); if (!e) return null;
+      const m = String(e[prop || 'color']).match(/[\\d.]+/g);
+      if (!m || m.length < 3) return null;
+      const a = m.length > 3 ? +m[3] : 1;
+      const c = (i) => +m[i] * a + 255 * (1 - a);
+      return +(0.299 * c(0) + 0.587 * c(1) + 0.114 * c(2)).toFixed(1);
+    };
     const rev = [].slice.call(document.querySelectorAll('.reveal'));
     const items = [].slice.call(document.querySelectorAll('.tl-item'));
     const nums = [].slice.call(document.querySelectorAll('.num'));
@@ -437,12 +449,27 @@ async function main() {
     return JSON.stringify({
       header: d('.site-header'), actions: d('.about-actions'), contactAct: d('.contact-act'),
       shotLb: d('#shotBox'), progress: d('.progress-track'), filterBar: d('.filter-bar'),
+      screenOnly: [].slice.call(document.querySelectorAll('.screen-only')).every((e) => getComputedStyle(e).display === 'none'),
       bodyBg: g('body').backgroundColor,
       bgToken: root.getPropertyValue('--background').trim(),
       fgToken: root.getPropertyValue('--foreground').trim(),
+      /* 01 经历在纸上还得是条时间轴：脊线和节点必须活着，游标点该死 */
+      rail: d('.tl-rail'), node: d('.tl-node'), head: d('.tl-head'),
+      nodeLum: lum('.tl-node', 'backgroundColor'),
+      /* 三处最容易糊掉的墨色：巨型年份、正文要点、胶囊标签 */
+      yearLum: lum('.tl-year'), pointsLum: lum('.tl-points'),
+      pillBg: lum('.work-tags span', 'backgroundColor'), pillFg: lum('.work-tags span'),
+      meterOff: lum('.meter i:not(.on)', 'backgroundColor'),
       tlCols: (g('.tl-item') || {}).gridTemplateColumns,
       tlWhen: (g('.tl-when') || {}).position,
       worksCols: (g('.works-grid') || {}).gridTemplateColumns,
+      /* 纸上点不了链接，所以外链要把地址印出来 —— 量 ::after 真的带上去了没 */
+      /* 纸上点不了链接，所以外链要把地址印出来 —— 量 ::after 真的带上去了没。
+         attr() 取的是宿主自己的属性，挂在没有 href 的 h3 上会印出空串，这里连这条一起看住 */
+      extCards: document.querySelectorAll('.about-works .work-card[href^="http"]').length,
+      extPrinted: [].slice.call(document.querySelectorAll('.about-works .work-card[href^="http"]'))
+        .filter((e) => String(getComputedStyle(e, '::after').content).indexOf('http') !== -1).length,
+      extAfter: String(getComputedStyle(document.querySelector('.about-works .work-card[href^="http"]'), '::after').content).slice(0, 60),
       statCols: (g('.stat-band') || {}).gridTemplateColumns,
       revealMin: rev.length ? Math.min.apply(null, rev.map((e) => +getComputedStyle(e).opacity)) : null,
       numBad: nums.filter((e) => e.textContent.replace(/[,\\s]/g, '') !== parseFloat(e.getAttribute('data-count')).toFixed(parseInt(e.getAttribute('data-dec'), 10) || 0)).length,
@@ -464,6 +491,7 @@ async function main() {
     if (pm.contactAct !== 'none') f.push('打印时复制/扫码按钮还在');
     if (pm.shotLb !== 'none') f.push('打印时灯箱还在');
     if (pm.filterBar !== 'none') f.push('打印时筛选条还在');
+    if (!pm.screenOnly) f.push('讲滚动进度的屏幕批注也上了纸（纸上没有滚动）');
     if (pm.bodyBg !== 'rgb(255, 255, 255)') f.push(`纸面底色是 ${pm.bodyBg}，不是白`);
     if (pm.bgToken !== '0 0% 100%') f.push(`打印时 --background 仍是 ${pm.bgToken}（暗色主题没被覆盖）`);
     if (pm.fgToken !== '240 10% 3.9%') f.push(`打印时 --foreground 是 ${pm.fgToken}，白墨印不出来`);
@@ -473,7 +501,46 @@ async function main() {
     if (pm.tlWhen !== 'static') f.push(`打印时时间轴年份仍是 ${pm.tlWhen}`);
     if (pm.overflowX) f.push(`打印版横向溢出（${pm.scrollW} > ${A4_W}）`);
     if (pm.pages > 4) f.push(`打印要 ${pm.pages} 页，太长`);
-    report.push({ case: 'print·A4 打印版式', ...pm, hiddenBefore, printCalls, fails: f });
+    /* 1) 时间轴得上纸：脊线 + 节点留着，只有跟着滚动走的游标点该死 */
+    if (pm.rail === 'none' || pm.rail === 'missing') f.push('打印版把时间轴脊线弄丢了，01 经历不再是时间轴');
+    if (pm.node === 'none' || pm.node === 'missing') f.push('打印版把时间轴节点弄丢了');
+    if (pm.head !== 'none') f.push('纸上还留着跟着滚动走的游标点');
+    if (!(pm.nodeLum <= 90)) f.push(`时间轴节点在纸上太浅（亮度 ${pm.nodeLum}）`);
+    /* 2) 墨色：屏幕上靠深色底撑出来的层级，白纸上必须换成真墨 */
+    if (!(pm.yearLum <= 90)) f.push(`巨型年份在纸上太浅（亮度 ${pm.yearLum}）`);
+    if (!(pm.pointsLum <= 90)) f.push(`经历正文在纸上太浅（亮度 ${pm.pointsLum}）`);
+    if (!(pm.meterOff <= 225)) f.push(`能力刻度的空档看不见（亮度 ${pm.meterOff}）`);
+    /* 3) 胶囊：.dark 里那行硬编码 #18181880 会在白纸上糊成一坨中灰 */
+    if (!(pm.pillBg >= 200)) f.push(`胶囊标签是灰底（底色亮度 ${pm.pillBg}）`);
+    if (!(pm.pillFg <= 90)) f.push(`胶囊标签的字太浅（亮度 ${pm.pillFg}）`);
+    if (pm.extPrinted !== pm.extCards) f.push(`${pm.extCards} 张外链项目卡里只有 ${pm.extPrinted} 张把地址印了出来`);
+    /* 暗色是本站默认，也是胶囊翻车的那一档；亮色再量一遍，两套主题都得压得住 */
+    await evalIn(`(() => { document.documentElement.classList.remove('dark'); document.documentElement.classList.add('light'); return 1; })()`, sessionId);
+    await sleep(200);
+    const inkLight = JSON.parse(await evalIn(`(() => {
+      const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
+      const lum = (sel, prop) => {
+        const e = g(sel); if (!e) return null;
+        const m = String(e[prop || 'color']).match(/[\\d.]+/g);
+        if (!m || m.length < 3) return null;
+        const a = m.length > 3 ? +m[3] : 1;
+        const c = (i) => +m[i] * a + 255 * (1 - a);
+        return +(0.299 * c(0) + 0.587 * c(1) + 0.114 * c(2)).toFixed(1);
+      };
+      return JSON.stringify({ pillBg: lum('.work-tags span', 'backgroundColor'), pillFg: lum('.work-tags span'), yearLum: lum('.tl-year'), pointsLum: lum('.tl-points') });
+    })()`, sessionId));
+    /* 那些靠 opacity 撑出来的「次要感」，纸上一律收掉，否则又是浅灰一片 */
+    const faded = JSON.parse(await evalIn(`(() => {
+      const sels = ['.section-en', '.tl-index', '.tl-range', '.tl-dur', '.skill-name em', '.contact-key'];
+      const bad = sels.filter((s) => { const e = document.querySelector(s); return e && +getComputedStyle(e).opacity < 1; });
+      return JSON.stringify({ bad: bad, min: Math.min.apply(null, sels.map((s) => { const e = document.querySelector(s); return e ? +getComputedStyle(e).opacity : 1; })) });
+    })()`, sessionId));
+    if (faded.bad.length) f.push(`纸上仍用 opacity 淡化文字：${faded.bad.join('、')}`);
+    if (!(inkLight.pillBg >= 200)) f.push(`亮色主题下胶囊是灰底（底色亮度 ${inkLight.pillBg}）`);
+    if (!(inkLight.pillFg <= 90)) f.push(`亮色主题下胶囊字太浅（亮度 ${inkLight.pillFg}）`);
+    if (!(inkLight.yearLum <= 90 && inkLight.pointsLum <= 90)) f.push(`亮色主题下正文太浅（年份 ${inkLight.yearLum} / 要点 ${inkLight.pointsLum}）`);
+    await evalIn(`(() => { document.documentElement.classList.remove('light'); document.documentElement.classList.add('dark'); return 1; })()`, sessionId);
+    report.push({ case: 'print·A4 打印版式', ...pm, inkLight, faded, hiddenBefore, printCalls, fails: f });
     console.log(f.length ? '✗' : '✓', `print·A4 打印版式（${pm.pages} 页 / ${pm.docH}px）`);
   }
   {

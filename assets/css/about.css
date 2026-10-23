@@ -748,18 +748,21 @@ body.about-page {
 @page { size: A4; margin: 14mm 13mm 15mm; }
 
 @media print {
-  /* .dark 的选择器权重比 :root 高，这里必须点名 html.dark 才压得回去 */
+  /* .dark 的选择器权重比 :root 高，这里必须点名 html.dark 才压得回去。
+     纸上的墨阶要重新定：屏幕上「次要文字」靠深色底 + 低不透明度分层级，
+     白纸上同一套只会糊成一片浅灰，所以 muted 直接压到 zinc-700 附近，
+     并把下面那些 opacity 装饰一律收掉，层级改由字重和字号承担。 */
   :root, :root.dark, :root.light {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --secondary: 240 4.8% 95.9%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --primary-foreground: 0 0% 100%;
+    --muted-foreground: 240 4% 30%;
+    --accent: 240 6% 95%;
+    --accent-foreground: 240 10% 3.9%;
+    --secondary: 0 0% 100%;
+    --border: 240 5% 72%;
+    --input: 240 5% 72%;
     --ring: 240 5.9% 10%;
   }
   html, body { background: #fff; }
@@ -778,10 +781,33 @@ body.about-page {
     transform: none !important;
   }
 
-  /* 屏幕专属控件一律不上纸 */
+  /* 屏幕专属控件一律不上纸。注意脊线和节点要留 —— 01 经历在纸上还得是条时间轴，
+     只有那枚跟着滚动走的游标点（.tl-head）在纸上没有意义。
+     .screen-only 是给「只在屏幕上成立的那句话」用的（比如讲滚动进度的批注），
+     纸上没有滚动，留着只会让人以为 PDF 坏了 */
   .site-header, .mobile-menu, .progress-track, .hero-ghost, .hero-clock,
   .filter-bar, .about-actions, .shot-lb, .contact-act, .work-go,
-  .tl-rail, .tl-node { display: none !important; }
+  .tl-head, .screen-only { display: none !important; }
+
+  /* 屏幕上「只有滚到的那条才点亮」，纸上没有滚动，四条一起落终态 */
+  .tl-year { color: hsl(var(--foreground)) !important; }
+  .tl-index, .tl-range, .tl-dur, .tl-when .tl-dur,
+  .section-en, .skill-name em, .hero-sub > * + *::before { opacity: 1 !important; }
+  .tl-points { color: hsl(var(--foreground)); }
+  .tl-points li b { font-weight: 700; }
+  .tl-points li::before { background: hsl(var(--muted-foreground)); }
+
+  /* 胶囊：屏幕上靠深色底浮出来，白纸上那层 #18181880 会变成一坨中灰。
+     改成「白底 + 细边 + 近黑字」的描边胶囊，墨色打印机也照样读得清。
+     .dark 的硬编码规则权重更高，这里必须点名压回去 */
+  .work-tags span, .dark .work-tags span, .dark .tag, .tag {
+    background: #fff;
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+  }
+  /* 刻度条：off 那档原来用 --border，压深一档才看得见 */
+  .meter i { background: hsl(var(--foreground) / 0.22); }
+  .meter i.on { background: hsl(var(--foreground)); }
 
   .container, .shorts-wrap, .about-foot { max-width: none; padding: 0; }
   .about-page section { margin-top: 1.5rem; }
@@ -800,9 +826,30 @@ body.about-page {
   .stat-num { font-size: 1.375rem; }
   .stat-label { font-size: 0.6875rem; }
 
-  /* 时间轴：年份回到左栏，粘性定位在纸上没有意义 */
+  /* 时间轴：年份回到左栏，粘性定位在纸上没有意义；
+     左栏前留出一条书脊位，脊线压在 0.5rem、节点跟着条目对齐 */
   .tl-when { position: static; }
-  .tl-item { grid-template-columns: 7.5rem minmax(0, 1fr); padding: 0.75rem 0; }
+  .tl-rail {
+    display: block !important;
+    top: 1.2rem;
+    bottom: 1rem;
+    background: hsl(var(--foreground) / 0.3);
+  }
+  .tl-rail-fill { display: none; }              /* 「走过多少」是滚动进度，纸上无解 */
+  .tl-node {
+    display: block !important;
+    top: 1.2rem;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border: 1px solid hsl(var(--foreground));
+    background: hsl(var(--foreground));
+    box-shadow: none;
+    transform: translateX(-50%);
+  }
+  .tl-item {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    padding: 0.75rem 0 0.75rem 1.5rem;
+  }
   .tl-year { font-size: 1.25rem; }
   .tl-head { margin-bottom: 0.25rem; }
   .tl-title { font-size: 1rem; }
@@ -817,12 +864,19 @@ body.about-page {
   .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
   .about-works .work-title h3 { font-size: 0.9375rem; }
   .about-works .work-title p { font-size: 0.75rem; }
-  .about-works .work-card[href^="http"] .work-title h3::after {
-    content: " — " attr(href);
+  /* 纸上点不了链接，就把地址印出来。attr() 取的是伪元素宿主自己的属性，
+     所以这条必须挂在带 href 的卡片上 —— 挂在 h3 上只会印出一个空串 */
+  .about-works .work-card[href^="http"]::after {
+    content: attr(href);
+    display: block;
+    margin-top: 0.5rem;
+    padding-top: 0.375rem;
+    border-top: 1px dashed hsl(var(--border));
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.625rem;
-    font-weight: 400;
+    letter-spacing: 0;
     color: hsl(var(--muted-foreground));
+    word-break: break-all;
   }
 
   /* 能力矩阵与联系方式：一行一条，值不许被省略号吃掉 */
