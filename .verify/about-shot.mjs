@@ -74,12 +74,16 @@ const LIGHTBOX_TEST = `(async () => {
     };
   };
   const shot = document.querySelector('.tl-shot');
+  /* 别拿固定 sleep 赌机器当时的负载：等它自己落到终态，最多 3s；收不完就让它去撞断言 */
+  const until = async (fn, cap) => { const t0 = Date.now(); while (Date.now() - t0 < cap && !fn()) await sleep(50); return fn(); };
   const before = state('before');
   shot.click();
-  await sleep(650);
+  await until(() => +cs().opacity > 0.95 && getComputedStyle(big).transform === 'none', 3000);
+  await sleep(120);
   const open = state('open');
   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-  await sleep(700);   /* 收回 300ms + 遮罩淡出 200ms，留点余量再判终态 */
+  /* 收回 300ms + 遮罩淡出 200ms，同样等终态 */
+  await until(() => !box.classList.contains('is-open') && cs().visibility === 'hidden', 3000);
   const closed = state('closed');
   /* 焦点是否回到触发它的那枚缩略图，单独量一次，别和 lifted 混在一起 */
   closed.focusOnShot = document.activeElement === shot;
@@ -89,6 +93,7 @@ const LIGHTBOX_TEST = `(async () => {
 /* 联系方式：两枚复制按钮逐个点，确认态要出现也要自己退回；再点扫码，看二维码走的是原地长开那一套 */
 const CONTACT_TEST = `(async () => {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const until = async (fn, cap) => { const t0 = Date.now(); while (Date.now() - t0 < cap && !fn()) await sleep(40); return fn(); };
   const live = document.getElementById('contactLive');
   const box = document.getElementById('shotBox');
   const big = document.getElementById('shotBoxImg');
@@ -105,6 +110,8 @@ const CONTACT_TEST = `(async () => {
   };
   for (const btn of [].slice.call(document.querySelectorAll('.contact-act[data-copy]'))) {
     btn.click();
+    /* 剪贴板写入是异步的，负载高时 420ms 未必落得下来——先等确认态真的出现，再给动画留时间走完 */
+    await until(() => btn.classList.contains('is-copied'), 1000);
     await sleep(420);
     const word = btn.querySelector('.act-word').firstElementChild;
     const wt = getComputedStyle(word).transform;      /* 文案上滑：matrix(1,0,0,1,0,-13.75) */
@@ -129,7 +136,9 @@ const CONTACT_TEST = `(async () => {
   const qr = document.querySelector('.contact-act[data-qr]');
   const yQ = Math.round(window.scrollY);
   qr.click();
-  await sleep(700);
+  /* 遮罩显形靠 opacity/visibility 过渡，尺寸还有一段宽度动画——先等显形收完，再给宽度留余量 */
+  await until(() => box.classList.contains('is-open') && +getComputedStyle(box).opacity > 0.95, 3000);
+  await sleep(400);
   const br = big.getBoundingClientRect();
   out.qr = {
     y0: yQ,
@@ -145,7 +154,7 @@ const CONTACT_TEST = `(async () => {
     overflowX: document.documentElement.scrollWidth > window.innerWidth,
   };
   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-  await sleep(700);
+  await until(() => !box.classList.contains('is-open') && getComputedStyle(box).visibility === 'hidden', 3000);
   out.qr.closed = !box.classList.contains('is-open');
   out.qr.focusBack = document.activeElement === qr;
   out.qr.visibility = getComputedStyle(box).visibility;
