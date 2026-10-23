@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-pg="article">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building with Claude Sonnet 5.5 / claude.dev Blog</title>
+<meta name="description" content="When to choose Sonnet over Opus, what it costs, and how to tune it.">
+<meta name="author" content="Addy Osmani">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Building with Claude Sonnet 5.5 / claude.dev Blog">
+<meta property="og:description" content="When to choose Sonnet over Opus, what it costs, and how to tune it.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="claude.dev Blog">
+<meta property="article:published_time" content="2026-09-28">
+<meta property="article:author" content="Addy Osmani">
+<meta property="article:section" content="Playbooks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Building with Claude Sonnet 5.5 / claude.dev Blog">
+<meta name="twitter:description" content="When to choose Sonnet over Opus, what it costs, and how to tune it.">
+<link rel="canonical" href="https://claude.dev/blog/building-with-claude-sonnet-5-5/">
+<link rel="icon" href="assets/img/favicon.svg">
+<link rel="preload" href="assets/fonts/AnthropicSans-Roman-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/AnthropicMono-Roman-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<div hidden=""><!--/$--></div><div id="app"><nav class="nav keyboard-nav grid-nav no-brand nav-live" style="--nav-w:1640px;position:sticky"><div class="nav-in"><a class="nav-brand" href="/"><span class="clawd-clip" style="display: inline-block; position: relative; width: 59px; height: 45px; overflow: visible; vertical-align: middle;"><img class="clawd-mark" src="assets/img/clawd-mark.png" alt="" width="59" height="45" style="display: block; position: absolute; inset: 0px; width: 59px; height: 45px; visibility: hidden;"><span style="display: block; position: absolute; width: 136px; height: 91px; left: -37px; top: -46px;"><canvas width="136" height="91" style="width: 100%; height: 100%; transform-origin: 0px 0px 0px; content-visibility: visible;"></canvas></span></span></a><div class="nav-links"><a href="/" data-key="H"><span class="k">[<!-- -->H<!-- -->]</span><span class="w">HOME</span></a><a data-key="D" href="https://code.claude.com/docs"><span class="k">[<!-- -->D<!-- -->]</span><span class="w">DOCS</span></a><a data-key="T" href="/terminal/"><span class="k">[<!-- -->T<!-- -->]</span><span class="w">TERMINAL</span></a></div><div class="nav-cta"><span class="dd"><button class="btn solid" type="button" aria-haspopup="menu" aria-expanded="false">Try Claude Code<!-- --> <span class="dd-caret"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M14.1282 7.16476C14.3129 6.95977 14.6301 6.9433 14.8353 7.12765C15.0404 7.31236 15.057 7.62946 14.8724 7.83471L10.3723 12.8349L10.2942 12.9052C10.2095 12.9666 10.1065 12.9999 10.0002 12.9999C9.85857 12.9999 9.72288 12.9402 9.62812 12.8349L5.12802 7.83471L5.06845 7.75267C4.95096 7.55219 4.98569 7.2892 5.16513 7.12765C5.34469 6.96611 5.60994 6.95932 5.79698 7.09738L5.87218 7.16476L10.0002 11.7518L14.1282 7.16476Z"></path></svg></span></button><div class="dd-menu" role="menu"><a role="menuitem" href="https://claude.com/download">Desktop</a><a role="menuitem" href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" target="_blank" rel="noopener">VS Code<span class="ext arr">↗</span></a><a role="menuitem" href="https://plugins.jetbrains.com/plugin/27310-claude-code-beta-" target="_blank" rel="noopener">JetBrains<span class="ext arr">↗</span></a><a role="menuitem" href="https://claude.ai/code" target="_blank" rel="noopener">Web<span class="ext arr">↗</span></a><a role="menuitem" href="https://claude.com/claude-for-slack" target="_blank" rel="noopener">Slack<span class="ext arr">↗</span></a></div></span></div><button class="nav-burger" type="button" aria-label="menu" aria-expanded="false"><i></i><i></i><i></i></button></div><div class="nav-panel"><a href="/"><span class="k">[<!-- -->H<!-- -->]</span><span class="w">HOME</span></a><a href="https://code.claude.com/docs"><span class="k">[<!-- -->D<!-- -->]</span><span class="w">DOCS</span></a><a href="/terminal/"><span class="k">[<!-- -->T<!-- -->]</span><span class="w">TERMINAL</span></a></div></nav></div><div data-tpl="article"><div id="topProg" aria-hidden="true"></div><div class="wrap"><div class="hero no-art"><div class="art" data-reveal="fade" style="--reveal-delay: 0s;"></div><div class="hd"><span class="cat-chip" data-reveal="" id="mCat" style="--reveal-delay: 0s;">Playbooks</span><h1 data-reveal="" id="h1" style="--reveal-delay: 0s;">Building with Claude Sonnet 5.5</h1><p class="standfirst" data-reveal="" style="--reveal-delay: 0s;" id="standfirst">When to choose Sonnet over Opus, what it costs, and how to tune it.</p><div class="meta" data-reveal="" style="--reveal-delay: 0s;"><div class="m1"><div class="lb">AUTHOR</div><div class="vv" id="mAuthor">Addy Osmani</div></div><div class="m2"><div class="lb">PUBLISHED</div><div class="vv" id="mDate">Sep 28, 2026</div></div><div class="m3"><div class="lb">READING TIME</div><div class="vv" id="mTime">9<!-- --> min</div></div></div></div></div><div class="body-grid"><aside class="rail" data-reveal="" style="--reveal-delay: 0s;"><div class="rail-title" id="railTitle">Building with Claude Sonnet 5.5</div><div class="th">TREE</div><div id="tree"><a href="#choosing-between-sonnet-55-and-opus-55" data-i="0"><span class="br">└</span>Choosing between Sonnet 5.5 and Opus 5.5</a><a href="#pricing" data-i="1"><span class="br">└</span>Pricing</a><a href="#model-details" data-i="2"><span class="br">└</span>Model details</a><a href="#migrating-from-sonnet-5" data-i="3"><span class="br">└</span>Migrating from Sonnet 5</a><div class="subs"><div><a href="#1-turn-off-upfront-thinking-with-between_tools" data-i="4" class="sub"><span class="br">└</span>1. Turn off upfront thinking with between_tools</a><a href="#2-replace-forced-tool_choice-with-auto-plus-strict-tools" data-i="5" class="sub"><span class="br">└</span>2. Replace forced tool_choice with auto plus strict tools</a><a href="#3-keep-conversations-append-only" data-i="6" class="sub"><span class="br">└</span>3. Keep conversations append-only</a><a href="#4-move-computer-use-to-the-toolset" data-i="7" class="sub"><span class="br">└</span>4. Move computer use to the toolset</a><a href="#5-check-your-advisor-pairing" data-i="8" class="sub"><span class="br">└</span>5. Check your advisor pairing</a><a href="#6-read-text-between-tool-calls-from-thinking-blocks" data-i="9" class="sub"><span class="br">└</span>6. Read text between tool calls from thinking blocks</a></div></div><a href="#tuning" data-i="10"><span class="br">└</span>Tuning</a><div class="subs"><div><a href="#re-run-your-effort-sweep" data-i="11" class="sub"><span class="br">└</span>Re-run your effort sweep</a><a href="#remove-sonnet-5-workarounds" data-i="12" class="sub"><span class="br">└</span>Remove Sonnet 5 workarounds</a><a href="#ask-for-real-checks-at-low-effort" data-i="13" class="sub"><span class="br">└</span>Ask for real checks at low effort</a><a href="#use-thinkingdisplay-for-progress" data-i="14" class="sub"><span class="br">└</span>Use thinking.display for progress</a><a href="#cache-more-of-your-prompt" data-i="15" class="sub"><span class="br">└</span>Cache more of your prompt</a></div></div><a href="#refusals-and-fallback" data-i="16"><span class="br">└</span>Refusals and fallback</a><a href="#availability" data-i="17"><span class="br">└</span>Availability</a><div class="subs"><div><a href="#in-claude-code" data-i="18" class="sub"><span class="br">└</span>In Claude Code</a></div></div></div><div class="prog" id="prog"><b></b>░░░░░░░░░░░░░░░░░░░░░░░░░░░░<span class="pct">00%</span></div><div class="hint">PRESS <span class="arr">↑</span> /<!-- --> <span class="arr">↓</span> TO SCROLL</div><div class="share"><div class="th">SHARE</div><a id="shX" href="https://twitter.com/intent/tweet?text=Building%20with%20Claude%20Sonnet%205.5%20%2F%20claude.dev%20Blog&amp;url=https%3A%2F%2Fclaude.dev%2Fblog%2Fbuilding-with-claude-sonnet-5-5%2F" target="_blank" rel="noopener">X.com</a><a id="shLi" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fclaude.dev%2Fblog%2Fbuilding-with-claude-sonnet-5-5%2F" target="_blank" rel="noopener">LinkedIn</a><a id="shMail" href="mailto:?subject=Building%20with%20Claude%20Sonnet%205.5%20%2F%20claude.dev%20Blog&amp;body=https%3A%2F%2Fclaude.dev%2Fblog%2Fbuilding-with-claude-sonnet-5-5%2F">Email</a><a id="shCopy" role="button" tabindex="0">Copy URL</a></div></aside><div class="prose" id="body"><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s0"><p>Claude Sonnet 5.5 is our second model in the Claude 5.5 family after Opus 5.5. It's a clear upgrade over Sonnet 5 and is smarter, more efficient and 30% faster. The per-token price is unchanged and because Sonnet 5.5 typically needs far fewer tokens to do the same work, it costs up to 30% less for most work.</p>
+<figure class="art-fig art-video"><div class="art-anim-box"><video class="art-anim" muted="" loop="" playsinline="" preload="none" src="assets/media/demo.mp4" poster="assets/img/hero-poster.jpg" aria-label="Two blank canvases labeled Claude Sonnet 5 and Claude Sonnet 5.5 fill in stroke by stroke, with a running count of brush-engine calls under each, as the code each model wrote paints a sunset aerial view of a city skyline. It ends on four panels side by side: the photograph, then the paintings by Claude Sonnet 5, Claude Sonnet 5.5 and Claude Opus 5.5." width="1920" height="1080" style="width:100%;height:auto"></video><img class="art-anim-still" src="assets/img/hero-poster.jpg" alt="Two blank canvases labeled Claude Sonnet 5 and Claude Sonnet 5.5 fill in stroke by stroke, with a running count of brush-engine calls under each, as the code each model wrote paints a sunset aerial view of a city skyline. It ends on four panels side by side: the photograph, then the paintings by Claude Sonnet 5, Claude Sonnet 5.5 and Claude Opus 5.5." loading="lazy" decoding="async" width="1920" height="1080" style="width:100%;height:auto"><button type="button" class="art-anim-play" aria-label="Play video: Lance Martin's code-to-painting demo: each model writes code that repaints the same photograph. From left: the photograph, Claude Sonnet 5, Claude Sonnet 5.5 and Claude Opus 5.5."><span class="art-anim-pill">Play video</span></button></div><figcaption class="cap"><b>VIDEO</b><button type="button" class="art-anim-toggle" aria-label="Play Lance Martin's code-to-painting demo: each model writes code that repaints the same photograph. From left: the photograph, Claude Sonnet 5, Claude Sonnet 5.5 and Claude Opus 5.5.">Play</button><span>Lance Martin's code-to-painting demo: each model writes code that repaints the same photograph. From left: the photograph, Claude Sonnet 5, Claude Sonnet 5.5 and Claude Opus 5.5.</span></figcaption></figure>
+<p><em>Credit to <a href="https://x.com/jkeatn">@jkeatn</a> for ideas related to code-to-painting and <a href="https://x.com/IceSolst">@IceSolst</a> for the reference image.</em></p>
+<p>This guide is about building with the model. To try it, run this request as written:</p>
+<div class="art-code"><div class="ch"><span>CODE<span class="lang">Python</span></span><button type="button">Copy</button></div><pre><span class="kw">import</span><span class="pl"> anthropic
+
+client = anthropic.Anthropic()
+
+response = client.messages.create(
+    model=</span><span class="ar">"claude-sonnet-5-5"</span><span class="pl">,
+    max_tokens=</span><span class="nm">4096</span><span class="pl">,
+    messages=[
+        {
+            </span><span class="ar">"role"</span><span class="pl">: </span><span class="ar">"user"</span><span class="pl">,
+            </span><span class="ar">"content"</span><span class="pl">: </span><span class="ar">"Analyze the trade-offs between microservices and monolithic architectures"</span><span class="pl">,
+        }
+    ],
+    output_config={</span><span class="ar">"effort"</span><span class="pl">: </span><span class="ar">"medium"</span><span class="pl">},
+)
+
+</span><span class="kw">for</span><span class="pl"> block </span><span class="kw">in</span><span class="pl"> response.content:
+    </span><span class="kw">if</span><span class="pl"> block.</span><span class="kw">type</span><span class="pl"> == </span><span class="ar">"text"</span><span class="pl">:
+        </span><span class="kw">print</span><span class="pl">(block.text)</span></pre></div>
+<p>The loop reads each block by type because Sonnet 5.5 thinks by default, so a response can begin with a <code>thinking</code> block, and code that reads <code>content[0].text</code> breaks.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s1"><h2 id="choosing-between-sonnet-55-and-opus-55">CHOOSING BETWEEN SONNET 5.5 AND OPUS 5.5</h2>
+<p>In the Claude 5.5 family, Opus 5.5 is built for complex work requiring careful judgment. Use Sonnet 5.5 for well-scoped everyday tasks like fixing bugs and quickly iterating on features. It also creates polished documents, slides and spreadsheets, and it has a strong eye for design. Its speed makes it well suited to fast iteration. Claude Haiku 5.5 will join the family in the coming weeks for high-volume, low-latency workflows.</p>
+<div class="art-table"><table><thead><tr><th scope="col">Your workload</th><th scope="col">Start with</th></tr></thead><tbody><tr><td>Well-scoped everyday coding: fixing bugs, quickly iterating on features, verifying against requirements</td><td>Sonnet 5.5</td></tr><tr><td>High-volume everyday development</td><td>Sonnet 5.5</td></tr><tr><td>Polished documents, slides and spreadsheets, such as one-pagers, diagrams, summary slides, document edits and spreadsheet cleanup, where an eye for design helps</td><td>Sonnet 5.5</td></tr><tr><td>Well-defined agent tasks you run repeatedly: investigation, review, drafting</td><td>Sonnet 5.5</td></tr><tr><td>Complex work requiring careful judgment, including long-horizon agentic coding and knowledge work</td><td>Opus 5.5</td></tr><tr><td>The hardest problems, where you need the most intelligence</td><td>Opus 5.5</td></tr></tbody></table></div>
+<blockquote class="q-block q-excerpt">
+<p>"In Epic's early testing, Claude Sonnet 5.5 cleared the same quality bar you'd expect from a higher-tier model, holding up on a system design audit and a data-flow review. The new model managed tens of thousands of lines of code for gameplay system architecture, kept responses snappy, handled multi-hour tasks, and delivered with less prescriptive prompting." (Daniel Vogel, COO, Epic Games)</p>
+</blockquote>
+<p>Sonnet 5.5 fits best when the task has a clear spec and a way to check the result. As the <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5">prompting guide</a> puts it, "for the hardest long-horizon work, an Opus model is the better choice."</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s2"><h2 id="pricing">PRICING</h2>
+<div class="art-table"><table><thead><tr><th scope="col">Per million tokens</th><th scope="col">Sonnet 5.5</th><th scope="col">Opus 5.5</th></tr></thead><tbody><tr><td>Input</td><td>$2</td><td>$4</td></tr><tr><td>Output</td><td>$10</td><td>$20</td></tr><tr><td>Cache write, 5 minutes</td><td>$2.50</td><td>$5</td></tr><tr><td>Cache write, 1 hour</td><td>$4</td><td>$8</td></tr><tr><td>Cache read</td><td>$0.20</td><td>$0.20</td></tr></tbody></table></div>
+<p>All Sonnet 5.5 prices, including batch processing and prompt caching, match Sonnet 5's, so swapping the model ID doesn't change your per-token bill. US-only inference (<code>inference_geo: "us"</code>) costs 1.1 times the standard price.</p>
+<p>While the per-token price doesn't change, the overall bill will change because, as previously mentioned, Sonnet 5.5 typically uses fewer tokens per task than Sonnet 5.</p>
+<p>Note that surfaces can ship with different default efforts for Sonnet, such as high on Claude Platform and medium in Claude Code.</p>
+<p>Sonnet 5.5 uses the high-resolution image tier, up to 2576 pixels on the long edge, and a 2000×1500 image costs about 2.5 times as many tokens as on Sonnet 4.6, Sonnet 4.5 or Haiku 4.5. If you don't need the detail, downscale before you send.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s3"><h2 id="model-details">MODEL DETAILS</h2>
+<div class="art-table"><table><thead><tr><th scope="col">Detail</th><th scope="col">Sonnet 5.5</th></tr></thead><tbody><tr><td><strong>Model ID</strong></td><td><code>claude-sonnet-5-5</code> on the Claude API, Claude Platform on AWS, Google Cloud and Microsoft Foundry; <code>anthropic.claude-sonnet-5-5</code> on Amazon Bedrock</td></tr><tr><td><strong>Context window</strong></td><td>1M tokens, native, no beta header</td></tr><tr><td><strong>Max output</strong></td><td>128k tokens; up to 300k on the Message Batches API with the <code>output-300k-2026-03-24</code> beta header</td></tr><tr><td><strong>Knowledge cutoff</strong></td><td>June 2026</td></tr><tr><td><strong>Thinking</strong></td><td>On by default (adaptive thinking); <code>between_tools</code> turns off upfront thinking</td></tr><tr><td><strong>Effort levels</strong></td><td><code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>, <code>max</code></td></tr><tr><td><strong>Default effort</strong></td><td><code>high</code> on the Claude API; <code>medium</code> in Claude Code</td></tr><tr><td><strong>Tokenizer</strong></td><td>Same as Sonnet 5</td></tr><tr><td><strong>Minimum cacheable prompt</strong></td><td>512 tokens (1,024 on Sonnet 5)</td></tr><tr><td><strong>Rate limits</strong></td><td>Separate from Sonnet 5, with the same default tier values</td></tr><tr><td><strong>Priority Tier</strong></td><td>Available on the Claude API</td></tr><tr><td><strong>Data retention</strong></td><td>Available with zero data retention for eligible customers</td></tr></tbody></table></div>
+<p>The Claude API defaults to <code>high</code> so you start from strong results. Start there, evaluate, and then pick the effort level your workload needs. If you're tempted to use <code>xhigh</code> or <code>max</code> effort, keep in mind that Sonnet 5.5 will think longer and cost more. On some tasks, you may lose some of what makes Sonnet useful: its balance of quality, speed, and cost. In that case, consider Opus 5.5.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s4"><h2 id="migrating-from-sonnet-5">MIGRATING FROM SONNET 5</h2>
+<p>Thinking is on by default. If you ran Sonnet 5 with thinking off, you can use <code>between_tools</code> to turn off upfront thinking. Step 1 below shows how.</p>
+<p>Change the model ID to <code>claude-sonnet-5-5</code>, then work through five breaking changes and one change to the response shape. The <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">Sonnet 5.5 migration guide</a> covers each one in full.</p>
+<p>Claude Code can also do the migration for you. Run <code>/claude-api migrate this project to claude-sonnet-5-5</code> to invoke the bundled <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/claude-api-skill#migrating-to-a-newer-claude-model">Claude API skill</a>, which applies the model ID swap and the breaking parameter changes across your code base.</p>
+<h3 id="1-turn-off-upfront-thinking-with-between_tools">1. Turn off upfront thinking with between_tools</h3>
+<p>On Sonnet 5.5, a request with no <code>thinking</code> field runs with adaptive thinking, and <code>thinking: {"type": "disabled"}</code> returns a 400 error. Send the new <code>between_tools</code> setting instead. With <code>between_tools</code>, thinking only happens between tool calls, and total response time is the same or faster.</p>
+<div class="art-code"><div class="ch"><span>CODE<span class="lang">Python</span></span><button type="button">Copy</button></div><pre><span class="cm"># Before: Claude Sonnet 5</span><span class="pl">
+client.messages.create(
+    model=</span><span class="ar">"claude-sonnet-5"</span><span class="pl">,
+    max_tokens=</span><span class="nm">16000</span><span class="pl">,
+    thinking={</span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"disabled"</span><span class="pl">},
+    output_config={</span><span class="ar">"effort"</span><span class="pl">: </span><span class="ar">"xhigh"</span><span class="pl">},
+    messages=[{</span><span class="ar">"role"</span><span class="pl">: </span><span class="ar">"user"</span><span class="pl">, </span><span class="ar">"content"</span><span class="pl">: </span><span class="ar">"..."</span><span class="pl">}],
+)
+
+</span><span class="cm"># After: Claude Sonnet 5.5</span><span class="pl">
+client.messages.create(
+    model=</span><span class="ar">"claude-sonnet-5-5"</span><span class="pl">,
+    max_tokens=</span><span class="nm">16000</span><span class="pl">,
+    thinking={</span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"between_tools"</span><span class="pl">},
+    output_config={</span><span class="ar">"effort"</span><span class="pl">: </span><span class="ar">"high"</span><span class="pl">},
+    messages=[{</span><span class="ar">"role"</span><span class="pl">: </span><span class="ar">"user"</span><span class="pl">, </span><span class="ar">"content"</span><span class="pl">: </span><span class="ar">"..."</span><span class="pl">}],
+)</span></pre></div>
+<p>The example also drops effort from <code>xhigh</code> to <code>high</code>, because <code>between_tools</code> has these limits:</p>
+<ul>
+<li><code>between_tools</code> works at <code>low</code>, <code>medium</code> and <code>high</code> effort. At <code>xhigh</code> or <code>max</code> it returns a 400 error; to run there, use adaptive thinking.</li>
+<li>It takes no other field. Sending <code>display</code>, <code>budget_tokens</code> or <code>block_binding</code> with it returns a 400 error.</li>
+<li>With <code>between_tools</code>, effort can't change mid-conversation. To vary effort per turn, use adaptive thinking.</li>
+<li>The short progress updates the model writes between tool calls still come back as <code>thinking</code> blocks, with summary text. Read content blocks by type, and pass these blocks back unchanged with the rest of the assistant turn. Without tools, the response contains only text.</li>
+<li>It works on every platform that offers Sonnet 5.5, with no beta header. If your SDK version doesn't define <code>between_tools</code>, update it.</li>
+</ul>
+<p>If you turn upfront thinking off with <code>between_tools</code>, use adaptive thinking instead for requests without tools that need a few steps of working out.</p>
+<h3 id="2-replace-forced-tool_choice-with-auto-plus-strict-tools">2. Replace forced tool_choice with auto plus strict tools</h3>
+<p><code>tool_choice</code> of type <code>any</code> or <code>tool</code> returns a 400 error, including on the token counting endpoint. Send <code>auto</code>, mark the tool <code>strict: true</code> so its input matches the schema, and say in the prompt when to use it:</p>
+<div class="art-code"><div class="ch"><span>CODE<span class="lang">Python</span></span><button type="button">Copy</button></div><pre><span class="pl">weather_tool = {
+    </span><span class="ar">"name"</span><span class="pl">: </span><span class="ar">"get_weather"</span><span class="pl">,
+    </span><span class="ar">"description"</span><span class="pl">: </span><span class="ar">"Get the current weather in a given location"</span><span class="pl">,
+    </span><span class="ar">"input_schema"</span><span class="pl">: {
+        </span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"object"</span><span class="pl">,
+        </span><span class="ar">"properties"</span><span class="pl">: {</span><span class="ar">"location"</span><span class="pl">: {</span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"string"</span><span class="pl">}},
+        </span><span class="ar">"required"</span><span class="pl">: [</span><span class="ar">"location"</span><span class="pl">],
+        </span><span class="ar">"additionalProperties"</span><span class="pl">: </span><span class="kw">False</span><span class="pl">,
+    },
+    </span><span class="ar">"strict"</span><span class="pl">: </span><span class="kw">True</span><span class="pl">,
+}
+
+client.messages.create(
+    model=</span><span class="ar">"claude-sonnet-5-5"</span><span class="pl">,
+    max_tokens=</span><span class="nm">1024</span><span class="pl">,
+    tools=[weather_tool],
+    tool_choice={</span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"auto"</span><span class="pl">},  </span><span class="cm"># was {"type": "tool", "name": "get_weather"}</span><span class="pl">
+    messages=[
+        {</span><span class="ar">"role"</span><span class="pl">: </span><span class="ar">"user"</span><span class="pl">, </span><span class="ar">"content"</span><span class="pl">: </span><span class="ar">"What's the weather in Paris? Use the get_weather tool."</span><span class="pl">}
+    ],
+)</span></pre></div>
+<p>Strict tool use needs <code>additionalProperties: false</code> on every object.</p>
+<h3 id="3-keep-conversations-append-only">3. Keep conversations append-only</h3>
+<p>Sonnet 5.5 thinking blocks are tied to the model and the conversation. Sonnet 5.5 reads Sonnet 5's thinking blocks, so a conversation you switch from Sonnet 5 to Sonnet 5.5 keeps its reasoning. No other model reads Sonnet 5.5's blocks.</p>
+<h3 id="4-move-computer-use-to-the-toolset">4. Move computer use to the toolset</h3>
+<p>On the Claude API and Google Cloud, Sonnet 5.5 supports computer use only through <code>{"type": "computer_toolset_20260801"}</code>; a request that declares <code>computer_20251124</code> returns a 400 error. Drop the <code>anthropic-beta: computer-use-2025-11-24</code> header from your requests, and in the SDKs, remove the <code>betas</code> parameter and call the Messages API through the standard client rather than the beta namespace. Replace the <code>tools</code> entry, and update your agent loop for member <code>tool_use</code> blocks, batch actions and <code>toolset_name</code> on results. If you send the <code>fine-grained-tool-streaming-2025-05-14</code> beta header, remove it too, because alongside a toolset entry it returns a 400 error; set <code>eager_input_streaming: true</code> on each tool that needs it instead. Amazon Bedrock still accepts <code>computer_20251124</code>.</p>
+<h3 id="5-check-your-advisor-pairing">5. Check your advisor pairing</h3>
+<p>With the advisor tool, a Sonnet 5.5 executor rejects Opus 4.8, Opus 4.7 and Sonnet 5 as advisors. Accepted advisors include Opus 5.5, Opus 5 and Sonnet 5.5 itself. Advice from every accepted advisor comes back encrypted, as an <code>advisor_redacted_result</code> block, so your code can't read the advice text.</p>
+<h3 id="6-read-text-between-tool-calls-from-thinking-blocks">6. Read text between tool calls from thinking blocks</h3>
+<p>This change causes no errors, but a UI can stop showing the model's notes between tool calls. Those notes, when longer than a sentence or two, come back as progress-update <code>thinking</code> blocks, which are empty at the default <code>display</code>.</p>
+<p>With adaptive thinking, set <code>thinking.display</code> to <code>"updates"</code> (beta, with the <code>thinking-display-updates-2026-08-18</code> header) or <code>"summarized"</code>, and render each non-empty <code>thinking</code> block before the <code>tool_use</code> block that follows it. With <code>between_tools</code>, the text comes back without <code>display</code>.</p>
+<p>Sonnet 5.5 also adds per-message effort (beta), mid-conversation system messages and mid-conversation tool changes (beta). If you're moving from Sonnet 4.6 or earlier, or from Haiku 4.5, the <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">migration guide</a> has a checklist for each starting model.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s5"><h2 id="tuning">TUNING</h2>
+<h3 id="re-run-your-effort-sweep">Re-run your effort sweep</h3>
+<p>Effort levels are recalibrated, so a level doesn't produce the same amount of thinking as it did on Sonnet 5, and your old setting won't carry over. Start with <code>high</code> unless your workload is agentic or latency-sensitive. For agentic coding and multistep tool use, start with <code>medium</code> for well-specified tasks and move to <code>high</code> for harder or longer ones. For chat and other latency-sensitive work, start with <code>medium</code> or <code>low</code>. Use <code>xhigh</code> or <code>max</code> only where your evals show a quality gain.</p>
+<p>Thinking counts toward <code>max_tokens</code>, so leave room. For agentic coding, set <code>max_tokens</code> to 128,000, the model's maximum, and stream the response. To get less thinking, lower the effort level, because asking the model in the system prompt to think less doesn't reliably reduce it.</p>
+<h3 id="remove-sonnet-5-workarounds">Remove Sonnet 5 workarounds</h3>
+<p>Existing Sonnet 5 prompts should perform well without changes. If your prompts carry workarounds such as refusal steering, tool-call retry shims, or "do not be lazy," remove them and re-run your evals before tuning anything else.</p>
+<h3 id="ask-for-real-checks-at-low-effort">Ask for real checks at low effort</h3>
+<p>Sonnet 5.5 generally checks its work before reporting a change as done, but at <code>low</code> effort it sometimes skips a check that exercises the change. If you see changes reported as done without test or build output, the prompting guide recommends this system-prompt paragraph:</p>
+<div class="art-code"><div class="ch"><span>CODE<span class="lang">Text</span></span><button type="button">Copy</button></div><pre><span class="pl">When you change code that can be run, built, or type-checked, run a real
+check that exercises the change before reporting it done: the project's
+tests, type-checker, or build, or the changed command itself. A syntax-only
+check, or a check command that failed to start, does not count; if all
+that is missing is the project's declared dependencies, install them with
+its own package manager and lockfile (e.g. npm install, pip
+install -r requirements.txt), never via sudo or the system package manager,
+unless told not to. Only if no real check can run here, say which one you
+did not run and why instead of reporting the change as done.</span></pre></div>
+<h3 id="use-thinkingdisplay-for-progress">Use thinking.display for progress</h3>
+<p>Don't ask the model to write out its reasoning in the response, because that invites <code>reasoning_extraction</code> declines. Read summarized thinking instead:</p>
+<div class="art-code"><div class="ch"><span>CODE<span class="lang">Python</span></span><button type="button">Copy</button></div><pre><span class="pl">thinking={</span><span class="ar">"type"</span><span class="pl">: </span><span class="ar">"adaptive"</span><span class="pl">, </span><span class="ar">"display"</span><span class="pl">: </span><span class="ar">"summarized"</span><span class="pl">}</span></pre></div>
+<p>For user-facing progress notes on their own, use <code>display: "updates"</code> (beta). If you want updates at predictable points, such as a line before the first tool call and a short recap at the end, say so in the system prompt.</p>
+<h3 id="cache-more-of-your-prompt">Cache more of your prompt</h3>
+<p>The minimum cacheable prompt drops to 512 tokens, so shorter system prompts and tool definitions now qualify. A cache read costs a tenth of the input price. Changing the top-level effort between requests invalidates the cache; to run one turn at a different level, use per-message effort (beta), which keeps the cache.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s6"><h2 id="refusals-and-fallback">REFUSALS AND FALLBACK</h2>
+<p>On our automated behavioral audit, Sonnet 5.5 improves on or matches Sonnet 5 on most measures of alignment and honesty. It's also the first Sonnet model with cybersecurity safeguards similar to those on our most capable models. Most routine software development is unaffected.</p>
+<p>A declined request returns HTTP 200 with <code>stop_reason: "refusal"</code>, and <code>stop_details</code> names one of five categories: <code>cyber</code>, <code>bio</code>, <code>frontier_llm</code>, <code>reasoning_extraction</code> or <code>general_harms</code>. Server-side fallback (<code>fallbacks: "default"</code>, beta, Claude API) retries <code>cyber</code> and <code>frontier_llm</code> declines on Sonnet 5. It doesn't retry the other three. You can also use the SDK middleware or your own retry.</p>
+<p>For legitimate security work, the Cyber Verification Program will soon expand to include Sonnet 5.5.</p>
+</section><section class="art-section" data-reveal="" style="--reveal-delay: 0s;" id="building-with-claude-sonnet-5-5-s7"><h2 id="availability">AVAILABILITY</h2>
+<p>Claude Sonnet 5.5 is available today on the platforms below. On the developer platforms, use these model IDs:</p>
+<ul>
+<li>Claude API, as <code>claude-sonnet-5-5</code></li>
+<li>Amazon Bedrock, as <code>anthropic.claude-sonnet-5-5</code></li>
+<li>Claude Platform on AWS, as <code>claude-sonnet-5-5</code></li>
+<li>Google Cloud, as <code>claude-sonnet-5-5</code></li>
+<li>Microsoft Foundry, as <code>claude-sonnet-5-5</code>, on Global Standard deployments only</li>
+</ul>
+<h3 id="in-claude-code">In Claude Code</h3>
+<p>From Claude Code v2.1.284 (Agent SDK for TypeScript v0.3.284 or later), the <code>sonnet</code> alias resolves to Sonnet 5.5 on the Claude API. It runs at <code>medium</code> effort by default, with the 1M context window native. You can't turn thinking off for Sonnet 5.5 in Claude Code, and effort sets how much the model thinks. Sonnet 5.5 has no fast mode. The <code>default</code> model stays Opus 5.5, so switch with <code>/model sonnet</code> for well-scoped tasks.</p>
+<p>We hope you'll enjoy trying out Sonnet 5.5 and as always feel free to share feedback.</p></section></div></div><div class="more-sec"><div class="rel-lbl">Related posts</div><div class="tabs-line"><div class="tabs tabs-fit" id="tabs"><button class="tab" data-c="ALL">ALL</button><button class="tab" data-c="AGENTS">AGENTS</button><button class="tab" data-c="ENGINEERING">ENGINEERING</button><button class="tab" data-c="PLAYBOOKS">PLAYBOOKS</button><button class="tab" data-c="SKILLS">SKILLS</button><span class="tab-more-wrap" style="display: none;"><button class="tab">···</button><div class="tab-menu"></div></span></div></div><div id="feed"><a class="frow" href="/blog/automating-eval-design-and-hillclimbing/"><span class="f-l">Sep 28, 2026</span><span class="f-t">Automating eval design and hillclimbing with Claude</span><span class="f-d">12<!-- --> min</span></a><a class="frow" href="/blog/spending-your-effort/"><span class="f-l">Sep 25, 2026</span><span class="f-t">Using Claude Code: Spending your effort</span><span class="f-d">8<!-- --> min</span></a><a class="frow" href="/blog/what-a-task-costs-on-opus-5-5/"><span class="f-l">Sep 25, 2026</span><span class="f-t">What a task costs on Opus 5.5</span><span class="f-d">21<!-- --> min</span></a><a href="/blog/how-we-made-claude-ai-faster/" class="frow"><span class="f-l">Sep 23, 2026</span><span class="f-t">How we made claude.ai 3x faster in two weeks</span><span class="f-d">15<!-- --> min</span></a><a class="frow" href="/blog/getting-the-most-out-of-opus-5-5/"><span class="f-l">Sep 22, 2026</span><span class="f-t">Getting the most out of Opus 5.5 in Claude and Claude Code</span><span class="f-d">9<!-- --> min</span></a></div><div class="vm-row" id="vm" role="button" tabindex="0" aria-label="Load more posts"><span style="grid-column:5 / 13">LOAD MORE</span></div></div></div><div><footer class="site-footer"><div class="f-low"><div class="footer-bar"><div class="fb-brand"><span class="wm">claude.dev</span><span class="by"><a href="https://www.anthropic.com" target="_blank" rel="noopener"><img src="assets/img/anthropic-logo.svg" alt="Anthropic"></a><span class="cc">© 2026 Anthropic PBC</span><span class="fb-legal"><a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Privacy Policy</a><a href="/terms/">Terms of Use</a></span><button type="button" class="fb-privacy" data-privacy-choices="">Privacy choices</button></span></div><nav class="footer-col fcol-5" aria-label="resources"><h2 class="fh">RESOURCES</h2><ul><li><a href="https://www.anthropic.com/learn" target="_blank" rel="noopener">Claude Academy</a></li><li><a href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a></li><li><a href="https://claude.com/community" target="_blank" rel="noopener">Community</a></li><li><a href="https://console.anthropic.com" target="_blank" rel="noopener">Console</a></li><li><a href="https://code.claude.com/docs" target="_blank" rel="noopener">Developer docs</a></li></ul></nav><nav class="footer-col fcol-7" aria-label="connect"><h2 class="fh">CONNECT</h2><ul><li><a href="https://www.anthropic.com/discord" target="_blank" rel="noopener">Discord</a></li><li><a href="https://luma.com/claudecommunity" target="_blank" rel="noopener">Meetups</a></li><li><a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener">Reddit</a></li><li><a href="https://x.com/ClaudeDevs" target="_blank" rel="noopener">X.com</a></li></ul></nav><div class="fnews"><h2 class="fh">GET THE NEWSLETTER</h2>
+    <p class="fn-sub">Product updates, how-tos, community spotlights, and more. Delivered monthly to your inbox.</p>
+    <form class="fn-row" novalidate="">
+      <input type="email" name="email" placeholder="Enter your email" spellcheck="false" autocomplete="email" aria-label="email address" aria-describedby="fn-note">
+      <button type="submit" class="fn-arr arr" aria-label="subscribe" aria-disabled="true">→</button>
+    </form>
+    <p class="fn-note" id="fn-note">Please provide your email address if you’d like to receive our monthly developer newsletter. You can unsubscribe at any time. Read Anthropic’s <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p></div></div></div><div class="scene"><div class="sky"><canvas aria-hidden="true" width="1440" height="675" style="display: block; width: 100%; height: 100%;"></canvas></div><div class="astro-stage" style="position: absolute; inset: 0px; pointer-events: auto; z-index: 1;"></div></div></footer></div></div><!--/$--><div id="veil"></div><div id="toast" role="status"></div><div class="pal-overlay">
+    <div class="pal">
+      <div class="pal-bar"><span>FINDER</span><button type="button" data-close="">Close (Esc)</button></div>
+      <div class="pal-prompt"><span class="pu">guest@claude.devs</span><span class="pp">·/</span><span class="pg">&gt;</span>
+        <input class="pal-input" placeholder="Search posts and pages" spellcheck="false" aria-label="Search"></div>
+      <div class="pal-tabs"><span data-tab="ALL" class="">ALL</span><span data-tab="PAGES">PAGES</span><span data-tab="AGENTS">AGENTS</span><span data-tab="ENGINEERING">ENGINEERING</span><span data-tab="PLAYBOOKS">PLAYBOOKS</span><span data-tab="SKILLS">SKILLS</span></div>
+      <div class="pal-list">
+          <div class="pal-item sel" data-i="0" data-kind="PAGE">
+            <span class="no">01</span><span class="nm">Home</span>
+            <span class="kind">PAGE</span>
+          </div>
+          <div class="pal-item" data-i="1" data-kind="PAGE">
+            <span class="no">02</span><span class="nm">Changelog</span>
+            <span class="kind">PAGE</span>
+          </div>
+          <div class="pal-item" data-i="2" data-kind="PAGE">
+            <span class="no">03</span><span class="nm">Terminal</span>
+            <span class="kind">PAGE</span>
+          </div>
+          <div class="pal-item" data-i="3" data-kind="GAME">
+            <span class="no">04</span><span class="nm">Clawd’s Quest</span>
+            <span class="kind">GAME</span>
+          </div>
+          <div class="pal-item" data-i="4" data-kind="ARTICLE" data-cat="PLAYBOOKS">
+            <span class="no">05</span><span class="nm">Automating eval design and hillclimbing with Claude</span>
+            <span class="mins">12 min</span><span class="kind">ARTICLE</span>
+          </div>
+          <div class="pal-item" data-i="5" data-kind="ARTICLE" data-cat="PLAYBOOKS">
+            <span class="no">06</span><span class="nm">Building with Claude Sonnet 5.5</span>
+            <span class="mins">9 min</span><span class="kind">ARTICLE</span>
+          </div>
+          <div class="pal-item" data-i="6" data-kind="ARTICLE" data-cat="ENGINEERING">
+            <span class="no">07</span><span class="nm">Using Claude Code: Spending your effort</span>
+            <span class="mins">8 min</span><span class="kind">ARTICLE</span>
+          </div>
+          <div class="pal-item" data-i="7" data-kind="ARTICLE" data-cat="PLAYBOOKS">
+            <span class="no">08</span><span class="nm">What a task costs on Opus 5.5</span>
+            <span class="mins">21 min</span><span class="kind">ARTICLE</span>
+          </div>
+          <div class="pal-item" data-i="8" data-kind="ARTICLE" data-cat="ENGINEERING">
+            <span class="no">09</span><span class="nm">How we made claude.ai 3x faster in two weeks</span>
+            <span class="mins">15 min</span><span class="kind">ARTICLE</span>
+          </div>
+          <div class="pal-item" data-i="9" data-kind="ARTICLE" data-cat="PLAYBOOKS">
+            <span class="no">10</span><span class="nm">Getting the most out of Opus 5.5 in Claude and Claude Code</span>
+            <span class="mins">9 min</span><span class="kind">ARTICLE</span>
+          </div></div>
+      <div class="pal-foot"><span><span class="arr">↑↓</span> navigate</span><span><span class="arr">↵</span> open</span><span>⌘K toggles</span><span style="margin-left:auto">12 posts</span></div>
+    </div></div>
+<script src="assets/vendor/lottie_canvas.min.js"></script>
+<script src="assets/data/clawd-anim.js"></script>
+<script src="assets/data/sprites.js"></script>
+<script src="assets/vendor/sprite-loader.js"></script>
+<script src="assets/vendor/scene-chunk.js"></script>
+<script src="assets/vendor/perch-chunk.js"></script>
+<script src="assets/vendor/scene-loader.js"></script>
+<script src="assets/data/posts.js"></script>
+<script src="clone.js"></script>
+</body>
+</html>

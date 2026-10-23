@@ -1,0 +1,21 @@
+{
+  "name": "Glass Octopus",
+  "frameWidth": 384,
+  "frameHeight": 384,
+  "frames": 12,
+  "fps": 12,
+  "columns": 12,
+  "rows": 1,
+  "loopMs": 1000,
+  "styles": [
+    "flat",
+    "lowpoly",
+    "pixel",
+    "pixelneon",
+    "sketch",
+    "halftone",
+    "clay",
+    "glass",
+    "mesh"
+  ]
+}

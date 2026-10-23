@@ -1,0 +1,35 @@
+{
+  "poster": 512,
+  "pieces": [
+    {
+      "id": "hearts",
+      "label": "爱心",
+      "note": "经典双色网屏"
+    },
+    {
+      "id": "stars",
+      "label": "星星",
+      "note": "四色印刷，玫瑰斑"
+    },
+    {
+      "id": "bubbles",
+      "label": "泡泡",
+      "note": "随机网点，无网格"
+    },
+    {
+      "id": "mixed",
+      "label": "综合",
+      "note": "粗网新闻纸，故意错版"
+    },
+    {
+      "id": "engraved",
+      "label": "雕刻",
+      "note": "交叉线屏，单色"
+    },
+    {
+      "id": "receipt",
+      "label": "小票",
+      "note": "针式打印，带齿孔"
+    }
+  ]
+}
