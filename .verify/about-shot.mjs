@@ -40,10 +40,13 @@ const CASES = [
 ];
 
 const IMG_SET = '.tl-shots img, .about-works img';
+/* 「站外」按当前 base 判，不写死 file: —— 同一套断言既跑本地文件，也跑 https 线上 */
+const IS_REMOTE = 'const isRemote = (u) => { try { const x = new URL(u, location.href); return x.protocol !== location.protocol || x.host !== location.host; } catch (e) { return true; } };';
 
 /* 点击放大：断言「开 → Esc 关」这一趟里，滚动位置一个像素都没动，焦点也回了那枚缩略图 */
 const LIGHTBOX_TEST = `(async () => {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  ${IS_REMOTE}
   const box = document.getElementById('shotBox');
   const big = document.getElementById('shotBoxImg');
   const cs = () => getComputedStyle(box);
@@ -65,7 +68,7 @@ const LIGHTBOX_TEST = `(async () => {
       shotW: Math.round(shot.getBoundingClientRect().width),
       inViewport: br.top >= -1 && br.left >= -1 && br.bottom <= window.innerHeight + 1 && br.right <= window.innerWidth + 1,
       settled: getComputedStyle(big).transform === 'none',
-      remote: !/^file:/.test(big.currentSrc || big.src || ''),
+      remote: isRemote(big.currentSrc || big.src || ''),
       cap: (document.getElementById('shotBoxCap').textContent || '').trim(),
       tag: tag,
     };
@@ -247,11 +250,12 @@ async function main() {
     await sleep(500);
 
     const m = await evalIn(`(() => {
+      ${IS_REMOTE}
       const L = (sel) => { const e = document.querySelector(sel); return e ? +e.getBoundingClientRect().left.toFixed(1) : null; };
       const rail = document.querySelector('#tlRail');
       const imgs = [].slice.call(document.querySelectorAll(${JSON.stringify(IMG_SET)}));
       const loaded = imgs.filter((i) => i.complete && i.naturalWidth > 0);
-      const remote = imgs.filter((i) => !/^file:/.test(i.currentSrc || i.src));
+      const remote = imgs.filter((i) => isRemote(i.currentSrc || i.src));
       const cards = [].slice.call(document.querySelectorAll('.about-works .work-card'));
       const rail2 = document.querySelector('.works-grid');
       return JSON.stringify({
