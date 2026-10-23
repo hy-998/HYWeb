@@ -6,7 +6,7 @@
      · 放大层   —— 「点开→Esc 关掉」里 scrollY 与焦点有没有被改动，越无感越要能被量出来
      · 门禁     —— 没钥匙必须被弹回首页、静态导航里搜不到「关于」、解锁后页签才出现 */
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
@@ -625,6 +625,18 @@ async function main() {
     'post-ghost.html', 'post-memory.html', 'post-pacing.html', 'post-pixels.html']
     .filter((fn) => readFileSync(fn, 'utf8').indexOf('about.html') !== -1);
   addGate('门禁·九个页面源码搜不到入口', leak.length ? [`静态导航里写死了 about.html：${leak.join('、')}`] : [], { leak });
+
+  /* C2. 全站版本号只有一个号（DESIGN.md 8.1）。这条是补上的：
+         另一次提交把 logo 图升到 v=17，这边把 JS/CSS 从 v=15 升到 v=16，
+         两边各升各的，站点就同时挂着两个号 —— 谁都不会报错，直到有人拿到旧缓存 */
+  const versions = {};
+  for (const fn of readdirSync('.').filter((x) => x.endsWith('.html'))) {
+    for (const v of readFileSync(fn, 'utf8').matchAll(/\?v=(\d+)/g)) {
+      (versions[v[1]] = versions[v[1]] || []).push(fn);
+    }
+  }
+  const vs = Object.keys(versions);
+  addGate('版本·全站只有一个版本号', vs.length === 1 ? [] : [`站点同时挂着 ${vs.map((v) => `v=${v}（${versions[v].length} 处）`).join(' + ')}`], { versions: vs });
 
   /* D. 带钥匙访问 —— 放行、揭开整页、钥匙从地址栏消失、「关于」出现在导航 */
   await evalIn(`(() => { try { sessionStorage.clear(); } catch (e) {} return 1; })()`, sessionId);
