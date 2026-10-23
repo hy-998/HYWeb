@@ -39,12 +39,20 @@ function readNext() {
   return safeNext(raw);
 }
 
+/* 本标签页是否已解锁简历（access.js 写的 sessionStorage 标记）。
+   解锁过的会话里，ENTER 优先回简历：?next= 可能带着误入的页面，
+   而简历才是这条入口链接真正要给人看的东西。 */
+function resumeUnlocked() {
+  try { return sessionStorage.getItem("aboutAccess") === "1"; } catch (e) { return false; }
+}
+
 /* 进入博客主界面（记录"开篇已播过"，之后直接进主界面。
-   带 ?next= 时回到用户首访时想看的页面；无 next 或校验不通过则回主页。
+   已解锁简历 → 优先回 about.html；否则维持原逻辑：带 ?next= 时回到
+   用户首访时想看的页面，无 next 或校验不通过则回主页。
    存储被禁用时 setItem 会抛错，此处吞掉即可——标记写不上不应挡住进入） */
 function enterBlog() {
   try { localStorage.setItem("introPlayed", "1"); } catch (e) {}
-  window.location.href = readNext() || "index.html";
+  window.location.href = resumeUnlocked() ? "about.html" : (readNext() || "index.html");
 }
 
 function runIntro() {

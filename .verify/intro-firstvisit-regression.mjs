@@ -1,6 +1,7 @@
 /* 首访开场回归用例（真实浏览器，CDP 驱动）
    覆盖：首访重定向 / 深链接回跳 / next 校验（开放重定向防护）/
         存储禁用不再死循环 / ?skipIntro=1 逃生口 / 头像重播 /
+        简历入口免播欢迎页 / 解锁后 ENTER 优先回简历 /
         核心链路（列表 → 详情 → 返回原位）/ 主题切换持久化
 
    断言与部署子路径无关：站点可托管在域名根目录，也可在 /HYWeb/ 子路径下。
@@ -217,6 +218,41 @@ async function main() {
   await goto(BASE);
   const themeReload = await ev('document.documentElement.className');
   check('K2 刷新后主题保持', /light/.test(themeReload), themeReload);
+
+  /* L. 简历专属链接是入口：首访不播欢迎页；会话解锁后 ENTER 优先回简历
+        钥匙与 assets/js/access.js 保持一致 */
+  const RESUME_KEY = 'SsIU9mi1NBV4';
+  await clearStorage();
+  await goto(BASE + 'about.html?k=' + RESUME_KEY);
+  w = await where();
+  check('L1 首访简历链接直达简历，不弹欢迎页', w.r === '/about.html', w);
+  check('L2 落地后钥匙已从地址栏抹掉', w.s === '', w);
+  check('L3 简历内容已揭开（门禁放行）', await ev("document.documentElement.classList.contains('about-ok')"), {});
+  check('L4 简历入口视为已进入，introPlayed 已写', (await ev("localStorage.getItem('introPlayed')")) === '1', {});
+  await goto(BASE);
+  w = await where();
+  check('L5 从简历回首页不再被欢迎页拦截', w.r === '/', w);
+  await ev("document.querySelector('.brand-avatar').click()");
+  await settle((h) => /intro\.html/.test(h));
+  w = await where();
+  check('L6 头像仍可手动进欢迎页', w.r === '/intro.html', w);
+  await clickEnter();
+  w = await where();
+  check('L7 解锁后 ENTER 优先回简历', w.r === '/about.html', w);
+  check('L8 ENTER 回简历不携带钥匙', w.s === '', w);
+  check('L9 简历页「关于」页签可见且为当前项', await ev(
+    "(function(){var a=document.querySelector('.main-nav a[href=\"about.html\"]');return !!a && a.classList.contains('active')})()"
+  ), {});
+  await goto(BASE);
+  w = await where();
+  check('L10 再来首页仍不弹欢迎页', w.r === '/', w);
+
+  /* M. 未解锁时 ENTER 不得擅自去简历（门禁不能靠前端信任） */
+  await clearStorage();
+  await goto(BASE + 'post-awake.html');
+  await clickEnter();
+  w = await where();
+  check('M1 未解锁时 ENTER 回深链接原文，而非简历', w.r === '/post-awake.html', w);
 
   check('I 全程无未捕获 JS 异常', exceptions.length === 0, exceptions);
 

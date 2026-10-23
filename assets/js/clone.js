@@ -10,6 +10,9 @@
         - 跳转附带 ?next=<当前页面>，ENTER 后回到用户原本要看的页面，
           而不是一律丢回首页（外部深链接首访不再被吞）
         - ?skipIntro=1 为逃生口：任何情况下都直接放行，不播欢迎页
+        - 简历专属链接（about.html?k=…）落地即视为已进入博客：不弹欢迎页，
+          并补写 introPlayed，之后在站内翻页也不会被开篇打断。
+          只有门禁放行（access.js 已加 about-ok）才算数，被弹回的无钥匙访问不算。
         - 点头像重播不受此标记影响（见第 5 节） */
   var introTarget = (function () {
     var file = location.pathname.split('/').pop(); /* 根路径 /HYWeb/ → '' */
@@ -32,6 +35,16 @@
   var seen = null;
   if (storageWritable) {
     try { seen = localStorage.getItem('introPlayed'); } catch (e) {}
+  }
+
+  /* 从简历专属链接进入：about.html 只有门禁放行才会走到这里（access.js 在
+     <head> 里同步加了 about-ok）。把这次落地当作「首次进入已完成」，
+     既不在简历上叠欢迎页，之后点去首页/文章也不会突然被开篇拦住。 */
+  var aboutEntered = /(?:^|\/)about\.html$/i.test(location.pathname) &&
+    document.documentElement.classList.contains('about-ok');
+  if (aboutEntered && storageWritable) {
+    try { localStorage.setItem('introPlayed', '1'); } catch (e) {}
+    seen = '1';
   }
 
   var skipIntro = /[?&]skipIntro=1(?:&|$)/.test(location.search);
