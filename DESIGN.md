@@ -171,6 +171,11 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 - 联系方式三行（EMAIL / PHONE NUMBER / WECHAT）行尾按钮：前两行是复制（主色横扫 + 对勾落位 + 文案上滑，1.6s 自动退回），
   第三行弹二维码。剪贴板被拒时退到 `execCommand`，再不行选中值并在 `aria-live` 里如实说明，不假装成功。
   `<640px` 整行换成「标签在上、值 + 按钮在下」两行——联系方式被省略号截断等于没给。
+- 「下载简历 PDF」不预生成文件，点 `#pdfBtn` 走浏览器打印管线（`about.css` 第 9 节 `@page` + `@media print`）：
+  版式永远跟页面同步，也不会往仓库里塞一个需要手动跟版的二进制。两个坑记牢——
+  A4 去掉 13mm 边距后正文只有 **695px**，`clone.css` 的 `min-width:768px` 桌面栅格在纸上根本不生效，打印布局必须在 `@media print` 里另写一套；
+  进场动画、数字滚动、筛选状态都得在 `beforeprint` 里落到终态（页面上没滚到的段落是 `opacity:0`，直接打就是一页白纸），
+  `afterprint` 再把打印前那个筛选条件原样还回去。
 - **受隐私门禁约束，见 6.7**：不进搜索引擎、不在任何静态导航里出现。
 
 ---
@@ -225,11 +230,16 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 5. **打字机**：匀速 60ms/字，不加末段变速、不加停顿（用户已两次纠正，此为定稿）。
 6. **首访开场**：仅当 `localStorage` **可写**且无 `introPlayed` 标记时，访问任何正文页自动跳 `intro.html`；
    跳转附带 `?next=<原页面>`，ENTER/键盘 Enter 回到该页面（无 `next` 或校验失败则回主页）并写标记；
+   **例外一**：简历专属链接（`about.html?k=…`，门禁已放行）落地不播开篇，并补写 `introPlayed`，
+   之后在站内翻页也不会被开篇打断；
+   **例外二**：本标签页已解锁简历（`sessionStorage.aboutAccess`）时，Enter **优先回 `about.html`**，
+   忽略可能带着误入页面的 `next`；未解锁则维持 `next` → 主页（门禁不靠前端信任）。
    `?skipIntro=1` 为逃生口，任何情况直接放行；**存储被禁用时不放欢迎页**（标记写不上会形成
    intro ↔ index 死循环，宁可不播开场也不能锁死用户）。`next` 只接受同目录单个 `.html`，防止开放重定向。点头像任何时候可重播。
 7. **简历页门禁（发现性隔离）**：`about.html` 只有一条带钥匙的链接能进 —— `about.html?k=<钥匙>`。
    `assets/js/access.js` 在 `<head>` 里同步校验：通过则写 `sessionStorage.aboutAccess`、用 `replaceState`
    把钥匙从地址栏抹掉、给 `<html>` 加 `about-ok` 揭开整页；不通过则 `location.replace('index.html')`，简历内容不渲染。
+   放行落地即视为「已进入博客」，`clone.js` 第 0 节据此不播欢迎页并补写 `introPlayed`；无钥匙被弹回的访问不算。
    用 `sessionStorage` 而非 `localStorage`：关掉标签即失效，公共电脑上下一个人接手时既看不到正文也看不到入口。
    `about.css` 第 0 节默认 `visibility: hidden`，所以**关掉 JavaScript 同样读不到**。
    本页带 `meta[name=robots]=noindex,nofollow,noarchive` 与 `referrer=no-referrer`。
@@ -250,13 +260,15 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 
 ## 8. 工程规范
 
-1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=13`）；
+1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=15`）；
    **任何 JS/CSS 改动必须同步 bump 所有页面的版本号**。
    覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）
    与 `assets/css/about.css`、`assets/js/{access,about}.js`。
 2. **零依赖**：无 webfont、无 CDN、无框架运行时；新增能力优先用原生实现。
 3. **改动后必测**（浏览器实测）：左右缘对齐测量、双主题截图、`<640px` 视口、核心链路（首访开场 → 列表 → 详情 → 返回原位）。
-   现成脚本：`.verify/intro-firstvisit-regression.mjs`（33 条，本地与线上同一套断言）与
-   `.verify/about-shot.mjs`（18 条视觉/对齐 + 5 条门禁，`BASE=http://127.0.0.1:8899/` 可切本地服务器）。
+   现成脚本：`.verify/intro-firstvisit-regression.mjs`（44 条，本地与线上同一套断言）与
+   `.verify/about-shot.mjs`（18 条视觉/对齐 + 2 条 A4 打印 + 5 条门禁，`BASE=http://127.0.0.1:8899/` 可切本地服务器）。
+   打印用例把视口摆成 A4 正文宽（695px）再切 `print` 媒体，量的是纸上那一版：白底、页头与按钮消失、
+   数字落终值、筛掉的条目被放回、打完又回到打印前的筛选。
 4. 页面清单：`intro.html`、`index.html`、`post-awake/pixels/ghost/memory/pacing.html`、`projects.html`、`favorites.html`；
    另有 `about.html`（简历页，受 6.7 门禁约束，不进导航、不进搜索引擎）；生成脚本与数据存于 `ref-yaolifeng-shorts/`。

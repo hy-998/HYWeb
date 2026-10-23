@@ -10,9 +10,9 @@
 <!-- 本页不进搜索引擎、不进 sitemap；离开本页时不把地址交给外部站 -->
 <meta name="robots" content="noindex,nofollow,noarchive" />
 <meta name="referrer" content="no-referrer" />
-<link rel="stylesheet" href="assets/css/clone.css?v=13" />
-<link rel="stylesheet" href="assets/css/about.css?v=13" />
-<script src="assets/js/access.js?v=13"></script>
+<link rel="stylesheet" href="assets/css/clone.css?v=15" />
+<link rel="stylesheet" href="assets/css/about.css?v=15" />
+<script src="assets/js/access.js?v=15"></script>
 <script>
 (function () {
   try {
@@ -428,12 +428,12 @@
       <p class="sr-only" id="contactLive" aria-live="polite"></p>
 
       <div class="about-actions reveal">
-        <!-- ⚠️占位：href 换成真实 PDF（合并时放 assets/docs/） -->
-        <a class="about-btn" href="#" download>
+        <!-- 不预生成文件：点了走浏览器打印管线，版式由 about.css 第 9 节负责，永远和页面同步 -->
+        <button type="button" class="about-btn" id="pdfBtn">
           <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
           <span>下载简历 PDF</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m6 9 6 6 6-6"/><path d="M4 21h16"/></svg>
-        </a>
+        </button>
         <a class="about-btn" href="mailto:immerse@example.com">
           <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
           <span>写邮件给我</span>
@@ -454,7 +454,7 @@
   </figure>
 </div>
 
-<script src="assets/js/clone.js?v=13"></script>
-<script src="assets/js/about.js?v=13"></script>
+<script src="assets/js/clone.js?v=15"></script>
+<script src="assets/js/about.js?v=15"></script>
 </body>
 </html>

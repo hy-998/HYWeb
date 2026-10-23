@@ -348,4 +348,52 @@
       });
     });
   })();
+
+  /* 10. 导出 PDF：不预生成文件，把当前这一页交给浏览器的打印管线，
+        纸面版式写在 about.css 第 9 节。好处是简历永远和页面同步——改了经历
+        不必记得重新导出一份二进制塞回仓库。
+        打印前替「纸上世界」做三件收尾：没滚到的进场元素直接落终态、
+        计数数字定稿、类别筛选恢复成「全部」——不然点过「教育」再导出，
+        纸上就只剩一条经历。打完原样还回去。 */
+  (function () {
+    var btn = document.getElementById('pdfBtn');
+    var busy = false;
+    var restoreKind = '';
+
+    var settle = function () {
+      if (busy) return;                       /* 点按钮和 beforeprint 会双触发，只收一次尾 */
+      busy = true;
+      revealEls.forEach(function (el) { el.classList.add('is-in'); });
+      document.querySelectorAll('.num').forEach(function (el) {
+        var t = parseFloat(el.getAttribute('data-count'));
+        var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+        if (!isNaN(t)) el.textContent = t.toFixed(dec);
+      });
+      var active = filterBar && filterBar.querySelector('.filter-tag.active');
+      var kind = active && active.getAttribute('data-kind');
+      if (kind && kind !== 'all') {
+        restoreKind = kind;
+        var all = filterBar.querySelector('.filter-tag[data-kind="all"]');
+        if (all) all.click();
+      }
+    };
+
+    var restore = function () {
+      if (!busy) return;
+      busy = false;
+      if (!restoreKind || !filterBar) return;
+      var tag = filterBar.querySelector('.filter-tag[data-kind="' + restoreKind + '"]');
+      restoreKind = '';
+      if (tag) tag.click();
+    };
+
+    window.addEventListener('beforeprint', settle);
+    window.addEventListener('afterprint', restore);
+    if (btn) {
+      btn.addEventListener('click', function () {
+        settle();                             /* 老 Safari 不发 beforeprint，按钮这条路上自己兜住 */
+        window.print();
+      });
+    }
+  })();
 })();

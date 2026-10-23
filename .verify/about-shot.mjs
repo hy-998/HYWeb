@@ -403,6 +403,115 @@ async function main() {
     console.log('✓', c.name);
   }
 
+  /* ---------- 打印版式：「下载简历 PDF」走的就是这条管线 ----------
+     about.css 第 9 节的 @page 是 A4 竖版，去掉 13mm 左右边距后正文宽约 695px。
+     视口先按这个宽度摆，再切 print 媒体，屏幕上量到的就是纸上的样子。
+     注意：clone.css 的 min-width:768px 桌面栅格在 695px 下本来就不生效，
+     所以打印布局必须在 @media print 里另写一套 —— 这条断言量的就是有没有写全。 */
+  const A4_W = 695;
+  const A4_H = 1013; /* 297 - 14 - 15 = 268mm */
+  await rpc('Emulation.setDeviceMetricsOverride', { width: A4_W, height: A4_H, deviceScaleFactor: 1, mobile: false }, sessionId);
+  await goto(URL_, 1400);
+  /* 真实用户路径：点 #pdfBtn。headless 里弹不出打印框，所以先把 window.print 换成探针 ——
+     这样量的仍是按钮自己那条链路：点击 → settle（揭开进场、落数字、放回筛掉的条目）→ 调打印。 */
+  await evalIn(`(() => {
+    window.__printCalls = 0;
+    window.print = function () { window.__printCalls++; };
+    const t = document.querySelector('.filter-tag[data-kind="work"]'); if (t) t.click(); return 1;
+  })()`, sessionId);
+  await sleep(300);
+  const hiddenBefore = await evalIn(`(() => [].slice.call(document.querySelectorAll('.tl-item')).filter((e) => getComputedStyle(e).display === 'none').length)()`, sessionId);
+  await evalIn(`(() => { document.getElementById('pdfBtn').click(); return 1; })()`, sessionId);
+  await sleep(400);
+  await rpc('Emulation.setEmulatedMedia', { media: 'print' }, sessionId);
+  await sleep(400);
+  const printCalls = await evalIn(`(() => window.__printCalls)()`, sessionId);
+  const pm = JSON.parse(await evalIn(`(() => {
+    const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
+    const d = (s) => { const e = g(s); return e ? e.display : 'missing'; };
+    const rev = [].slice.call(document.querySelectorAll('.reveal'));
+    const items = [].slice.call(document.querySelectorAll('.tl-item'));
+    const nums = [].slice.call(document.querySelectorAll('.num'));
+    const act = document.querySelector('.filter-tag.active');
+    const root = getComputedStyle(document.documentElement);
+    return JSON.stringify({
+      header: d('.site-header'), actions: d('.about-actions'), contactAct: d('.contact-act'),
+      shotLb: d('#shotBox'), progress: d('.progress-track'), filterBar: d('.filter-bar'),
+      bodyBg: g('body').backgroundColor,
+      bgToken: root.getPropertyValue('--background').trim(),
+      fgToken: root.getPropertyValue('--foreground').trim(),
+      tlCols: (g('.tl-item') || {}).gridTemplateColumns,
+      tlWhen: (g('.tl-when') || {}).position,
+      worksCols: (g('.works-grid') || {}).gridTemplateColumns,
+      statCols: (g('.stat-band') || {}).gridTemplateColumns,
+      revealMin: rev.length ? Math.min.apply(null, rev.map((e) => +getComputedStyle(e).opacity)) : null,
+      numBad: nums.filter((e) => e.textContent.replace(/[,\\s]/g, '') !== parseFloat(e.getAttribute('data-count')).toFixed(parseInt(e.getAttribute('data-dec'), 10) || 0)).length,
+      numTotal: nums.length,
+      activeKind: act ? act.getAttribute('data-kind') : null,
+      hiddenNow: items.filter((e) => getComputedStyle(e).display === 'none').length,
+      overflowX: document.documentElement.scrollWidth > ${A4_W},
+      scrollW: document.documentElement.scrollWidth,
+      docH: document.documentElement.scrollHeight,
+      pages: Math.ceil(document.documentElement.scrollHeight / ${A4_H}),
+      nameSize: (g('.hero-name') || {}).fontSize,
+    });
+  })()`, sessionId));
+  {
+    const f = [];
+    if (!printCalls) f.push('点「下载简历 PDF」没有走到打印管线');
+    if (pm.header !== 'none') f.push(`打印时页头还在（${pm.header}）`);
+    if (pm.actions !== 'none') f.push('打印时按钮组还在');
+    if (pm.contactAct !== 'none') f.push('打印时复制/扫码按钮还在');
+    if (pm.shotLb !== 'none') f.push('打印时灯箱还在');
+    if (pm.filterBar !== 'none') f.push('打印时筛选条还在');
+    if (pm.bodyBg !== 'rgb(255, 255, 255)') f.push(`纸面底色是 ${pm.bodyBg}，不是白`);
+    if (pm.bgToken !== '0 0% 100%') f.push(`打印时 --background 仍是 ${pm.bgToken}（暗色主题没被覆盖）`);
+    if (pm.fgToken !== '240 10% 3.9%') f.push(`打印时 --foreground 是 ${pm.fgToken}，白墨印不出来`);
+    if (pm.revealMin !== 1) f.push(`有 .reveal 在打印时仍是半透明（${pm.revealMin}）`);
+    if (pm.numBad) f.push(`${pm.numBad}/${pm.numTotal} 个数字没落到终值`);
+    if (hiddenBefore > 0 && (pm.activeKind !== 'all' || pm.hiddenNow > 0)) f.push(`打印前筛掉了 ${hiddenBefore} 条，打印时仍是 ${pm.activeKind} / 藏 ${pm.hiddenNow} 条`);
+    if (pm.tlWhen !== 'static') f.push(`打印时时间轴年份仍是 ${pm.tlWhen}`);
+    if (pm.overflowX) f.push(`打印版横向溢出（${pm.scrollW} > ${A4_W}）`);
+    if (pm.pages > 4) f.push(`打印要 ${pm.pages} 页，太长`);
+    report.push({ case: 'print·A4 打印版式', ...pm, hiddenBefore, printCalls, fails: f });
+    console.log(f.length ? '✗' : '✓', `print·A4 打印版式（${pm.pages} 页 / ${pm.docH}px）`);
+  }
+  {
+    const s = await rpc('Page.captureScreenshot', { format: 'png', fromSurface: true, captureBeyondViewport: true }, sessionId);
+    writeFileSync(join(OUT, 'about-print.png'), Buffer.from(s.data, 'base64'));
+    /* PDF 只出到临时目录：每跑一次字节都变，不进仓库；要看真实分页再手动打开 */
+    const pdf = await rpc('Page.printToPDF', {
+      printBackground: true, preferCSSPageSize: true,
+      paperWidth: 8.27, paperHeight: 11.69, marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    }, sessionId);
+    const tmp = 'C:/Users/Administrator/AppData/Local/Temp/hyweb-resume.pdf';
+    writeFileSync(tmp, Buffer.from(pdf.data, 'base64'));
+    console.log('  · PDF 样例', tmp, (Buffer.from(pdf.data, 'base64').length / 1024).toFixed(0) + 'KB');
+  }
+  /* 必须清干净：后面的门禁用例跑的是屏幕媒体，留着 print 会量错 */
+  await rpc('Emulation.setEmulatedMedia', { media: '' }, sessionId);
+  await sleep(200);
+
+  /* 打完收工：afterprint 要把打印前那个筛选条件原样还回去，
+     否则用户关掉打印框会发现「我刚才只看得到工作经历，怎么全冒出来了」 */
+  await evalIn(`(() => { window.dispatchEvent(new Event('afterprint')); return 1; })()`, sessionId);
+  await sleep(300);
+  const back = JSON.parse(await evalIn(`(() => {
+    const act = document.querySelector('.filter-tag.active');
+    return JSON.stringify({
+      kind: act ? act.getAttribute('data-kind') : null,
+      hidden: [].slice.call(document.querySelectorAll('.tl-item')).filter((e) => getComputedStyle(e).display === 'none').length,
+      total: document.querySelectorAll('.tl-item').length,
+    });
+  })()`, sessionId));
+  {
+    const f = [];
+    if (back.kind !== 'work') f.push(`打印后筛选回到了 ${back.kind}，不是打印前的 work`);
+    if (hiddenBefore && back.hidden !== hiddenBefore) f.push(`打印后藏了 ${back.hidden} 条，打印前是 ${hiddenBefore} 条`);
+    report.push({ case: 'print·打完回到原状', ...back, fails: f });
+    console.log(f.length ? '✗' : '✓', `print·打完回到原状（${back.total} 条里藏 ${back.hidden} 条）`);
+  }
+
   /* ---------- 门禁：没钥匙进不来 · 静态导航里搜不到 · 解锁后页签才出现 ---------- */
   const NAV_TEST = `(() => {
     const names = (sel) => [].slice.call(document.querySelectorAll(sel + ' a')).map((a) => a.textContent.trim());
