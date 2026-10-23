@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>关于 · 简历 | 弘1</title>
+<meta name="description" content="弘1（Immerse）的简历页：时间轴式经历、能力矩阵与联系方式。" />
+<link rel="icon" href="assets/img/avatar.svg" type="image/svg+xml" />
+
+<!-- ==========================================================
+     预览稿 v2 · 未合并入项目
+     ----------------------------------------------------------
+     统一感来自哪里（刻意不动的部分）：
+       · 色彩只用 clone.css 的 zinc 令牌，不新增色相
+       · 字体仍是衬线/无衬线/等宽三栈，零 webfont
+       · 页头、主题按钮、页签、pill、描边按钮全部复用现成组件
+       · 虚线引导线（首页 .leader）被放大成本页的主视觉母题
+       · 顶部阅读进度条 = 详情页已有组件
+     胆量放在哪（可以按 DESIGN.md 争议掉的）：
+       · 版式尺度：巨型衬线名字 / 粘性大年份 / 数字条
+       · 全站一层点阵底纹、节点辉光（=破「禁止阴影」）
+       · 遮罩行进场、错峰淡入、计数滚动、刻度矩阵逐格升起
+       · 下载按钮的三段填充（致敬 intro.html 的 ENTER）
+     ⚠️占位标记 = 需要换成真实数据的 5 处。
+     ========================================================== -->
+<link rel="stylesheet" href="assets/css/clone.css?v=12" />
+<script>
+(function () {
+  try {
+    var theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+
+<style>
+/* ---------- 0. 底纹与滚动进度 ---------- */
+body.about-page {
+  background-image: radial-gradient(hsl(var(--foreground) / 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+}
+.dark  body.about-page { background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px); }
+
+/* ---------- 1. 遮罩行进场：本页标志性动效 ---------- */
+.mask { display: block; overflow: hidden; }
+.mask > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.is-in .mask > span,
+.mask.is-in > span { transform: none; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- 2. HERO ---------- */
+.about-hero { position: relative; padding-top: 0.5rem; }
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+.hero-kicker .leader { display: block; flex: 1; min-width: 2rem; }
+
+/* 幽灵大字：随滚动做微弱视差，只负责"这里有东西"的气场 */
+.hero-ghost {
+  position: absolute;
+  right: 0;
+  top: -1.5rem;
+  z-index: -1;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: clamp(4.5rem, 15vw, 11rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: hsl(var(--foreground) / 0.05);
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+/* 小屏不放幽灵字：宽度不够，压到正文就是噪声 */
+@media (max-width: 767px) { .hero-ghost { display: none; } }
+
+.hero-name {
+  margin: 0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: clamp(3rem, 11vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: hsl(var(--foreground));
+}
+.hero-name .en {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.2em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: hsl(var(--muted-foreground));
+  vertical-align: 0.62em;
+  margin-left: 0.5rem;
+}
+
+.hero-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.875rem;
+  margin: 1.25rem 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  color: hsl(var(--muted-foreground));
+}
+.hero-sub b { font-weight: 500; color: hsl(var(--foreground)); }
+/* 分隔符挂在条目自身前面：换行时不会被甩到上一行行尾 */
+.hero-sub > * { white-space: nowrap; }
+.hero-sub > * + *::before {
+  content: "/";
+  margin-right: 0.875rem;
+  opacity: 0.35;
+  font-weight: 400;
+}
+
+.hero-lead {
+  margin: 1.5rem 0 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: hsl(var(--muted-foreground));
+}
+.hero-lead strong { color: hsl(var(--foreground)); font-weight: 600; }
+
+/* 现场感：本地时钟，等宽字体，秒级跳动 */
+.hero-clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 9999px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+.hero-clock .dot {
+  width: 0.375rem; height: 0.375rem;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+/* ---------- 3. 数字条 ---------- */
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 3rem;
+  border-top: 1px solid hsl(var(--border));
+}
+@media (min-width: 768px) { .stat-band { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stat {
+  padding: 1.25rem 0 1.375rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+@media (min-width: 768px) {
+  .stat { padding-left: 1.25rem; border-bottom: none; border-left: 1px dashed hsl(var(--border)); }
+  .stat:first-child { padding-left: 0; border-left: none; }
+}
+.stat-num {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: clamp(1.875rem, 5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: hsl(var(--foreground));
+  font-variant-numeric: tabular-nums;
+}
+.stat-num .unit {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}
+.stat-label {
+  margin-top: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+/* ---------- 4. 小节标题（虚线引导线母题） ---------- */
+.about-section { margin-top: 4.5rem; }
+.section-head {
+  display: grid;
+  grid-template-columns: max-content minmax(0, auto) minmax(32px, 1fr) max-content;
+  column-gap: 0.75rem;
+  align-items: baseline;
+}
+.section-no {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+.section-head h2 {
+  margin: 0;
+  min-width: 0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.section-head .leader { display: block; }
+.section-en {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.6;
+}
+.section-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: hsl(var(--muted-foreground));
+}
+
+/* ---------- 5. 时间轴 ---------- */
+.timeline { position: relative; margin-top: 1.5rem; }
+
+/* 脊线：未走部分是虚线（同引导线母题），走过部分是实心主色 + 一枚游标 */
+.tl-rail {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 1.5rem;
+  left: 0.5rem;
+  width: 1px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(to bottom,
+    hsl(var(--muted-foreground) / 0.45) 0 3px, transparent 3px 7px);
+}
+.tl-rail-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: hsl(var(--primary));
+  transform-origin: top center;
+  transform: scaleY(var(--fill, 0));
+  transition: transform 0.1s linear;
+}
+.tl-head {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--fill, 0) * 100%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.12), 0 0 12px hsl(var(--primary) / 0.35);
+  transition: top 0.1s linear;
+  opacity: var(--head-on, 0);
+}
+
+.tl-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 1.5rem;
+  padding: 1.75rem 1rem 1.75rem 1.75rem;
+  border-radius: var(--radius);
+  transition: background-color 0.25s;
+}
+@media (min-width: 768px) {
+  .tl-item { grid-template-columns: 12.5rem minmax(0, 1fr); }
+}
+.tl-item:hover { background-color: hsl(var(--accent)); }
+
+.tl-node {
+  position: absolute;
+  top: 2.25rem;
+  left: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--muted-foreground) / 0.6);
+  background: hsl(var(--background));
+  transform: translateX(-50%);
+  transition: background-color 0.35s, border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+}
+.tl-item.is-lit .tl-node {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--primary));
+  transform: translateX(-50%) scale(1.2);
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.14);
+}
+
+/* 左栏：粘性大年份 —— 滚动时年份"钉"住，条目走完才换下一个 */
+.tl-when { align-self: start; }
+@media (min-width: 768px) {
+  .tl-when { position: sticky; top: 5.5rem; }
+}
+.tl-year {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: hsl(var(--muted-foreground) / 0.55);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.35s;
+}
+.tl-item.is-lit .tl-year,
+.tl-item:hover .tl-year { color: hsl(var(--foreground)); }
+.tl-when .tl-range {
+  display: block;
+  margin-top: 0.375rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  transition: transform 0.25s;
+}
+.tl-item:hover .tl-range { transform: translateX(2px); }
+.tl-when .tl-dur {
+  display: block;
+  margin-top: 0.125rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.55;
+}
+
+/* 小屏：年份与区间同一行显示，避免占两行 */
+@media (max-width: 767px) {
+  .tl-year { font-size: 1.375rem; }
+  .tl-when { display: flex; align-items: baseline; gap: 0.375rem 0.625rem; flex-wrap: wrap; }
+  .tl-when .tl-range { margin-top: 0.125rem; }
+  .tl-when .tl-dur { flex-basis: 100%; margin-top: 0; opacity: 0.45; }
+}
+
+.tl-index {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.6;
+}
+.tl-title {
+  margin: 0.25rem 0 0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.tl-role {
+  margin: 0.375rem 0 0;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
+.tl-points {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 56rem;
+}
+.tl-points li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: hsl(var(--muted-foreground));
+}
+.tl-points li b { color: hsl(var(--foreground)); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tl-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 0.5rem;
+  height: 1px;
+  background: hsl(var(--muted-foreground) / 0.55);
+}
+/* pill 复用 .work-tags（含暗色硬编码 #18181880） */
+.tl-item .work-tags { margin-top: 1rem; }
+
+/* ---------- 6. 能力矩阵 ---------- */
+.skill-matrix {
+  display: grid;
+  gap: 0;
+  margin-top: 2rem;
+  border-top: 1px solid hsl(var(--border));
+}
+.skill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  padding: 1rem 0.5rem 1rem 0;
+  border-bottom: 1px solid hsl(var(--border));
+  transition: background-color 0.2s, padding-left 0.25s;
+}
+.skill-row:hover { background-color: hsl(var(--accent)); padding-left: 0.75rem; }
+.skill-name {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.skill-name em {
+  margin-left: 0.625rem;
+  font-style: normal;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.7;
+}
+.skill-meter { display: flex; align-items: center; gap: 1.25rem; justify-self: end; }
+.meter { display: inline-flex; align-items: flex-end; gap: 2px; height: 1.125rem; }
+.meter i {
+  width: 3px;
+  height: 35%;
+  border-radius: 1px;
+  background: hsl(var(--border));
+  transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s;
+}
+.meter i.on { height: 100%; background: hsl(var(--primary)); }
+.skill-val {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  font-variant-numeric: tabular-nums;
+  min-width: 2.75rem;
+  text-align: right;
+}
+@media (max-width: 639px) {
+  .skill-row { grid-template-columns: minmax(0, 1fr); }
+  .skill-meter { justify-self: start; margin-top: 0.25rem; }
+}
+
+.skill-extra { margin-top: 1.5rem; }
+.skill-extra .skill-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+.skill-extra .work-tags { margin-top: 0.75rem; }
+
+/* ---------- 7. 联系与操作 ---------- */
+.contact-list { margin: 2rem 0 0; padding: 0; list-style: none; border-top: 1px solid hsl(var(--border)); }
+.contact-list li { border-bottom: 1px solid hsl(var(--border)); }
+.contact-list a {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.125rem 0.5rem 1.125rem 0;
+  transition: background-color 0.2s, padding-left 0.25s;
+}
+.contact-list a:hover { background-color: hsl(var(--accent)); padding-left: 0.75rem; }
+.contact-key {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  color: hsl(var(--muted-foreground));
+}
+.contact-val {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+.contact-list .work-go { grid-column: 3; }
+
+.about-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; }
+.about-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  overflow: hidden;
+  transition: color 0.3s, border-color 0.3s;
+}
+.about-btn > span, .about-btn > svg { position: relative; z-index: 1; }
+.about-btn svg { width: 1rem; height: 1rem; }
+.about-btn:hover { border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+/* 三段填充：intro.html 的 ENTER 按钮语言 */
+.btn-fill { position: absolute; inset: 0; z-index: 0; display: flex; }
+.btn-fill span {
+  flex: 1;
+  background: hsl(var(--primary));
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+.btn-fill span:nth-child(2) { transition-delay: 0.05s; }
+.btn-fill span:nth-child(3) { transition-delay: 0.1s; }
+.about-btn:hover .btn-fill span { transform: none; }
+
+.about-foot { padding-bottom: 6rem; }
+
+/* ---------- 8. 减弱动效 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .mask > span { transform: none; transition: none; }
+  .tl-rail-fill, .tl-head, .tl-node, .tl-item, .tl-range, .tl-year { transition: none; }
+  .meter i { transition: none; }
+  .hero-clock .dot { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- 预览批注（合并时整块删除） ---------- */
+.preview-note {
+  margin-top: 4.5rem;
+  padding: 1.25rem;
+  border: 1px dashed hsl(var(--muted-foreground) / 0.5);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  line-height: 1.625;
+  color: hsl(var(--muted-foreground));
+}
+.preview-note h3 {
+  margin: 0 0 0.625rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: hsl(var(--foreground));
+}
+.preview-note ul { margin: 0; padding-left: 1.25rem; }
+.preview-note code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+}
+</style>
+</head>
+<body class="about-page">
+<noscript><style>
+  /* 无 JS 兜底：进场元素直接呈现终态，脊线不填充 */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .mask > span { transform: none !important; }
+</style></noscript>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="header-row">
+      <a class="brand" href="#" aria-label="弘1">
+        <span class="brand-avatar"><img src="assets/img/avatar.svg" alt="弘1" width="44" height="44" /></span>
+        <span class="brand-name">弘1</span>
+      </a>
+
+      <div class="header-actions">
+        <nav class="main-nav">
+          <a href="index.html">首页</a>
+          <a href="projects.html">项目</a>
+          <a href="favorites.html">收藏推荐</a>
+          <a href="about.html" class="active">关于</a><!-- 预览新增页签 -->
+        </nav>
+
+        <div class="quick-actions">
+          <button class="theme-toggle" aria-label="切换主题">
+            <span class="icon-slot">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </span>
+          </button>
+
+          <button class="rss-btn" title="RSS Feed" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          </button>
+
+          <a class="coffee" href="#" title="请我喝咖啡 ☕">
+            <span class="coffee-inner">
+              <span class="coffee-emoji">☕</span>
+              <span class="coffee-glow"></span>
+              <span class="coffee-heart">❤️</span>
+            </span>
+          </a>
+
+          <button class="mobile-menu-btn" type="button" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="移动端导航">
+    <a href="index.html">首页</a>
+    <a href="projects.html">项目</a>
+    <a href="favorites.html">收藏推荐</a>
+    <a href="about.html" class="active">关于</a>
+  </nav>
+</header>
+
+<!-- 顶部阅读进度条：详情页同款组件 -->
+<div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="flex-1">
+  <div class="container shorts-wrap about-foot">
+
+    <!-- ===== HERO ===== -->
+    <section class="about-hero" id="sec-hero">
+      <span class="hero-ghost" id="heroGhost" aria-hidden="true">RESUME</span>
+
+      <p class="hero-kicker reveal">
+        <span>2026 · 简历</span><span class="leader"></span><span>HANGZHOU / CN</span>
+      </p>
+
+      <h1 class="hero-name">
+        <span class="mask"><span>弘 1<i class="en">IMMERSE</i></span></span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        <b>高级前端工程师</b>
+        <span>6 年经验</span>
+        <span>独立开发</span>
+        <span>AI 协作</span>
+      </p>
+
+      <!-- ⚠️占位：简介文案按真实情况改写 -->
+      <p class="hero-lead reveal">
+        左栏是时间，右栏是我做了什么。我写简历和写代码用同一个习惯——
+        <strong>只写能验证的事实，每个数字都有出处。</strong>
+        其余时间我把一半精力花在把决策写下来：DESIGN.md 是我的第二语言。
+      </p>
+
+      <span class="hero-clock"><span class="dot"></span><span id="heroClock">--:--:--</span><span>杭州 · 在线</span></span>
+    </section>
+
+    <!-- ===== 数字条 ===== -->
+    <div class="stat-band" id="statBand">
+      <!-- ⚠️占位：数字与口径 -->
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="6">0</span><span class="unit">年</span></div>
+        <div class="stat-label">前端工程经验</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="42">0</span><span class="unit">个</span></div>
+        <div class="stat-label">一次替换上线的组件</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="1.1" data-dec="1">0</span><span class="unit">s</span></div>
+        <div class="stat-label">核心页首屏 LCP</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="6">0</span><span class="unit">款</span></div>
+        <div class="stat-label">独立上线的产品</div>
+      </div>
+    </div>
+
+    <!-- ===== 01 经历 ===== -->
+    <section class="about-section" id="sec-exp">
+      <div class="section-head reveal">
+        <span class="section-no">01</span>
+        <h2>经历</h2>
+        <span class="leader"></span>
+        <span class="section-en">Experience</span>
+      </div>
+      <p class="section-note reveal">脊线随阅读进度填充；滚到哪一段，哪一年的字号就醒来。</p>
+
+      <!-- 页签复用收藏推荐页 .filter-bar / .filter-tag -->
+      <div class="filter-bar reveal" id="tlFilter">
+        <button class="filter-tag active" data-kind="all" type="button">全部 <span class="cnt">(4)</span></button>
+        <button class="filter-tag" data-kind="work" type="button">工作 <span class="cnt">(2)</span></button>
+        <button class="filter-tag" data-kind="project" type="button">独立开发 <span class="cnt">(1)</span></button>
+        <button class="filter-tag" data-kind="edu" type="button">教育 <span class="cnt">(1)</span></button>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <div class="tl-rail" id="tlRail" aria-hidden="true"><span class="tl-rail-fill" id="tlFill"></span><span class="tl-head"></span></div>
+
+        <!-- ⚠️占位：以下 4 段经历为示例内容 -->
+        <article class="tl-item reveal" data-kind="work" data-year="2024">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2024</span>
+            <time class="tl-range">2024.06 — 至今</time>
+            <span class="tl-dur">在职 1 年 4 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 01 / CURRENT</span>
+            <h3 class="tl-title">云枢科技 · 前端平台组</h3>
+            <p class="tl-role">高级前端工程师 / 设计系统 owner（带 4 人小组）</p>
+            <ul class="tl-points">
+              <li>主导设计系统重构，<b>42</b> 个组件一次性替换零停机上线；核心页面首屏 LCP 从 3.2s 降到 <b>1.1s</b>。</li>
+              <li>发布流程从手工脚本改为 CI 校验 + 全站版本号自动 bump，回滚耗时 <b>40min → 3min</b>。</li>
+              <li>建立视觉回归基线（Playwright 截图 diff），上线前累计拦下 <b>30+</b> 处像素级偏差。</li>
+            </ul>
+            <div class="work-tags"><span>TypeScript</span><span>React</span><span>Vite</span><span>Playwright</span><span>Design System</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="work" data-year="2021">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2021</span>
+            <time class="tl-range">2021.03 — 2024.05</time>
+            <span class="tl-dur">3 年 3 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 02</span>
+            <h3 class="tl-title">拾光网络 · 内容技术部</h3>
+            <p class="tl-role">前端工程师</p>
+            <ul class="tl-points">
+              <li>从 0 搭建内容站矩阵（SSG + 增量构建），<b>5</b> 个站点共用一套模板，文章产出量提升 <b>3 倍</b>。</li>
+              <li>重写播放器交互层，移动端播放失败率 <b>2.1% → 0.4%</b>。</li>
+              <li>推动无障碍改造，核心链路通过 <b>WCAG 2.1 AA</b>。</li>
+            </ul>
+            <div class="work-tags"><span>Vue</span><span>Nuxt</span><span>Node.js</span><span>a11y</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="project" data-year="2020">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2020</span>
+            <time class="tl-range">2020.01 — 2021.02</time>
+            <span class="tl-dur">1 年 2 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 03 / SOLO</span>
+            <h3 class="tl-title">一人公司</h3>
+            <p class="tl-role">独立开发 / 外包</p>
+            <ul class="tl-points">
+              <li>上线 <b>6</b> 个小产品，其中 2 个持续盈利；设计、开发、部署、客服全部自己完成。</li>
+              <li>养出了「先写 DESIGN.md 再写代码」的习惯——这个博客本身就是这套流程的产物。</li>
+            </ul>
+            <div class="work-tags"><span>Next.js</span><span>Cloudflare</span><span>文案</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="edu" data-year="2016">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2016</span>
+            <time class="tl-range">2016.09 — 2020.06</time>
+            <span class="tl-dur">4 年</span>
+          </div>
+          <div>
+            <span class="tl-index">EDU — 04</span>
+            <h3 class="tl-title">之江大学 · 计算机科学与技术</h3>
+            <p class="tl-role">本科（工学学士）</p>
+            <ul class="tl-points">
+              <li>毕业设计：面向中文排版的网页栅格还原工具。</li>
+              <li>在校期间开始接外包，从此没有离开前端。</li>
+            </ul>
+            <div class="work-tags"><span>数据结构</span><span>图形学入门</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 02 能力矩阵 ===== -->
+    <section class="about-section" id="sec-skills">
+      <div class="section-head reveal">
+        <span class="section-no">02</span>
+        <h2>能力矩阵</h2>
+        <span class="leader"></span>
+        <span class="section-en">Stack</span>
+      </div>
+
+      <!-- ⚠️占位：以下刻度与自评按真实情况调整 -->
+      <div class="skill-matrix" id="skillMatrix">
+        <div class="skill-row reveal">
+          <div class="skill-name">CSS 与排版<em>LAYOUT</em></div>
+          <div class="skill-meter"><span class="meter" data-level="10"></span><span class="skill-val">10/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">TypeScript<em>TS</em></div>
+          <div class="skill-meter"><span class="meter" data-level="9"></span><span class="skill-val">9/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">React / Vue<em>FRAMEWORK</em></div>
+          <div class="skill-meter"><span class="meter" data-level="9"></span><span class="skill-val">9/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">构建与性能<em>BUILD · PERF</em></div>
+          <div class="skill-meter"><span class="meter" data-level="8"></span><span class="skill-val">8/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">Node 与部署<em>DEVOPS</em></div>
+          <div class="skill-meter"><span class="meter" data-level="7"></span><span class="skill-val">7/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">AI 协作与 Agent<em>AGENT</em></div>
+          <div class="skill-meter"><span class="meter" data-level="8"></span><span class="skill-val">8/10</span></div>
+        </div>
+      </div>
+
+      <div class="skill-extra reveal">
+        <div class="work-tags">
+          <span>Vite</span><span>Playwright</span><span>Tailwind</span><span>设计令牌体系</span>
+          <span>双主题</span><span>视觉回归</span><span>CI/CD</span><span>可观测性</span>
+          <span>Prompt 工程</span><span>上下文管理</span><span>把 AI 当同事</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 03 联系 ===== -->
+    <section class="about-section" id="sec-contact">
+      <div class="section-head reveal">
+        <span class="section-no">03</span>
+        <h2>联系</h2>
+        <span class="leader"></span>
+        <span class="section-en">Contact</span>
+      </div>
+
+      <!-- ⚠️占位：邮箱 / GitHub / 微信换成真实值 -->
+      <ul class="contact-list">
+        <li><a href="mailto:immerse@example.com" class="reveal">
+          <span class="contact-key">EMAIL</span>
+          <span class="contact-val">immerse@example.com</span>
+          <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+        </a></li>
+        <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="reveal">
+          <span class="contact-key">GITHUB</span>
+          <span class="contact-val">github.com/immerse</span>
+          <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+        </a></li>
+        <li><a href="#" class="reveal">
+          <span class="contact-key">WECHAT</span>
+          <span class="contact-val">immerse_1</span>
+          <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+        </a></li>
+      </ul>
+
+      <div class="about-actions reveal">
+        <!-- ⚠️占位：href 换成真实 PDF（合并时放 assets/docs/） -->
+        <a class="about-btn" href="#" download>
+          <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>下载简历 PDF</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m6 9 6 6 6-6"/><path d="M4 21h16"/></svg>
+        </a>
+        <a class="about-btn" href="mailto:immerse@example.com">
+          <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>写邮件给我</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 预览批注（合并时删除这一块） -->
+    <aside class="preview-note">
+      <h3>PREVIEW NOTES · 尚未合并 / v2 出挑版</h3>
+      <ul>
+        <li>5 处 <code>⚠️占位</code>：身份条与简介、4 段经历、能力刻度、联系方式、PDF 链接。</li>
+        <li>破格项清单（要你点头才落地）：全站点阵底纹、节点辉光（破 DESIGN 2.3 禁止阴影）、巨型名字与粘性年份、数字滚动、能力刻度条、按钮三段填充。</li>
+        <li>合并动作：head 内 <code>&lt;style&gt;</code> 整段移入 <code>clone.css</code> 新增第五节；内联脚本 1~2 段删掉改用 <code>clone.js</code>，3~8 段并入 <code>clone.js</code>；五页导航加「关于」；版本号 <code>v=12 → v=13</code>；DESIGN.md 补 3.9「简历页」与 8.4 页面清单。</li>
+        <li>已按 prefers-reduced-motion 全部关掉动效。</li>
+      </ul>
+    </aside>
+
+  </div>
+</main>
+
+<script>
+/* 预览专用脚本（合并时按编号并入 clone.js） */
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. 主题切换（同 clone.js 第 2 节） */
+  var toggle = document.querySelector('.theme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var next = root.classList.contains('dark') ? 'light' : 'dark';
+      root.classList.remove('light', 'dark');
+      root.classList.add(next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
+
+  /* 2. 移动端菜单（同 clone.js 第 9 节） */
+  (function () {
+    var btn = document.querySelector('.mobile-menu-btn');
+    var menu = document.querySelector('.mobile-menu');
+    if (!btn || !menu) return;
+    var setOpen = function (open) {
+      menu.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
+    document.addEventListener('click', function (e) {
+      if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== btn) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 768) setOpen(false); });
+  })();
+
+  /* 3. 刻度条：用 span 生成 10 格，逐格错峰升起 */
+  var meters = document.querySelectorAll('.meter');
+  meters.forEach(function (m) {
+    var level = parseInt(m.getAttribute('data-level'), 10) || 0;
+    for (var i = 0; i < 10; i++) {
+      var bar = document.createElement('i');
+      if (i < level) bar.className = 'on';
+      if (!reduce) bar.style.transitionDelay = (i * 40) + 'ms';
+      m.appendChild(bar);
+    }
+  });
+
+  /* 4. 进场：IntersectionObserver（淡入上浮 + 遮罩行 + 数字滚动 + 刻度点亮） */
+  var hero = document.querySelector('.about-hero');
+  var revealEls = [].slice.call(document.querySelectorAll('.reveal, .mask'));
+
+  var playStats = function () {
+    document.querySelectorAll('.num').forEach(function (el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce) { el.textContent = target.toFixed(dec); return; }
+      var dur = 1100, t0 = null;
+      var step = function (ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);      /* easeOutCubic */
+        el.textContent = (target * eased).toFixed(dec);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  };
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('is-in'); });
+    playStats();
+  } else {
+    var group = 0;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        el.style.transitionDelay = ((group++ % 4) * 80) + 'ms';   /* 同屏错峰，上限 240ms */
+        el.classList.add('is-in');
+        io.unobserve(el);
+        if (el.id === 'statBand') playStats();
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+
+    revealEls.forEach(function (el) { io.observe(el); });
+    var band = document.getElementById('statBand');
+    if (band) io.observe(band);
+    if (hero) {
+      var heroName = hero.querySelector('.hero-name');
+      if (heroName) io.observe(heroName);
+    }
+  }
+
+  /* 5. 顶部阅读进度条（详情页逻辑同款） */
+  var bar = document.getElementById('progressBar');
+  var rail = document.getElementById('tlRail');
+  var items = [].slice.call(document.querySelectorAll('.tl-item'));
+  var ghost = document.getElementById('heroGhost');
+  var ticking = false;
+
+  var update = function () {
+    ticking = false;
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var y = window.pageYOffset || doc.scrollTop;
+
+    if (bar) bar.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+
+    /* 时间轴脊线：以视口 45% 高度为「阅读线」 */
+    if (rail) {
+      var rect = rail.getBoundingClientRect();
+      var line = window.innerHeight * 0.45;
+      var h = rect.height || 1;
+      var pct = Math.max(0, Math.min(1, (line - rect.top) / h));
+      rail.style.setProperty('--fill', pct);
+      rail.style.setProperty('--head-on', (pct > 0.002 && pct < 0.999) ? 1 : 0);
+
+      items.forEach(function (it) {
+        if (it.style.display === 'none') return;
+        var node = it.querySelector('.tl-node');
+        if (!node) return;
+        var nr = node.getBoundingClientRect();
+        it.classList.toggle('is-lit', (nr.top + nr.height / 2) <= line);
+      });
+    }
+
+    /* 幽灵大字：微弱视差，只做纵深 */
+    if (ghost && !reduce) ghost.style.transform = 'translateY(' + Math.min(y * 0.12, 120) + 'px)';
+  };
+
+  var onScroll = function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+
+  /* 6. 类别筛选（收藏推荐页同款行为） */
+  var filterBar = document.getElementById('tlFilter');
+  if (filterBar) {
+    filterBar.addEventListener('click', function (e) {
+      var tag = e.target.closest('.filter-tag');
+      if (!tag) return;
+      filterBar.querySelector('.filter-tag.active').classList.remove('active');
+      tag.classList.add('active');
+      var kind = tag.getAttribute('data-kind');
+      items.forEach(function (it) {
+        var ok = kind === 'all' || it.getAttribute('data-kind') === kind;
+        it.style.display = ok ? '' : 'none';
+        if (ok) it.classList.add('is-in');
+      });
+      update();
+    });
+  }
+
+  /* 7. 现场时钟：固定取东八区墙钟，与"杭州"标签一致，不受访问者本机时区影响 */
+  (function () {
+    var out = document.getElementById('heroClock');
+    if (!out) return;
+    var fmt = null;
+    try {
+      fmt = new Intl.DateTimeFormat('zh-CN', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false, timeZone: 'Asia/Shanghai'
+      });
+    } catch (e) {}
+    var tick = function () {
+      var d = new Date();
+      out.textContent = fmt
+        ? fmt.format(d)
+        : (function (p) { return p.map(function (n) { return (n < 10 ? '0' : '') + n; }).join(':'); })
+            ([d.getHours(), d.getMinutes(), d.getSeconds()]);
+    };
+    tick();
+    setInterval(tick, 1000);
+  })();
+})();
+</script>
+</body>
+</html>
