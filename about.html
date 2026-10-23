@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>关于 · 简历 | 弘1</title>
+<meta name="description" content="弘1（Immerse）的简历页：时间轴式经历、项目作品、能力矩阵与联系方式。" />
+<link rel="icon" href="assets/img/avatar.svg" type="image/svg+xml" />
+
+<!-- 本页不进搜索引擎、不进 sitemap；离开本页时不把地址交给外部站 -->
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<meta name="referrer" content="no-referrer" />
+<link rel="stylesheet" href="assets/css/clone.css?v=13" />
+<link rel="stylesheet" href="assets/css/about.css?v=13" />
+<script src="assets/js/access.js?v=13"></script>
+<script>
+(function () {
+  try {
+    var theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+
+</head>
+<body class="about-page">
+<noscript><style>
+  /* 无 JS 兜底：进场元素直接呈现终态，脊线不填充 */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .mask > span { transform: none !important; }
+</style></noscript>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="header-row">
+      <a class="brand" href="#" aria-label="弘1">
+        <span class="brand-avatar"><img src="assets/img/avatar.svg" alt="弘1" width="44" height="44" /></span>
+        <span class="brand-name">弘1</span>
+      </a>
+
+      <div class="header-actions">
+        <nav class="main-nav">
+          <a href="index.html">首页</a>
+          <a href="projects.html">项目</a>
+          <a href="favorites.html">收藏推荐</a>
+        </nav>
+
+        <div class="quick-actions">
+          <button class="theme-toggle" aria-label="切换主题">
+            <span class="icon-slot">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </span>
+          </button>
+
+          <button class="rss-btn" title="RSS Feed" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          </button>
+
+          <a class="coffee" href="#" title="请我喝咖啡 ☕">
+            <span class="coffee-inner">
+              <span class="coffee-emoji">☕</span>
+              <span class="coffee-glow"></span>
+              <span class="coffee-heart">❤️</span>
+            </span>
+          </a>
+
+          <button class="mobile-menu-btn" type="button" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="移动端导航">
+    <a href="index.html">首页</a>
+    <a href="projects.html">项目</a>
+    <a href="favorites.html">收藏推荐</a>
+  </nav>
+</header>
+
+<!-- 顶部阅读进度条：详情页同款组件 -->
+<div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="flex-1">
+  <div class="container shorts-wrap about-foot">
+
+    <!-- ===== HERO ===== -->
+    <section class="about-hero" id="sec-hero">
+      <span class="hero-ghost" id="heroGhost" aria-hidden="true">RESUME</span>
+
+      <p class="hero-kicker reveal">
+        <span>2026 · 简历</span><span class="leader"></span><span>HANGZHOU / CN</span>
+      </p>
+
+      <h1 class="hero-name">
+        <span class="mask"><span>弘 1<i class="en">IMMERSE</i></span></span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        <b>高级前端工程师</b>
+        <span>6 年经验</span>
+        <span>独立开发</span>
+        <span>AI 协作</span>
+      </p>
+
+      <!-- ⚠️占位：简介文案按真实情况改写 -->
+      <p class="hero-lead reveal">
+        左栏是时间，右栏是我做了什么。我写简历和写代码用同一个习惯——
+        <strong>只写能验证的事实，每个数字都有出处。</strong>
+        其余时间我把一半精力花在把决策写下来：DESIGN.md 是我的第二语言。
+      </p>
+
+      <span class="hero-clock"><span class="dot"></span><span id="heroClock">--:--:--</span><span>杭州 · 在线</span></span>
+    </section>
+
+    <!-- ===== 数字条 ===== -->
+    <div class="stat-band" id="statBand">
+      <!-- ⚠️占位：数字与口径 -->
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="6">0</span><span class="unit">年</span></div>
+        <div class="stat-label">前端工程经验</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="42">0</span><span class="unit">个</span></div>
+        <div class="stat-label">一次替换上线的组件</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="1.1" data-dec="1">0</span><span class="unit">s</span></div>
+        <div class="stat-label">核心页首屏 LCP</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="num" data-count="6">0</span><span class="unit">款</span></div>
+        <div class="stat-label">独立上线的产品</div>
+      </div>
+    </div>
+
+    <!-- ===== 01 经历 ===== -->
+    <section class="about-section" id="sec-exp">
+      <div class="section-head reveal">
+        <span class="section-no">01</span>
+        <h2>经历</h2>
+        <span class="leader"></span>
+        <span class="section-en">Experience</span>
+      </div>
+      <p class="section-note reveal">脊线随阅读进度填充；滚到哪一段，哪一年的字号就醒来。</p>
+
+      <!-- 页签复用收藏推荐页 .filter-bar / .filter-tag -->
+      <div class="filter-bar reveal" id="tlFilter">
+        <button class="filter-tag active" data-kind="all" type="button">全部 <span class="cnt">(4)</span></button>
+        <button class="filter-tag" data-kind="work" type="button">工作 <span class="cnt">(2)</span></button>
+        <button class="filter-tag" data-kind="project" type="button">独立开发 <span class="cnt">(1)</span></button>
+        <button class="filter-tag" data-kind="edu" type="button">教育 <span class="cnt">(1)</span></button>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <div class="tl-rail" id="tlRail" aria-hidden="true"><span class="tl-rail-fill" id="tlFill"></span><span class="tl-head"></span></div>
+
+        <!-- ⚠️占位：以下 4 段经历为示例内容 -->
+        <article class="tl-item reveal" data-kind="work" data-year="2024">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2024</span>
+            <time class="tl-range">2024.06 — 至今</time>
+            <span class="tl-dur">在职 1 年 4 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 01 / CURRENT</span>
+            <h3 class="tl-title">云枢科技 · 前端平台组</h3>
+            <p class="tl-role">高级前端工程师 / 设计系统 owner（带 4 人小组）</p>
+            <ul class="tl-points">
+              <li>主导设计系统重构，<b>42</b> 个组件一次性替换零停机上线；核心页面首屏 LCP 从 3.2s 降到 <b>1.1s</b>。</li>
+              <li>发布流程从手工脚本改为 CI 校验 + 全站版本号自动 bump，回滚耗时 <b>40min → 3min</b>。</li>
+              <li>建立视觉回归基线（Playwright 截图 diff），上线前累计拦下 <b>30+</b> 处像素级偏差。</li>
+            </ul>
+            <!-- ⚠️占位：缩略图暂用站内 UI 示意，待换成组件总览与文档站的真实截图 -->
+            <div class="tl-shots">
+              <button type="button" class="tl-shot" data-cap="组件总览 · 42 个">
+                <img src="assets/img/shot-1.svg" alt="设计系统组件总览界面示意" width="800" height="500" loading="lazy" decoding="async" />
+                <em>组件总览 · 42 个</em>
+              </button>
+              <button type="button" class="tl-shot" data-cap="文档站 · 用法即示例">
+                <img src="assets/img/shot-2.svg" alt="组件文档站列表页示意" width="800" height="500" loading="lazy" decoding="async" />
+                <em>文档站 · 用法即示例</em>
+              </button>
+            </div>
+            <div class="work-tags"><span>TypeScript</span><span>React</span><span>Vite</span><span>Playwright</span><span>Design System</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="work" data-year="2021">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2021</span>
+            <time class="tl-range">2021.03 — 2024.05</time>
+            <span class="tl-dur">3 年 3 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 02</span>
+            <h3 class="tl-title">拾光网络 · 内容技术部</h3>
+            <p class="tl-role">前端工程师</p>
+            <ul class="tl-points">
+              <li>从 0 搭建内容站矩阵（SSG + 增量构建），<b>5</b> 个站点共用一套模板，文章产出量提升 <b>3 倍</b>。</li>
+              <li>重写播放器交互层，移动端播放失败率 <b>2.1% → 0.4%</b>。</li>
+              <li>推动无障碍改造，核心链路通过 <b>WCAG 2.1 AA</b>。</li>
+            </ul>
+            <div class="work-tags"><span>Vue</span><span>Nuxt</span><span>Node.js</span><span>a11y</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="project" data-year="2020">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2020</span>
+            <time class="tl-range">2020.01 — 2021.02</time>
+            <span class="tl-dur">1 年 2 个月</span>
+          </div>
+          <div>
+            <span class="tl-index">EXP — 03 / SOLO</span>
+            <h3 class="tl-title">一人公司</h3>
+            <p class="tl-role">独立开发 / 外包</p>
+            <ul class="tl-points">
+              <li>上线 <b>6</b> 个小产品，其中 2 个持续盈利；设计、开发、部署、客服全部自己完成。</li>
+              <li>养出了「先写 DESIGN.md 再写代码」的习惯——这个博客本身就是这套流程的产物。</li>
+            </ul>
+            <!-- ⚠️占位：这三张是仓库里的真实作品封面，但「哪三个属于这段经历」需要你确认 -->
+            <div class="tl-shots">
+              <button type="button" class="tl-shot" data-cap="Inspoweb · 灵感库">
+                <img src="assets/works/inspoweb.jpg" alt="Inspoweb 灵感库首页截图" width="800" height="500" loading="lazy" decoding="async" />
+                <em>Inspoweb</em>
+              </button>
+              <button type="button" class="tl-shot" data-cap="UIUXDeck · 设计清单">
+                <img src="assets/works/uiuxdeck.jpg" alt="UIUXDeck 设计清单页面截图" width="800" height="500" loading="lazy" decoding="async" />
+                <em>UIUXDeck</em>
+              </button>
+              <button type="button" class="tl-shot" data-cap="3D 情人节 · 小工具">
+                <img src="assets/works/3d-valentines.jpg" alt="3D 情人节小工具页面截图" width="800" height="500" loading="lazy" decoding="async" />
+                <em>3D 情人节</em>
+              </button>
+            </div>
+            <div class="work-tags"><span>Next.js</span><span>Cloudflare</span><span>文案</span></div>
+          </div>
+        </article>
+
+        <article class="tl-item reveal" data-kind="edu" data-year="2016">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="tl-when">
+            <span class="tl-year">2016</span>
+            <time class="tl-range">2016.09 — 2020.06</time>
+            <span class="tl-dur">4 年</span>
+          </div>
+          <div>
+            <span class="tl-index">EDU — 04</span>
+            <h3 class="tl-title">之江大学 · 计算机科学与技术</h3>
+            <p class="tl-role">本科（工学学士）</p>
+            <ul class="tl-points">
+              <li>毕业设计：面向中文排版的网页栅格还原工具。</li>
+              <li>在校期间开始接外包，从此没有离开前端。</li>
+            </ul>
+            <div class="work-tags"><span>数据结构</span><span>图形学入门</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 02 项目展示 ===== -->
+    <section class="about-section" id="sec-works">
+      <div class="section-head reveal">
+        <span class="section-no">02</span>
+        <h2>项目</h2>
+        <span class="leader"></span>
+        <span class="section-en">Works</span>
+      </div>
+      <!-- ⚠️占位：卡片沿用项目页母版，四段简介与标签待本人逐条复核 -->
+      <p class="section-note reveal">四个还在跑着的东西。前三张跳外站，最后一张留在站内——它是这套做法自己的记录。</p>
+
+      <div class="works-grid about-works">
+        <a class="work-card reveal" href="https://portfolio.ricoui.com/" target="_blank" rel="noopener noreferrer">
+          <div class="work-preview"><img src="assets/works/ricoui.jpg" alt="Ricoui Portfolio 站点首页截图" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-head">
+            <div class="work-title">
+              <h3>Ricoui Portfolio</h3>
+              <p>个人作品集站点，模板已开源；中文排版和栅格还原是它的底子。</p>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          </div>
+          <div class="work-tags"><span>Portfolio</span><span>Open Source</span><span>Next.js</span></div>
+        </a>
+
+        <a class="work-card reveal" href="https://gradientshub.com/" target="_blank" rel="noopener noreferrer">
+          <div class="work-preview"><img src="assets/works/gradientshub.jpg" alt="GradientsHub 站点首页截图" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-head">
+            <div class="work-title">
+              <h3>GradientsHub</h3>
+              <p>渐变资源与网页小工具合集，一个人做完设计、开发和部署。</p>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          </div>
+          <div class="work-tags"><span>Gradient</span><span>Resource</span><span>Tools</span></div>
+        </a>
+
+        <a class="work-card reveal" href="https://ricoog.com/" target="_blank" rel="noopener noreferrer">
+          <div class="work-preview"><img src="assets/works/ricoog.jpg" alt="RicoOG 站点首页截图" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-head">
+            <div class="work-title">
+              <h3>RicoOG</h3>
+              <p>Open Graph 封面灵感库，抓图、归类、预览一屏做完。</p>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          </div>
+          <div class="work-tags"><span>Open Graph</span><span>Inspiration</span><span>Tools</span></div>
+        </a>
+
+        <!-- 站内链接：不跳外站，箭头换成右箭头 -->
+        <a class="work-card reveal" href="post-pixels.html">
+          <div class="work-preview"><img src="assets/img/shot-3.svg" alt="弘1 博客界面示意" width="800" height="500" loading="lazy" decoding="async" /></div>
+          <div class="work-head">
+            <div class="work-title">
+              <h3>弘1 · 本站</h3>
+              <p>你正在看的这个博客：先写 DESIGN.md 再写代码，17 像素的偏差也要记一篇。</p>
+            </div>
+            <span class="work-go" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></span>
+          </div>
+          <div class="work-tags"><span>本站</span><span>零依赖</span><span>开发记录</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== 03 能力矩阵 ===== -->
+    <section class="about-section" id="sec-skills">
+      <div class="section-head reveal">
+        <span class="section-no">03</span>
+        <h2>能力矩阵</h2>
+        <span class="leader"></span>
+        <span class="section-en">Stack</span>
+      </div>
+
+      <!-- ⚠️占位：以下刻度与自评按真实情况调整 -->
+      <div class="skill-matrix" id="skillMatrix">
+        <div class="skill-row reveal">
+          <div class="skill-name">CSS 与排版<em>LAYOUT</em></div>
+          <div class="skill-meter"><span class="meter" data-level="10"></span><span class="skill-val">10/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">TypeScript<em>TS</em></div>
+          <div class="skill-meter"><span class="meter" data-level="9"></span><span class="skill-val">9/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">React / Vue<em>FRAMEWORK</em></div>
+          <div class="skill-meter"><span class="meter" data-level="9"></span><span class="skill-val">9/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">构建与性能<em>BUILD · PERF</em></div>
+          <div class="skill-meter"><span class="meter" data-level="8"></span><span class="skill-val">8/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">Node 与部署<em>DEVOPS</em></div>
+          <div class="skill-meter"><span class="meter" data-level="7"></span><span class="skill-val">7/10</span></div>
+        </div>
+        <div class="skill-row reveal">
+          <div class="skill-name">AI 协作与 Agent<em>AGENT</em></div>
+          <div class="skill-meter"><span class="meter" data-level="8"></span><span class="skill-val">8/10</span></div>
+        </div>
+      </div>
+
+      <div class="skill-extra reveal">
+        <div class="work-tags">
+          <span>Vite</span><span>Playwright</span><span>Tailwind</span><span>设计令牌体系</span>
+          <span>双主题</span><span>视觉回归</span><span>CI/CD</span><span>可观测性</span>
+          <span>Prompt 工程</span><span>上下文管理</span><span>把 AI 当同事</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 04 联系方式 ===== -->
+    <section class="about-section" id="sec-contact">
+      <div class="section-head reveal">
+        <span class="section-no">04</span>
+        <h2>联系方式</h2>
+        <span class="leader"></span>
+        <span class="section-en">Contact</span>
+      </div>
+
+      <!-- ⚠️占位：邮箱 / 手机号 / 微信号换成真实值；二维码是生成的占位图，等真实图片到了直接覆盖 -->
+      <ul class="contact-list">
+        <li class="reveal">
+          <div class="contact-row">
+            <span class="contact-key">EMAIL</span>
+            <span class="contact-val">immerse@example.com</span>
+            <button type="button" class="contact-act" data-copy="immerse@example.com" data-what="邮箱" aria-label="复制邮箱 immerse@example.com">
+              <span class="act-word"><span>复制</span><span>已复制</span></span>
+              <span class="act-icons" aria-hidden="true">
+                <svg class="act-idle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <svg class="act-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+            </button>
+          </div>
+        </li>
+        <li class="reveal">
+          <div class="contact-row">
+            <span class="contact-key">PHONE NUMBER</span>
+            <span class="contact-val">+86 138 0000 0000</span>
+            <button type="button" class="contact-act" data-copy="+86 138 0000 0000" data-what="手机号" aria-label="复制手机号 +86 138 0000 0000">
+              <span class="act-word"><span>复制</span><span>已复制</span></span>
+              <span class="act-icons" aria-hidden="true">
+                <svg class="act-idle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <svg class="act-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+            </button>
+          </div>
+        </li>
+        <li class="reveal">
+          <div class="contact-row">
+            <span class="contact-key">WECHAT</span>
+            <span class="contact-val">immerse_1</span>
+            <button type="button" class="contact-act" data-qr="assets/img/wechat-qr.svg" data-cap="微信号 immerse_1 · 扫码添加" data-alt="微信二维码" aria-label="查看微信二维码">
+              <span class="act-word"><span>扫码</span></span>
+              <span class="act-icons" aria-hidden="true">
+                <svg class="act-idle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+              </span>
+            </button>
+          </div>
+        </li>
+      </ul>
+      <p class="sr-only" id="contactLive" aria-live="polite"></p>
+
+      <div class="about-actions reveal">
+        <!-- ⚠️占位：href 换成真实 PDF（合并时放 assets/docs/） -->
+        <a class="about-btn" href="#" download>
+          <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>下载简历 PDF</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m6 9 6 6 6-6"/><path d="M4 21h16"/></svg>
+        </a>
+        <a class="about-btn" href="mailto:immerse@example.com">
+          <span class="btn-fill" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>写邮件给我</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+
+  </div>
+</main>
+
+<!-- 缩略图放大层：必须在 main 之外，任何带 transform 的祖先都会让 fixed 定位失效 -->
+<div class="shot-lb" id="shotBox" role="dialog" aria-modal="true" aria-label="放大查看图片" tabindex="-1" aria-hidden="true">
+  <figure>
+    <img id="shotBoxImg" alt="" decoding="async" />
+    <figcaption id="shotBoxCap"></figcaption>
+  </figure>
+</div>
+
+<script src="assets/js/clone.js?v=13"></script>
+<script src="assets/js/about.js?v=13"></script>
+</body>
+</html>

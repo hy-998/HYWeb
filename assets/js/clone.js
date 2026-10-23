@@ -248,3 +248,27 @@
     if (window.innerWidth >= 768) setOpen(false);
   });
 })();
+
+/* ---------- 10. 「关于」页签：解锁后才注入 ----------
+   九个页面的静态导航里都没有这一项，源码搜「关于」搜不到入口；
+   只有 assets/js/access.js 校验过钥匙、往 sessionStorage 写过
+   aboutAccess 标记的那个标签页里，它才会被补到桌面导航和移动菜单末尾。
+   标记随标签页关闭即失效，公共电脑上下一个人接手时看不到这个入口。 */
+(function () {
+  var allowed = false;
+  try { allowed = sessionStorage.getItem("aboutAccess") === "1"; } catch (e) {}
+  if (!allowed) return;
+
+  var file = location.pathname.split("/").pop() || "index.html";
+  var isHere = /^about\.html$/i.test(file);
+
+  [".main-nav", ".mobile-menu"].forEach(function (sel) {
+    var nav = document.querySelector(sel);
+    if (!nav || nav.querySelector('a[href="about.html"]')) return;
+    var a = document.createElement("a");
+    a.href = "about.html";
+    a.textContent = "关于";
+    if (isHere) a.className = "active";
+    nav.appendChild(a);
+  });
+})();

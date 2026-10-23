@@ -1,2 +1,28 @@
 .DS_Store
 Thumbs.db
+
+# 像素画的渲染产物（可由 tools/make-octopus.py 重新生成）与预览截图。
+octopus/.shots/
+octopus/tools/__pycache__/
+
+# 复刻作业的中间产物：无头 Chrome 的临时 profile、探针页面、逐帧截图。
+# 保留的是 build 真正的输入：
+#   orig/           原站冻结 DOM（build 的输入）
+#   rep/tree.html   运行时生成的完整目录树
+#   rep/anim/       10 个 Clawd 动作动画
+#   rep/lottie/     logo 的 Lottie 动画数据
+#   vendor/         原站页面 widget 的原始代码
+.verify/claudedev/rep/_chrome*/
+.verify/claudedev/rep/*/_chrome*/
+.verify/claudedev/orig/_chrome*/
+.verify/claudedev/rep/crops/
+.verify/claudedev/rep/bands/
+.verify/claudedev/rep/dump/
+.verify/claudedev/rep/subset/
+.verify/claudedev/rep/*.html
+.verify/claudedev/rep/*.png
+.verify/claudedev/rep/rep*.json
+.verify/claudedev/rep/selfA390.*
+.verify/claudedev/rep/selfB390.*
+.verify/claudedev/rep/scene/
+.verify/claudedev/rep/perch/

@@ -83,6 +83,8 @@
 - `h-14` sticky + 毛玻璃（`bg-background/60 + backdrop-blur`），底部 1px 边框。
 - 左：头像（44px 圆形，点击回开场页）+ 站名；右：三页签导航（首页/项目/收藏推荐）+ 主题切换/RSS/☕。
 - 导航激活态 = `--foreground` 常色，非激活 = `--muted-foreground`。
+- 「关于」是第四枚页签，但**不写进任何页面的静态 HTML**：由 `clone.js` 第 10 节在解锁后注入
+  桌面导航与移动菜单末尾（原因见 6.7）。静态导航永远只有三枚，改动后按 8.3 复测。
 
 ### 3.3 首页（index.html）
 
@@ -158,6 +160,19 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 **实测基准（2026-09-06）**：15 档视口宽（320 / 375 / 480 / 600 / 639 / 640 / 700 / 767 / 768 / 900 / 1023 / 1024 / 1200 / 1440 / 1920）
 两页按钮 x 偏差 **0.0px**。任何改动后按 8.3 复测。
 
+### 3.9 简历页（about.html）
+
+- 独立样式与脚本：`assets/css/about.css` + `assets/js/about.js`，只被本页引用（同 `assets/intro/` 的处理方式），
+  不塞进 `clone.css` 让其余八页白担体积；主题切换与移动端菜单仍走 `clone.js`，本页不重复实现。
+- 结构：HERO（巨型衬线名字 + 东八区现场时钟）→ 数字条 → 01 经历（时间轴 + 缩略图）→ 02 项目展示 → 03 能力矩阵 → 04 联系方式。
+- 母题是把首页 `.leader` 的虚线引导线放大成小节标题；色彩只用 zinc 令牌，零新增色相、零 webfont、零外部资源。
+- 缩略图与二维码共用一层 `.shot-lb` 放大层：FLIP 从原位长出（420ms `cubic-bezier(0.4,0,0.2,1)`）/ 缩回原处（300ms），
+  不改 `body` 溢出、不动 `window.scrollY`，关掉后阅读位置一格没变；`#shotBox` 必须放在 `<main>` 之外（带 transform 的祖先会让 `fixed` 失效）。
+- 联系方式三行（EMAIL / PHONE NUMBER / WECHAT）行尾按钮：前两行是复制（主色横扫 + 对勾落位 + 文案上滑，1.6s 自动退回），
+  第三行弹二维码。剪贴板被拒时退到 `execCommand`，再不行选中值并在 `aria-live` 里如实说明，不假装成功。
+  `<640px` 整行换成「标签在上、值 + 按钮在下」两行——联系方式被省略号截断等于没给。
+- **受隐私门禁约束，见 6.7**：不进搜索引擎、不在任何静态导航里出现。
+
 ---
 
 ## 4. 间距与对齐规则（硬性）
@@ -212,6 +227,15 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
    跳转附带 `?next=<原页面>`，ENTER/键盘 Enter 回到该页面（无 `next` 或校验失败则回主页）并写标记；
    `?skipIntro=1` 为逃生口，任何情况直接放行；**存储被禁用时不放欢迎页**（标记写不上会形成
    intro ↔ index 死循环，宁可不播开场也不能锁死用户）。`next` 只接受同目录单个 `.html`，防止开放重定向。点头像任何时候可重播。
+7. **简历页门禁（发现性隔离）**：`about.html` 只有一条带钥匙的链接能进 —— `about.html?k=<钥匙>`。
+   `assets/js/access.js` 在 `<head>` 里同步校验：通过则写 `sessionStorage.aboutAccess`、用 `replaceState`
+   把钥匙从地址栏抹掉、给 `<html>` 加 `about-ok` 揭开整页；不通过则 `location.replace('index.html')`，简历内容不渲染。
+   用 `sessionStorage` 而非 `localStorage`：关掉标签即失效，公共电脑上下一个人接手时既看不到正文也看不到入口。
+   `about.css` 第 0 节默认 `visibility: hidden`，所以**关掉 JavaScript 同样读不到**。
+   本页带 `meta[name=robots]=noindex,nofollow,noarchive` 与 `referrer=no-referrer`。
+   钥匙只存一处（`access.js`，`about-shot.mjs` 顶部同步一份）。
+   **边界**：这是「不让站上的读者顺路看到」，不是访问控制 —— 仓库与 Pages 都是公开的，
+   知道路径或读到 `access.js` 的人依然进得来。要真隐私得把页面挪出公开仓库，或改成内容加密 + 钥匙放 `#` 片段。
 
 ---
 
@@ -226,9 +250,13 @@ top: calc(var(--container-padding) + max(180px, 11vw) / 9.2 - 0.75rem);  /* 字�
 
 ## 8. 工程规范
 
-1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=12`）；
+1. **缓存穿透**：JS/CSS 引用一律带版本号，**全站共用同一个号**（当前 `?v=13`）；
    **任何 JS/CSS 改动必须同步 bump 所有页面的版本号**。
-   覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）。
+   覆盖范围含 `assets/intro/{style,typewriter,intro}`（曾整页漏带版本号，已补）
+   与 `assets/css/about.css`、`assets/js/{access,about}.js`。
 2. **零依赖**：无 webfont、无 CDN、无框架运行时；新增能力优先用原生实现。
 3. **改动后必测**（浏览器实测）：左右缘对齐测量、双主题截图、`<640px` 视口、核心链路（首访开场 → 列表 → 详情 → 返回原位）。
-4. 页面清单：`intro.html`、`index.html`、`post-awake/pixels/ghost/memory/pacing.html`、`projects.html`、`favorites.html`；生成脚本与数据存于 `ref-yaolifeng-shorts/`。
+   现成脚本：`.verify/intro-firstvisit-regression.mjs`（33 条，本地与线上同一套断言）与
+   `.verify/about-shot.mjs`（18 条视觉/对齐 + 5 条门禁，`BASE=http://127.0.0.1:8899/` 可切本地服务器）。
+4. 页面清单：`intro.html`、`index.html`、`post-awake/pixels/ghost/memory/pacing.html`、`projects.html`、`favorites.html`；
+   另有 `about.html`（简历页，受 6.7 门禁约束，不进导航、不进搜索引擎）；生成脚本与数据存于 `ref-yaolifeng-shorts/`。
