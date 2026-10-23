@@ -152,8 +152,13 @@ ONLY=contact node .verify/about-shot.mjs                           # 只跑名�
 node .verify/intro-firstvisit-regression.mjs 9333 http://127.0.0.1:8899/
 ```
 
+- **别同时跑两份**（哪怕一份本地一份线上）：`about-shot.mjs` 的 CDP 端口 9411 和 `--user-data-dir=.verify/_chrome-about` 都是写死的，
+  两个实例互相踩一脚就会出现「这趟红四条、下一趟全绿」的假故障。
+  灯箱开合、二维码开合、复制确认态四处现在是**轮询终态**（上限 3s）而不是固定 sleep，就是为了不在机器负载高的那一刻误判。
 - 产物：`.verify/about-*.png`（截图基线，**已入库**）与 `.verify/about-report.json`（未跟踪）。
   跑一次脚本就会重画基线，提交前确认这些改动是有意的。
+  两张天生逐次不同，冒 `M` 不代表真改了东西：`about-*-hero`（姓名右侧的东八区时钟跳到新秒）、
+  `about-desktop-dark-shotbox-mid`（按设计就截在动画中途）——其余张应当能原样对上。
 - 断言与部署子路径无关，本地 `file://`、本地 HTTP、线上 `/HYWeb/` 三种 base 都跑得通。
 - 两个脚本都靠 CDP 驱动 headless Chrome，**Chrome 路径写死在文件顶部 `CHROME` 常量**（Windows 默认安装位），
   换机器/换系统要改这一行。`about-shot.mjs` 自己起实例；regression 那条要你自己先开
