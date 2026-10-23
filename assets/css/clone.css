@@ -143,7 +143,7 @@ img, svg { display: block; vertical-align: middle; }
 }
 @media (min-width: 640px) { .header-actions { gap: 1rem; } }
 
-/* 操作区（主题/RSS/咖啡/汉堡）：
+/* 操作区（主题/咖啡/汉堡）：
    原站 div.flex.items-center.space-x-2 sm:space-x-4 —— 此前漏写导致按钮堆叠错位 */
 .quick-actions {
   display: flex;
@@ -197,18 +197,6 @@ img, svg { display: block; vertical-align: middle; }
 /* 暗色显示太阳（点击切亮）、亮色显示月亮 —— 与原站 next-themes 行为一致 */
 html.dark .icon-moon { display: none; }
 html:not(.dark) .icon-sun { display: none; }
-
-/* RSS：h-9 w-5，图标 h-4 w-4，sm 以下隐藏 */
-.rss-btn {
-  display: none;
-  width: 1.25rem; height: 2.25rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.375rem;
-  color: hsl(var(--foreground) / 0.6);
-}
-@media (min-width: 640px) { .rss-btn { display: flex; } }
-.rss-btn:hover { color: hsl(var(--accent-foreground)); }
 
 /* 咖啡 ☕：hover 放大旋转 + 光晕 + 心跳 */
 .coffee {
@@ -822,15 +810,6 @@ html:not(.dark) .icon-sun { display: none; }
 }
 .aside-btn:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
 .aside-btn > svg { width: 1rem; height: 1rem; margin-right: 0.5rem; }
-.aside-x-icon { margin-right: 0.5rem; display: flex; color: hsl(var(--muted-foreground)); }
-.aside-wechat-icon {
-  margin-right: 0.5rem;
-  display: flex;
-  width: 1rem; height: 1rem;
-  align-items: center;
-  justify-content: center;
-}
-.aside-wechat-icon svg { width: 1rem; height: 1rem; }
 
 /* =========================================================
    三、图文卡片模式（参考 LUON Models 卡片布局）

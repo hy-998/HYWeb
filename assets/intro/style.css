@@ -179,8 +179,8 @@ body {
 /* ============ 右上角主题切换 ============ */
 /* 与博客 .theme-toggle 同规格（外壳 1.5rem / 图标 1rem / 日月互换）。
    水平位置按博客主页实测值对齐：主页的切换按钮是 .quick-actions 组的第一个，
-   它后面还跟着若干按钮，所以并不贴正文列右缘。三档断点下后续按钮不同，
-   相对视口右缘的偏移分别为 96.7 / 148.7 / 100.7px（详见下方 640、768 媒体查询）。 */
+   它后面还跟着咖啡与移动端菜单，所以并不贴正文列右缘。三档断点下后续按钮不同，
+   相对视口右缘的偏移分别为 96.7 / 112.7 / 64.7px（详见下方 640、768 媒体查询）。 */
 
 .theme-toggle {
   position: fixed;
@@ -314,11 +314,11 @@ html:not(.dark) .icon-sun {
   transition: color 0.3s cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* 640–767：主页 actions 组里 RSS(20) 与移动端菜单(40) 同时可见，
-   切换按钮被推得更靠左，故偏移从 80.7 增至 132.7（容器右内边距仍为 1rem） */
+/* 640–767：主页 actions 组里咖啡(24.7) 与移动端菜单(40) 同时可见，
+   切换按钮距视口右缘增至 112.7px（容器右内边距仍为 1rem） */
 @media (min-width: 640px) {
   .theme-toggle {
-    right: calc(max((100vw - 640px) / 2, 0px) + 148.7px);
+    right: calc(max((100vw - 640px) / 2, 0px) + 112.7px);
   }
 }
 @media (min-width: 768px) {
@@ -335,16 +335,16 @@ html:not(.dark) .icon-sun {
     width: auto;
   }
   .theme-toggle {
-    right: calc(max((100vw - 768px) / 2, 0px) + 100.7px);
+    right: calc(max((100vw - 768px) / 2, 0px) + 64.7px);
   }
 }
 @media (min-width: 1024px) {
   .cta-wrap { left: calc(max((100vw - 1024px) / 2, 0px) + 1.5rem); }
-  .theme-toggle { right: calc(max((100vw - 1024px) / 2, 0px) + 100.7px); }
+  .theme-toggle { right: calc(max((100vw - 1024px) / 2, 0px) + 64.7px); }
 }
 @media (min-width: 1200px) {
   .cta-wrap { left: calc(max((100vw - 1200px) / 2, 0px) + 1.5rem); }
-  .theme-toggle { right: calc(max((100vw - 1200px) / 2, 0px) + 100.7px); }
+  .theme-toggle { right: calc(max((100vw - 1200px) / 2, 0px) + 64.7px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

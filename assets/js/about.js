@@ -130,7 +130,7 @@
     });
   }
 
-  /* 7. 现场时钟：固定取东八区墙钟，与"杭州"标签一致，不受访问者本机时区影响 */
+  /* 7. 现场时钟：固定取东八区墙钟，与"广州"标签一致，不受访问者本机时区影响 */
   (function () {
     var out = document.getElementById('heroClock');
     if (!out) return;
