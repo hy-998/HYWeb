@@ -109,7 +109,7 @@ img, svg { display: block; vertical-align: middle; }
 .header-row { display: flex; height: 3.5rem; align-items: center; }
 .header-row > * { display: flex; align-items: center; }
 
-/* 品牌：avatar 44px 圆形 + 名字 text-lg font-semibold，左间距 ml-3 */
+/* 品牌：插画 logo 高 44px、按原始比例自适应宽（约 70px），圆角方形 */
 .brand {
   display: flex;
   align-items: center;
@@ -121,8 +121,10 @@ img, svg { display: block; vertical-align: middle; }
   font-weight: 500;
 }
 .brand-avatar img {
-  width: 2.75rem; height: 2.75rem;   /* h-11 w-11 */
-  border-radius: 9999px;
+  display: block;
+  height: 2.75rem;           /* 高固定 44px */
+  width: auto;               /* 宽随原始 1852:1169 比例 */
+  border-radius: 0.625rem;   /* 10px 圆角方形 */
   overflow: hidden;
   transition: all 0.2s;              /* transition-all duration-200 */
 }
