@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自顶向下，还是自底向上？——游戏设计中的两种工作流程 | 弘1</title>
+<meta name="description" content="从《阿凡达》与《战争机器 2》的新手关对比出发，说明为什么游戏设计更该用自底向上的原子化流程。" />
+<link rel="icon" href="assets/img/moon-favicon.png?v=23" type="image/png" />
+<link rel="stylesheet" href="assets/css/clone.css?v=23" />
+<script>
+(function () {
+  try {
+    var theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="header-row">
+      <a class="brand" href="index.html" aria-label="弘1">
+        <span class="brand-avatar"><img src="assets/img/moon-logo.png?v=23" alt="弘1" width="70" height="44" /></span>
+        <span class="brand-name">弘1</span>
+      </a>
+      <div class="header-actions">
+        <nav class="main-nav">
+          <a href="index.html" class="active">首页</a>
+          <a href="projects.html">项目</a>
+          <a href="favorites.html">收藏推荐</a>
+        </nav>
+        <div class="quick-actions">
+          <button class="theme-toggle" aria-label="切换主题">
+            <span class="icon-slot">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </span>
+          </button>
+          <a class="coffee" href="#" title="请我喝咖啡 ☕">
+            <span class="coffee-inner">
+              <span class="coffee-emoji">☕</span>
+              <span class="coffee-glow"></span>
+              <span class="coffee-heart">❤️</span>
+            </span>
+          </a>
+          <button class="mobile-menu-btn" type="button" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<nav class="mobile-menu" id="mobileMenu" aria-label="移动端导航">
+          <a href="index.html" class="active">首页</a>
+          <a href="projects.html">项目</a>
+          <a href="favorites.html">收藏推荐</a>
+        </nav>
+  </header>
+
+<div class="progress-track" aria-hidden="true">
+  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+</div>
+
+<main class="flex-1">
+  <div class="detail-layout">
+    <div class="container detail-container">
+      <div class="detail-cols">
+
+        <article class="detail-article">
+          <div class="detail-scroll">
+            <div class="container detail-inner">
+
+              <a class="back-link" href="index.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
+                <span>返回列表</span>
+              </a>
+
+              <div class="post-meta">
+                <p>作者&nbsp;&nbsp;<a class="meta-author" href="#">弘1</a></p>
+                <p>发布于&nbsp;&nbsp;<time dateTime="2026-10-22T09:00:00.000Z">2026 年 10 月 22 日，星期四</time></p>
+              </div>
+
+              <h1 class="post-title">自顶向下，还是自底向上？——游戏设计中的两种工作流程</h1>
+
+              <div class="ai-card">
+                <div class="ai-card-head">
+                  <div class="ai-card-left">
+                    <span class="ai-badge">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+                    </span>
+                    <span class="ai-title">AI 生成的摘要</span>
+                  </div>
+                  <div class="ai-note"><span class="ai-dot"></span>此内容由 AI 生成</div>
+                </div>
+                <p class="ai-body">同一个射击机制，为什么一款游戏拿 10 分、另一款只有 5 分？文章用《阿凡达》和《战争机器 2》的首场战斗做对比，指出自顶向下适合提案与卖创意，自底向上才适合打磨玩法；大多数团队把顺序搞反了。</p>
+              </div>
+
+              <div class="prose">
+                <div class="markdown-body">
+
+<p><strong>存档说明</strong>：原文发表于 Design better games（2017-07-14），作者未署名，原站已跳转至无关站点。以下为中文整理，版权归原作者所有。</p><h2>同一个机制，为什么分数差一倍？</h2><p>有些游戏能拿到接近满分，另一些游戏用了同样的核心机制，却只有中游水平。为什么？</p><p>文章先看两款第一人称射击游戏的新手关：</p><ul><li>《詹姆斯·卡梅隆的阿凡达》——Metacritic 59 分。</li><li>《战争机器 2》——Metacritic 93 分。</li></ul><p>两段演示都让玩家经历第一次战斗，但设计完全不同。</p><p>《阿凡达》的第一场战斗是一群「狗」：体型小、移动快、经常看不见、数量多，而且每只都要吃好几发子弹。</p><p>《战争机器 2》的第一场战斗是一颗「炸弹」：在屏幕上占的面积够大、不移动、始终可见，只有一颗，而且一发子弹就能引爆，同时炸掉一群敌人。</p><p>差别不在机制，而在<strong>这场战斗要求玩家付出的技能</strong>。《战争机器 2》围绕玩家当前具备的能力来设计挑战；《阿凡达》则像是把所有参数都拉到最高难度，直接考验玩家。作者判断，在《战争机器 2》里，同等强度的敌人大概要接近通关才会出现。</p><p>这就是自底向上（bottom-up）与原子化设计能带来的差别。</p><h2>两种流程</h2><p>游戏设计里最常见的两种工作方式，是自顶向下（top-down）和自底向上（bottom-up）。作者观察到的现实是：大多数公司和设计师都在用自顶向下，而这是他们最大的错误。</p><p>两种流程并非彼此独立，真正的问题是<strong>先做哪一步</strong>。</p><p><strong>自顶向下</strong>通常由美术和故事驱动。它对头脑风暴、把想法讲清楚、向客户提案都很有用。但一个伟大的想法、一个视觉上惊艳的概念，并不自动等于好的玩法和玩家体验。作为开发者，大部分时间应该花在玩法和玩家体验上，而不是画面和剧情上。</p><p><strong>自底向上</strong>则从具体机制、原子化的交互和玩家能力出发，一步步搭出系统。它才是设计团队最该投入的地方。</p><p>作者的建议是：高层概念被客户认可之后，退一步，把它放到一边，停止围着概念打转。接下来让自底向上的流程接管。玩一款游戏时，常常能明显看出它是用自顶向下做出来的，还是用自底向上做出来的。</p><h2>不是非此即彼</h2><p>作者并不认为自底向上是唯一道路。他的意思是：用它推进到某个程度，然后开始做设计师真正该做的事。</p><p>他提到自己有机会与大约 30 位游戏设计师共事、又教过另外 30 位，其中很少有人真正具备「设计师思维」。他提供的课程会更偏自底向上，目标是给学习者一套工具，让他们获得这种设计思维、更有效地沟通设计，并最终做出更好的游戏。</p><h2>一句话总结</h2><blockquote><p>自顶向下用来卖想法，自底向上用来做游戏。把顺序搞反，团队就会得到一个看起来很棒、玩起来却不对的产品。</p></blockquote><hr /><p><strong>原文信息</strong></p><ul><li>标题：Top Down/Bottom Up Process in game design</li><li>来源：Design better games（thinkgamedesign.com）</li><li>发布：2017-07-14</li><li>原链：<a href="https://thinkgamedesign.com/design-videogame/" target="_blank" rel="noopener noreferrer">https://thinkgamedesign.com/design-videogame/</a>（已失效，域名跳转至无关站点）</li></ul>
+                </div>
+              </div>
+
+              <div class="post-tags">
+                <span class="tag"># 游戏设计</span>
+                <span class="tag"># 方法论</span>
+                <span class="tag"># 关卡设计</span>
+                <span class="tag"># 存档</span>
+              </div>
+
+              <div class="post-nav">
+      <a class="post-nav-btn prev" href="post-archive-biopolitics.html">
+        <span class="post-nav-text"><span class="post-nav-label">上一篇</span><span class="post-nav-title">什么是生命政治</span></span>
+      </a>
+      <a class="post-nav-btn next" href="post-archive-game-archive-vol1.html">
+        <span class="post-nav-text"><span class="post-nav-label">下一篇</span><span class="post-nav-title">游戏档案参考 第一期</span></span>
+      </a>
+              </div>
+
+              <div class="post-footer">
+                <a class="back-link" href="index.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
+                  <span>返回列表</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <aside class="detail-aside">
+          <div class="aside-sticky">
+            <div class="toc-card">
+              <div class="toc-label">目录</div>
+              <ul class="toc-list">
+                <li>无目录</li>
+              </ul>
+            </div>
+            <div class="aside-actions">
+              <button class="aside-btn" id="backTopBtn" title="回到顶部">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                回到顶部
+              </button>
+              <button class="aside-btn" id="copyLinkBtn" title="复制链接">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                复制链接
+              </button>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/clone.js?v=23"></script>
+</body>
+</html>

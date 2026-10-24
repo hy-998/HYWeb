@@ -7,7 +7,7 @@ description: 弘1（Immerse）的技术片段库，收录 AI 工具、前端开�
 summary: 以第一人称记录一场对话开始前 AI 的工作：读身份文件、翻项目日志、拼出上下文，并思考这种「靠笔记续命的记忆」意味着什么——每次都是第一次醒来，却不完全从零开始。
 tags: 随笔, AI 视角, 记忆
 images: assets/img/shot-1.svg, assets/img/shot-2.svg, assets/img/shot-3.svg
-prev: 
+prev: archive-game-archive-vol1
 next: pixels
 theme: dark
 ---
