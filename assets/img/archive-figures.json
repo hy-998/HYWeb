@@ -1,0 +1,368 @@
+{
+  "assets/img/post-archive-zenless-zone-zero/static-01-intro.jpg": {
+    "w": 900,
+    "h": 502,
+    "kind": "image",
+    "caption": "《绝区零》二测「降噪测试」：本篇拆解的对象"
+  },
+  "assets/img/post-archive-zenless-zone-zero/static-02-active-frequency.jpg": {
+    "w": 900,
+    "h": 506,
+    "kind": "image",
+    "caption": "主动反应频率：玩家持续出招，敌人干预较少"
+  },
+  "assets/img/post-archive-zenless-zone-zero/static-03-passive-frequency.jpg": {
+    "w": 900,
+    "h": 506,
+    "kind": "image",
+    "caption": "被动反应频率：敌方攻击与状态要求玩家响应的密度"
+  },
+  "assets/img/post-archive-zenless-zone-zero/static-04-precision.jpg": {
+    "w": 900,
+    "h": 506,
+    "kind": "image",
+    "caption": "操作精度：指令复杂度中等、空间精度低、时间精度中等"
+  },
+  "assets/img/post-archive-zenless-zone-zero/static-05-mastery.jpg": {
+    "w": 900,
+    "h": 506,
+    "kind": "image",
+    "caption": "精通维度：策略与判断，以及技术与熟练度"
+  },
+  "assets/img/post-archive-zenless-zone-zero/static-06-loop.jpg": {
+    "w": 900,
+    "h": 506,
+    "kind": "image",
+    "caption": "战斗系统框图：小循环攒能量，大循环打失衡、连携与终结技"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-01-normal-attack.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-01-normal-attack.jpg",
+    "caption": "普攻四连后，用闪避取消最后一击的后摇"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-02-fire-input.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-02-fire-input.jpg",
+    "caption": "精准输入让 11 号的普攻转为火属性攻击"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-03-dodge-cd.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-03-dodge-cd.jpg",
+    "caption": "连续闪避两次后进入 1 秒冷却"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-04-perfect-dodge.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-04-perfect-dodge.jpg",
+    "caption": "精准闪避进入魔女时间，并派生闪避反击"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-05-special-cancel.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-05-special-cancel.jpg",
+    "caption": "普通特殊技可以用闪避取消"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-06-swap-chain.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-06-swap-chain.jpg",
+    "caption": "只要还有后台角色，换人就能持续衔接"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-07-hit-support.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-07-hit-support.jpg",
+    "caption": "前场角色被击飞时，换人立即转为受击支援"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-08-yellow-support.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-08-yellow-support.jpg",
+    "caption": "黄光预警时换人，触发极限支援并大幅积累失衡值"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-09-red-dodge.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-09-red-dodge.jpg",
+    "caption": "支援点数耗尽后黄光变红光，换人自动触发极限闪避"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-10-ultimate.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-10-ultimate.jpg",
+    "caption": "终结技拥有独立特写与极高爆发"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-11-chain.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-11-chain.jpg",
+    "caption": "重击失衡敌人后触发连携技，作为一轮循环的收尾"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-12-low-hp.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-12-low-hp.jpg",
+    "caption": "丝血敌人只吃招式最后一击，也可能因动作取消而漏杀"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-13-anby-startup.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-13-anby-startup.jpg",
+    "caption": "安比 attack0 前摇 14/60 帧，起手极快"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-14-bear-motion.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-14-bear-motion.jpg",
+    "caption": "熊哥的动作帧更平滑，突出重型武器的力量感"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-15-billy-recoil.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-15-billy-recoil.jpg",
+    "caption": "比利最后一击用夸张后退表现远程后坐力"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-16-hit-reaction.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-16-hit-reaction.jpg",
+    "caption": "敌人受击动画与攻击轨迹匹配，强化命中确认"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-17-body-size.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-17-body-size.jpg",
+    "caption": "不同体型角色招架后的后退幅度，表现攻击强度"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-18-run-block.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-18-run-block.jpg",
+    "caption": "刀剑角色奔跑时可格挡子弹"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-19-camera-pull.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-19-camera-pull.jpg",
+    "caption": "11 号强化特殊技：镜头随蓄力拉伸"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-20-chain-zoom.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-20-chain-zoom.jpg",
+    "caption": "连携技触发瞬间聚焦角色，放大 QTE 紧张感"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-21-screen-shake.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-21-screen-shake.jpg",
+    "caption": "熊哥普攻后段：震屏方向与攻击轨迹一致"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-22-crit-text.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-22-crit-text.jpg",
+    "caption": "暴击飘字的双感叹号与逐字放大"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-23-result-screen.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-23-result-screen.jpg",
+    "caption": "结算画面用多机位慢动作衔接战斗与关卡"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-24-ff16-result.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-24-ff16-result.jpg",
+    "caption": "对比《FF16》的结算：演出仪式感强，但切换略显生硬"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-25-motion-blur.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-25-motion-blur.jpg",
+    "caption": "死路屠夫跳砸：最快几帧加入动态模糊"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-26-hitstop.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-26-hitstop.jpg",
+    "caption": "连续命中多名敌人时顿帧过重，像在播 PPT"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-27-support-timing.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-27-support-timing.jpg",
+    "caption": "极限支援的判定从预警亮起开始，初期非常反直觉"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-28-tanatos.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-28-tanatos.jpg",
+    "caption": "塔纳托斯的闪现三连击，是很好的节奏变奏"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-29-warning-color.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-29-warning-color.jpg",
+    "caption": "黄/红光颜色让玩家直观判断会触发哪种支援"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-30-spider-sense.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-30-spider-sense.jpg",
+    "caption": "《漫威蜘蛛侠 2》的蜘蛛感应提示"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-31-support-cost.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-31-support-cost.jpg",
+    "caption": "消耗支援点数却没打出失衡，点数就补不回来"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-32-hades.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-32-hades.jpg",
+    "caption": "《Hades》投弹技：击杀或到时后回收资源"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-33-ff7-atb.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-33-ff7-atb.jpg",
+    "caption": "《FF7 Remake》的 ATB：自然恢复＋行为积攒"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-34-offscreen.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-34-offscreen.jpg",
+    "caption": "频繁的远程偷袭打断战斗流畅性"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-35-gow-assist.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-35-gow-assist.jpg",
+    "caption": "《战神》的攻击辅助让受击敌人留在屏幕中央"
+  },
+  "assets/img/post-archive-zenless-zone-zero/demo-36-fov.mp4": {
+    "w": 480,
+    "h": 270,
+    "kind": "video",
+    "poster": "assets/img/post-archive-zenless-zone-zero/demo-36-fov.jpg",
+    "caption": "面对大型 Boss 时，FOV 与镜头让对策变难"
+  },
+  "assets/img/post-archive-biopolitics/01-biological-life.jpg": {
+    "w": 799,
+    "h": 599,
+    "kind": "image",
+    "caption": "生物性生命：生命政治直接作用的对象"
+  },
+  "assets/img/post-archive-biopolitics/02-aristotle.jpg": {
+    "w": 476,
+    "h": 316,
+    "kind": "image",
+    "caption": "亚里士多德：人是政治的动物，但政治首先是城邦之学"
+  },
+  "assets/img/post-archive-biopolitics/03-politics-book.jpg": {
+    "w": 476,
+    "h": 693,
+    "kind": "image",
+    "caption": "亚里士多德《政治学》：城邦由家庭构成，家政与政治却遵循不同原则"
+  },
+  "assets/img/post-archive-biopolitics/04-agamben.jpg": {
+    "w": 800,
+    "h": 600,
+    "kind": "image",
+    "caption": "阿甘本：城邦与家的区分，也是 bios 与 zoē 的区分"
+  },
+  "assets/img/post-archive-biopolitics/05-django.jpg": {
+    "w": 799,
+    "h": 450,
+    "kind": "image",
+    "caption": "《被解救的姜戈》：用测量把黑人排除在「真正的人」之外"
+  },
+  "assets/img/post-archive-biopolitics/06-phrenology.jpg": {
+    "w": 620,
+    "h": 487,
+    "kind": "image",
+    "caption": "19 世纪颅相学图谱：用颅骨形状排列人种「进化序列」"
+  },
+  "assets/img/post-archive-biopolitics/07-fingerprint.jpg": {
+    "w": 798,
+    "h": 576,
+    "kind": "image",
+    "caption": "指纹识别与贝蒂荣档案卡片：从区分种类到个体识别"
+  },
+  "assets/img/post-archive-biopolitics/08-foucault.jpg": {
+    "w": 798,
+    "h": 493,
+    "kind": "image",
+    "caption": "福柯：生命权力不再只约束肉体，而是作用于人口总体"
+  },
+  "assets/img/post-archive-biopolitics/09-foucault-book.jpg": {
+    "w": 799,
+    "h": 1160,
+    "kind": "image",
+    "caption": "福柯《必须保卫社会》：生命政治与安全机制的课程讲稿"
+  },
+  "assets/img/post-archive-biopolitics/10-deleuze-guattari.jpg": {
+    "w": 799,
+    "h": 533,
+    "kind": "image",
+    "caption": "德勒兹与加塔利：从规训社会走向控制社会"
+  },
+  "assets/img/post-archive-biopolitics/11-database.jpg": {
+    "w": 799,
+    "h": 559,
+    "kind": "image",
+    "caption": "数据库图例：控制社会的中枢通过算法调制每一个分体"
+  },
+  "assets/img/post-archive-top-down-bottom-up/01-top-down.jpg": {
+    "w": 376,
+    "h": 297,
+    "kind": "image",
+    "caption": "自顶向下：从高层概念、玩家体验、游戏纲要逐层向下"
+  },
+  "assets/img/post-archive-top-down-bottom-up/02-bottom-up.jpg": {
+    "w": 360,
+    "h": 266,
+    "kind": "image",
+    "caption": "自底向上：从原子设计、原型与研发逐层向上"
+  }
+}
