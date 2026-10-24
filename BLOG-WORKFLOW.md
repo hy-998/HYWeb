@@ -1,4 +1,4 @@
-# 写博客工作流（yaolifeng-shorts-clone）
+# 写博客工作流（immerse-notes）
 
 适用对象：当前这套静态 shorts 博客。每篇文章 = 一个 `post-<slug>.html`。
 本文件只管「怎么写、怎么发」，不动代码。模板见 `POST-TEMPLATE.md`。
